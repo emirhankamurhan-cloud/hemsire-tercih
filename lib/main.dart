@@ -32,7 +32,6 @@ class HemsireTercihApp extends StatelessWidget {
   }
 }
 
-// ---------------- MODEL ----------------
 class Hospital {
   final String id;
   final String name;
@@ -67,9 +66,9 @@ class Hospital {
   });
 }
 
-// ---------------- TÜRKİYE GENELİ KAPSAMLI VERİ HAVUZU ----------------
+// ---------------- TÜRKİYE TÜM İLLER HASTANE LİSTESİ ----------------
 final List<Hospital> initialHospitals = [
-  // --- SAMSUN & KARADENİZ ---
+  // --- SAMSUN ---
   Hospital(
     id: 'samsun_sehir',
     name: 'Samsun Şehir Hastanesi',
@@ -84,12 +83,11 @@ final List<Hospital> initialHospitals = [
     shift: '08:00 - 08:00 (24 Saat) & 16-8',
     rentRange: '15.000 TL - 22.000 TL',
     surveyReviews: [
-      'Bina ve tüm teknolojik altyapı sıfır ve son model. Geniş servisler ve dinlenme odaları mevcut.',
-      'Sistem ilk açılış sürecinde oturmaya başladığı için birim transferleri yaşanabiliyor.'
+      'Bina sıfır ve son teknoloji. Ameliyathane ve yoğun bakımlar çok geniş.',
+      'Canik çevre yolunda; ekspres belediye otobüsleri ve personel servisleri düzenli.'
     ],
     webReviews: [
-      'Canik çevre yolunda; ekspres belediye otobüsleri ve servislerle ulaşım rahat.',
-      'Atakum bölgesine kıyasla Canik ve İlkadım taraflarında ev kiraları daha makul seviyelerde.'
+      'Bölgenin yeni ana üssü. Canik tarafında ev kiraları Atakum’a göre daha uygun.'
     ],
   ),
   Hospital(
@@ -103,15 +101,10 @@ final List<Hospital> initialHospitals = [
     kpss2025: 82.75,
     workLoad: '7 / 10',
     incentive: '8.000 TL - 12.000 TL',
-    shift: '08:00 - 08:00 (24 saat nöbet)',
+    shift: '08:00 - 08:00 (24 saat)',
     rentRange: '14.000 TL - 20.000 TL',
-    surveyReviews: [
-      'Merkezi konumda, dolmuş ve belediye otobüsleri kapısına kadar gidiyor.',
-      'Köklü bir hastane; hemşire ekipleri deneyimli ve nöbet dayanışması yüksek.'
-    ],
-    webReviews: [
-      'Şehir hastanesine bazı branşların kaymasıyla aşırı hasta yükü azaldı, çalışma ortamı dengelendi.'
-    ],
+    surveyReviews: ['Ulaşımı çok merkezi. Köklü kadrosu var, nöbet dayanışması oturmuş.'],
+    webReviews: ['Şehir hastanesi açılınca hasta sirkülasyonu dengelendi, çalışma şartları rahatladı.'],
   ),
   Hospital(
     id: 'samsun_gazi',
@@ -126,14 +119,43 @@ final List<Hospital> initialHospitals = [
     incentive: '7.000 TL - 10.000 TL',
     shift: '08:00 - 08:00 & 8-16',
     rentRange: '13.000 TL - 18.000 TL',
-    surveyReviews: [
-      'Şehrin göbeğinde. Ulaşım sorunu kesinlikle yok.',
-      'İkinci basamak hastane; ağır travma vakaları EAH veya Şehir Hastanesine sevk ediliyor.'
-    ],
-    webReviews: [
-      'Huzurlu, nöbet usulü düzenli, çalışan memnuniyeti ortalamanın üzerinde.'
-    ],
+    surveyReviews: ['Şehrin tam göbeğinde, ulaşım sorunu yok. Nöbet listeleri düzenli.'],
+    webReviews: ['Ağır travma vakaları EAH veya Şehir Hastanesine gittiği için çalışma ortamı sakin.'],
   ),
+  Hospital(
+    id: 'samsun_carsamba',
+    name: 'Samsun Çarşamba Devlet Hastanesi',
+    city: 'Samsun',
+    district: 'Çarşamba',
+    type: 'Devlet Hastanesi',
+    imageUrl: 'https://images.unsplash.com/photo-1505751172876-fa1923c5c528?auto=format&fit=crop&w=800&q=80',
+    kpss2024: 82.80,
+    kpss2025: 82.35,
+    workLoad: '6 / 10',
+    incentive: '6.500 TL - 9.500 TL',
+    shift: '24 Saat Nöbet Usulü',
+    rentRange: '10.000 TL - 15.000 TL',
+    surveyReviews: ['İlçe hastanesi ancak donanımlı, merkeze 30 dakika mesafede dolmuş sürekli var.'],
+    webReviews: ['Kiralar merkeze göre çok uygun, birikim için ideal.'],
+  ),
+  Hospital(
+    id: 'samsun_bafra',
+    name: 'Samsun Bafra Devlet Hastanesi',
+    city: 'Samsun',
+    district: 'Bafra',
+    type: 'Devlet Hastanesi',
+    imageUrl: 'https://images.unsplash.com/photo-1538108149393-fbbd81895907?auto=format&fit=crop&w=800&q=80',
+    kpss2024: 82.85,
+    kpss2025: 82.40,
+    workLoad: '7 / 10',
+    incentive: '7.000 TL - 10.000 TL',
+    shift: '24 Saat Nöbet',
+    rentRange: '11.000 TL - 16.000 TL',
+    surveyReviews: ['Büyük bir ilçe hastanesi, acil servisi canlı, çalışanlar genel olarak memnun.'],
+    webReviews: ['Merkeze gidiş-geliş yapan çok personel var.'],
+  ),
+
+  // --- TOKAT ---
   Hospital(
     id: 'tokat_resadiye',
     name: 'Tokat Reşadiye Devlet Hastanesi',
@@ -145,22 +167,17 @@ final List<Hospital> initialHospitals = [
     kpss2025: 81.80,
     workLoad: '4 / 10',
     incentive: '4.000 TL - 7.000 TL',
-    shift: '24 Saat Nöbet & Blok İzin',
+    shift: '24 Saat Nöbet & Blok Off',
     rentRange: '8.000 TL - 12.000 TL',
-    surveyReviews: [
-      'Küçük ilçe hastanesi. İş yükü büyük şehirlere kıyasla gayet sakin ve stressiz.',
-      'Blok nöbet sistemiyle memlekete gitmek için uzun süreli boşluklar alınabiliyor.'
-    ],
-    webReviews: [
-      'Yaşam giderleri çok uygun. Sakinlik ve birikim arayanlar için biçilmiş kaftan.'
-    ],
+    surveyReviews: ['İş temposu büyük şehirlere kıyasla gayet sakin. Blok nöbet imkanı var.'],
+    webReviews: ['Yaşam maliyeti çok uygun, para biriktirmek ve sakinlik için ideal.'],
   ),
   Hospital(
-    id: 'tokat_eah',
-    name: 'Tokat Gaziosmanpaşa Üniversitesi & Devlet Hastanesi',
+    id: 'tokat_devlet',
+    name: 'Tokat Devlet Hastanesi',
     city: 'Tokat',
     district: 'Merkez',
-    type: 'Devlet / EAH',
+    type: 'Devlet Hastanesi',
     imageUrl: 'https://images.unsplash.com/photo-1579684385127-1ef15d508118?auto=format&fit=crop&w=800&q=80',
     kpss2024: 83.20,
     kpss2025: 82.80,
@@ -168,121 +185,59 @@ final List<Hospital> initialHospitals = [
     incentive: '7.500 TL - 11.000 TL',
     shift: '08:00 - 08:00 (24 saat nöbet)',
     rentRange: '10.000 TL - 15.000 TL',
-    surveyReviews: [
-      'Merkezde hayat ucuz ve rahat. Ulaşım masrafı neredeyse yok denecek kadar az.',
-      'İdare genel olarak hemşirelerle uyumlu çalışıyor, mobbing şikayeti düşük.'
-    ],
-    webReviews: [
-      'Tokat merkez hem aile hayatı hem de ekonomik rahatlık açısından hemşirelerin gözde yerlerinden biri.'
-    ],
+    surveyReviews: ['Merkezde hayat ucuz ve rahat. Ulaşım masrafı çok az.'],
+    webReviews: ['Tokat merkez hem aile hayatı hem ekonomik rahatlık için çok popüler.'],
   ),
   Hospital(
-    id: 'amasya_eah',
-    name: 'Amasya Sabuncuoğlu Şerefeddin EAH',
-    city: 'Amasya',
-    district: 'Merkez',
-    type: 'Eğitim ve Araştırma',
-    imageUrl: 'https://images.unsplash.com/photo-1519494026892-80bbd2d6fd0d?auto=format&fit=crop&w=800&q=80',
-    kpss2024: 82.90,
-    kpss2025: 82.40,
-    workLoad: '7 / 10',
-    incentive: '8.000 TL - 11.500 TL',
-    shift: '08:00 - 08:00 & 16-8',
-    rentRange: '12.000 TL - 17.000 TL',
-    surveyReviews: [
-      'İl merkezinin tek büyük hastanesi. Nüfusa göre yoğunluk kaldırılabilir düzeyde.',
-      'Tarihi ve şirin bir şehir, yaşam masrafı makul.'
-    ],
-    webReviews: [
-      'Samsun ve Tokat aksında yer alıyor, ulaşım ağı kolay.'
-    ],
-  ),
-  Hospital(
-    id: 'corum_eah',
-    name: 'Çorum Erol Olçok EAH',
-    city: 'Çorum',
-    district: 'Merkez',
-    type: 'Eğitim ve Araştırma',
-    imageUrl: 'https://images.unsplash.com/photo-1505751172876-fa1923c5c528?auto=format&fit=crop&w=800&q=80',
-    kpss2024: 82.60,
-    kpss2025: 82.10,
-    workLoad: '8 / 10',
-    incentive: '9.000 TL - 12.000 TL',
-    shift: '08:00 - 08:00 (24 saat nöbet)',
-    rentRange: '12.000 TL - 17.000 TL',
-    surveyReviews: [
-      'İlin en büyük hastanesi, çevre ilçelerden çok fazla vaka gelir.',
-      'Ek mesai ücretleri ve teşvik düzenli yatar.'
-    ],
-    webReviews: [
-      'Hayat pahalılığı düşük, İç Anadolu-Karadeniz geçişinde sakin bir şehir.'
-    ],
-  ),
-  Hospital(
-    id: 'trabzon_kanuni',
-    name: 'Trabzon Kanuni EAH',
-    city: 'Trabzon',
-    district: 'Yomra',
-    type: 'Eğitim ve Araştırma',
-    imageUrl: 'https://images.unsplash.com/photo-1587351021759-3e566b6af7cc?auto=format&fit=crop&w=800&q=80',
-    kpss2024: 83.50,
-    kpss2025: 83.05,
-    workLoad: '8 / 10',
-    incentive: '9.000 TL - 13.000 TL',
-    shift: '08:00 - 08:00 (24 saat nöbet)',
-    rentRange: '15.000 TL - 22.000 TL',
-    surveyReviews: [
-      'Doğu Karadeniz’in sevk merkezi konumunda. Vaka çeşitliliği çok fazla.',
-      'Kaşüstü yerleşkesi ferah ve modern.'
-    ],
-    webReviews: [
-      'Deniz manzaralı kampüs, Yomra ve Kaşüstü bölgesinde sitelerde kiralık daireler mevcut.'
-    ],
-  ),
-  Hospital(
-    id: 'giresun_eah',
-    name: 'Giresun Eğitim ve Araştırma Hastanesi',
-    city: 'Giresun',
-    district: 'Merkez',
-    type: 'Eğitim ve Araştırma',
+    id: 'tokat_zile',
+    name: 'Tokat Zile Devlet Hastanesi',
+    city: 'Tokat',
+    district: 'Zile',
+    type: 'Devlet Hastanesi',
     imageUrl: 'https://images.unsplash.com/photo-1516549655169-df83a0774514?auto=format&fit=crop&w=800&q=80',
-    kpss2024: 82.70,
-    kpss2025: 82.20,
-    workLoad: '8 / 10',
-    incentive: '8.000 TL - 11.000 TL',
-    shift: '08:00 - 08:00 (24 saat nöbet)',
-    rentRange: '13.000 TL - 18.000 TL',
-    surveyReviews: [
-      'Deniz kenarında konumlanmış modern bina. İl genelinin yükünü sırtlar.',
-      'Şehir güvenli, insanları sıcakkanlı.'
-    ],
-    webReviews: [
-      'Karadeniz sahil yolunda yer alır, dolmuşlarla merkeze 10 dakika.'
-    ],
+    kpss2024: 82.40,
+    kpss2025: 82.00,
+    workLoad: '5 / 10',
+    incentive: '5.500 TL - 8.500 TL',
+    shift: '24 Saat Nöbet & Blok Dinlenme',
+    rentRange: '8.000 TL - 12.000 TL',
+    surveyReviews: ['Huzurlu, sakin bir ilçe. Nöbet günleri dışında uzun boşluklar verilebiliyor.'],
+    webReviews: ['Tarihi ilçe, yerel halk saygılı, yaşam giderleri çok düşük.'],
   ),
   Hospital(
-    id: 'ordu_eah',
-    name: 'Ordu Eğitim ve Araştırma Hastanesi',
-    city: 'Ordu',
-    district: 'Altınordu',
-    type: 'Eğitim ve Araştırma',
+    id: 'tokat_turhal',
+    name: 'Tokat Turhal Devlet Hastanesi',
+    city: 'Tokat',
+    district: 'Turhal',
+    type: 'Devlet Hastanesi',
+    imageUrl: 'https://images.unsplash.com/photo-1587351021759-3e566b6af7cc?auto=format&fit=crop&w=800&q=80',
+    kpss2024: 82.50,
+    kpss2025: 82.10,
+    workLoad: '5 / 10',
+    incentive: '6.000 TL - 9.000 TL',
+    shift: '24 Saat Nöbet',
+    rentRange: '9.000 TL - 13.000 TL',
+    surveyReviews: ['Merkeze çok yakın (20 dk), iş yükü dengeli.'],
+    webReviews: ['Ulaşım dolmuşlarla sürekli var.'],
+  ),
+  Hospital(
+    id: 'tokat_niksar',
+    name: 'Tokat Niksar Devlet Hastanesi',
+    city: 'Tokat',
+    district: 'Niksar',
+    type: 'Devlet Hastanesi',
     imageUrl: 'https://images.unsplash.com/photo-1519494026892-80bbd2d6fd0d?auto=format&fit=crop&w=800&q=80',
-    kpss2024: 83.35,
-    kpss2025: 82.90,
-    workLoad: '8 / 10',
-    incentive: '8.500 TL - 12.000 TL',
-    shift: '08:00 - 08:00 (24 saat nöbet)',
-    rentRange: '14.000 TL - 20.000 TL',
-    surveyReviews: [
-      'Altınordu merkezinde sahil kordonuna yakın, şehir hayatı çok canlı.',
-      'Servislerde sirkülasyon var ancak ekip dayanışması yüksek.'
-    ],
-    webReviews: [
-      'Yeni şehir hastanesi projesi de sürdüğü için sağlık altyapısı hızla gelişen bir il.'
-    ],
+    kpss2024: 82.30,
+    kpss2025: 81.90,
+    workLoad: '5 / 10',
+    incentive: '5.000 TL - 8.000 TL',
+    shift: '24 Saat Nöbet',
+    rentRange: '8.500 TL - 12.500 TL',
+    surveyReviews: ['Yeşillikler içinde sakin bir ilçe. İş stresi minimum.'],
+    webReviews: ['Ekonomik ve samimi bir ilçe.'],
   ),
 
-  // --- ANKARA & İÇ ANADOLU ---
+  // --- ANKARA ---
   Hospital(
     id: 'ankara_bilkent',
     name: 'Ankara Bilkent Şehir Hastanesi',
@@ -296,13 +251,8 @@ final List<Hospital> initialHospitals = [
     incentive: '12.000 TL - 15.000 TL',
     shift: '08:00 - 08:00 & 16-8',
     rentRange: '25.000 TL - 35.000 TL',
-    surveyReviews: [
-      'Devasa bir sağlık kenti. Her türlü ileri seviye cerrahi ve yoğun bakım vakası gelir.',
-      'Sistem işi ve evrak prosedürleri titizlikle denetlenir.'
-    ],
-    webReviews: [
-      'Metroya direkt ring otobüsleri var. Genç sağlık personeli nüfusu çok yoğun.'
-    ],
+    surveyReviews: ['Devasa bir sağlık kenti. Her türlü ileri cerrahi ve yoğun bakım vakası gelir.'],
+    webReviews: ['Metro ring otobüsleri var. Genç personel nüfusu çok yoğun.'],
   ),
   Hospital(
     id: 'ankara_etlik',
@@ -315,15 +265,10 @@ final List<Hospital> initialHospitals = [
     kpss2025: 83.25,
     workLoad: '8 / 10',
     incentive: '11.000 TL - 14.000 TL',
-    shift: '08:00 - 08:00 (24 saat nöbet)',
+    shift: '08:00 - 08:00 (24 saat)',
     rentRange: '20.000 TL - 28.000 TL',
-    surveyReviews: [
-      'Bina yeni ve ferah. Malzeme sıkıntısı yaşanmıyor.',
-      'Keçiören ve Yenimahalle aksında ev bulma şansı yüksek.'
-    ],
-    webReviews: [
-      'Teşvik ödemeleri düzenli, acil serviste mentör-mentee oryantasyon sistemi uygulanıyor.'
-    ],
+    surveyReviews: ['Bina yeni ve ferah. Malzeme sıkıntısı yaşanmıyor.'],
+    webReviews: ['Teşvik ödemeleri düzenli, acilde mentörlük sistemi var.'],
   ),
   Hospital(
     id: 'ankara_gulhane',
@@ -338,79 +283,43 @@ final List<Hospital> initialHospitals = [
     incentive: '9.000 TL - 13.000 TL',
     shift: '08:00 - 08:00 & 16-8',
     rentRange: '20.000 TL - 26.000 TL',
-    surveyReviews: [
-      'Geniş ormanlık kampüsü var. Kurumsal kültürü ve disiplini çok köklü.',
-      'Şehir hastanelerine göre daha kompakt ve derli toplu bir düzen var.'
-    ],
-    webReviews: [
-      'Etlik ve Keçiören metro/otobüs hatlarının kesişim noktasında.'
-    ],
+    surveyReviews: ['Geniş ormanlık kampüsü var. Kurumsal kültürü ve disiplini köklü.'],
+    webReviews: ['Şehir hastanelerine kıyasla daha derli toplu ve oturmuş bir yerleşke.'],
   ),
   Hospital(
-    id: 'eskisehir_sehir',
-    name: 'Eskişehir Şehir Hastanesi',
-    city: 'Eskişehir',
-    district: 'Odunpazarı',
-    type: 'Şehir Hastanesi',
+    id: 'ankara_sincan_eah',
+    name: 'Ankara Sincan EAH',
+    city: 'Ankara',
+    district: 'Sincan',
+    type: 'Eğitim ve Araştırma',
     imageUrl: 'https://images.unsplash.com/photo-1587351021759-3e566b6af7cc?auto=format&fit=crop&w=800&q=80',
-    kpss2024: 83.70,
-    kpss2025: 83.10,
-    workLoad: '7 / 10',
-    incentive: '8.000 TL - 11.000 TL',
-    shift: '08:00 - 08:00 (24 saat nöbet)',
-    rentRange: '14.000 TL - 20.000 TL',
-    surveyReviews: [
-      'Tramvay hattı hastanenin kapısına kadar geliyor. Şehir içi ulaşım mükemmel.',
-      'Eskişehir sosyal imkanlar ve genç yaşamı açısından Türkiye’nin en keyifli illerinden.'
-    ],
-    webReviews: [
-      'Şehir hastaneleri arasında hemşire memnuniyeti en yüksek kurumlardan biri.'
-    ],
+    kpss2024: 83.40,
+    kpss2025: 82.95,
+    workLoad: '8 / 10',
+    incentive: '9.000 TL - 12.000 TL',
+    shift: '08:00 - 08:00 & 3 Vardiya',
+    rentRange: '15.000 TL - 20.000 TL',
+    surveyReviews: ['Bölge nüfusuna göre acili hareketli, dinamik ortam sevenler için iyi.'],
+    webReviews: ['Sincan tarafında kiralar Çankaya ve Yenimahalle’ye göre çok daha uygun.'],
   ),
   Hospital(
-    id: 'kayseri_sehir',
-    name: 'Kayseri Şehir Hastanesi',
-    city: 'Kayseri',
-    district: 'Kocasinan',
-    type: 'Şehir Hastanesi',
-    imageUrl: 'https://images.unsplash.com/photo-1538108149393-fbbd81895907?auto=format&fit=crop&w=800&q=80',
-    kpss2024: 83.10,
-    kpss2025: 82.60,
-    workLoad: '8 / 10',
-    incentive: '10.000 TL - 14.000 TL',
-    shift: '08:00 - 08:00 (24 saat nöbet)',
-    rentRange: '13.000 TL - 19.000 TL',
-    surveyReviews: [
-      'Kampüs geniş ve teknolojik altyapısı çok kuvvetli.',
-      'Tramvay bağlantısı var, şehir merkezine ulaşım konforlu.'
-    ],
-    webReviews: [
-      'İç Anadolu’nun sanayi ve ticaret merkezinde, yaşam masrafları dengeli.'
-    ],
-  ),
-  Hospital(
-    id: 'konya_sehir',
-    name: 'Konya Şehir Hastanesi',
-    city: 'Konya',
-    district: 'Karatay',
-    type: 'Şehir Hastanesi',
-    imageUrl: 'https://images.unsplash.com/photo-1586773860418-d37222d8fce3?auto=format&fit=crop&w=800&q=80',
-    kpss2024: 83.25,
-    kpss2025: 82.75,
-    workLoad: '8 / 10',
-    incentive: '10.000 TL - 14.500 TL',
-    shift: '08:00 - 08:00 (24 saat nöbet)',
-    rentRange: '13.000 TL - 18.000 TL',
-    surveyReviews: [
-      'Geniş poliklinik ve yatak kapasitesi var. Çevre ilçelerden sevk yoğundur.',
-      'Tramvay ve otobüs hatlarıyla entegre ulaşım.'
-    ],
-    webReviews: [
-      'Geniş ve düzenli şehir planı, uygun ev kiraları sunar.'
-    ],
+    id: 'ankara_etimesgut',
+    name: 'Ankara Etimesgut Şehit Sait Ertürk DH',
+    city: 'Ankara',
+    district: 'Etimesgut',
+    type: 'Devlet Hastanesi',
+    imageUrl: 'https://images.unsplash.com/photo-1505751172876-fa1923c5c528?auto=format&fit=crop&w=800&q=80',
+    kpss2024: 83.60,
+    kpss2025: 83.15,
+    workLoad: '6 / 10',
+    incentive: '7.500 TL - 10.000 TL',
+    shift: '24 Saat Nöbet & 16-8',
+    rentRange: '18.000 TL - 24.000 TL',
+    surveyReviews: ['Ulaşımı rahat, Eryaman ve Etimesgut bölgesinde oturulabilir.'],
+    webReviews: ['Kendi halinde, ikinci basamak hastane arayanlar için dengeli tercih.'],
   ),
 
-  // --- İSTANBUL & MARMARA ---
+  // --- İSTANBUL ---
   Hospital(
     id: 'basaksehir_cam_sakura',
     name: 'Başakşehir Çam ve Sakura Şehir Hastanesi',
@@ -424,13 +333,8 @@ final List<Hospital> initialHospitals = [
     incentive: '12.000 TL - 15.000 TL',
     shift: '08:00 - 08:00 & 8-16/16-08',
     rentRange: '25.000 TL - 32.000 TL',
-    surveyReviews: [
-      'Kağıtsız hastane; tüm ilaçlar hasta bileklik barkoduyla eşleştirilerek uygulanıyor.',
-      'İş temposu yüksek fakat metro istasyonu doğrudan hastanenin altına çıkıyor.'
-    ],
-    webReviews: [
-      'Kısa sürede üst düzey klinik ve cerrahi deneyim kazandırır. Teşvikler yüksektir.'
-    ],
+    surveyReviews: ['Kağıtsız hastane altyapısı var. Metro istasyonu kampüsün içine giriyor.'],
+    webReviews: ['Kısa sürede yoğun klinik deneyim kazandırır. Teşvik ve nöbet ücretleri yüksek.'],
   ),
   Hospital(
     id: 'istanbul_bagcilar',
@@ -445,13 +349,8 @@ final List<Hospital> initialHospitals = [
     incentive: '9.000 TL - 12.000 TL',
     shift: '08:00 - 08:00 & 16-8',
     rentRange: '18.000 TL - 24.000 TL',
-    surveyReviews: [
-      'Metro ve tramvay bağlantısı çok rahat. Vaka yoğunluğu yüksek.',
-      'Nöbet sayıları adil dağıtılıyor.'
-    ],
-    webReviews: [
-      'İstanbul içi merkezi ulaşımı olan ve teşvikleri stabil yatan kurumlardan biri.'
-    ],
+    surveyReviews: ['Metro ve tramvay bağlantısı çok rahat. Vaka yoğunluğu yüksek.'],
+    webReviews: ['İstanbul içinde merkezi ulaşımı olan ve teşvikleri stabil yatan kurumlardan biri.'],
   ),
   Hospital(
     id: 'istanbul_sadi_konuk',
@@ -466,58 +365,59 @@ final List<Hospital> initialHospitals = [
     incentive: '9.500 TL - 13.000 TL',
     shift: '08:00 - 08:00 (24 saat nöbet)',
     rentRange: '25.000 TL - 35.000 TL',
-    surveyReviews: [
-      'E-5 karayolunun bitişiğinde, metrobüs ve metro durağına yürüme mesafesinde.',
-      'İstanbul’un en köklü ve en yoğun acillerinden biri.'
-    ],
-    webReviews: [
-      'Lokasyon avantajı çok yüksek, çevre semtlerde sosyal imkanlar sınırsız.'
-    ],
+    surveyReviews: ['Metrobüs ve metro durağına yürüme mesafesinde.'],
+    webReviews: ['Lokasyon avantajı çok yüksek, çevre semtlerde sosyal imkanlar sınırsız.'],
   ),
   Hospital(
-    id: 'bursa_sehir',
-    name: 'Bursa Şehir Hastanesi',
-    city: 'Bursa',
-    district: 'Nilüfer',
-    type: 'Şehir Hastanesi',
-    imageUrl: 'https://images.unsplash.com/photo-1586773860418-d37222d8fce3?auto=format&fit=crop&w=800&q=80',
-    kpss2024: 83.15,
-    kpss2025: 82.60,
-    workLoad: '7 / 10',
-    incentive: '12.000 TL - 15.000 TL',
-    shift: '08:00 - 08:00 (24 saat nöbet)',
-    rentRange: '16.000 TL - 22.000 TL',
-    surveyReviews: [
-      'Yemekhane ve yardımcı personel hizmetleri şirket eliyle düzenli yürütülüyor.',
-      'Bölge hastanesi olduğu için yoğunluk var ancak nöbetler sonrası 3-4 gün blok izin alınabiliyor.'
-    ],
-    webReviews: [
-      'Nilüfer ilçesi sosyal imkanları ve genç nüfusuyla yaşam kalitesi açısından çok avantajlı.'
-    ],
-  ),
-  Hospital(
-    id: 'kocaeli_sehir',
-    name: 'Kocaeli Şehir Hastanesi',
-    city: 'Kocaeli',
-    district: 'İzmit',
+    id: 'istanbul_kartal_sehir',
+    name: 'Kartal Dr. Lütfi Kırdar Şehir Hastanesi',
+    city: 'İstanbul',
+    district: 'Kartal',
     type: 'Şehir Hastanesi',
     imageUrl: 'https://images.unsplash.com/photo-1587351021759-3e566b6af7cc?auto=format&fit=crop&w=800&q=80',
-    kpss2024: 82.80,
-    kpss2025: 82.30,
+    kpss2024: 80.90,
+    kpss2025: 80.40,
     workLoad: '8 / 10',
+    incentive: '11.000 TL - 14.000 TL',
+    shift: '08:00 - 08:00 (24 saat nöbet)',
+    rentRange: '22.000 TL - 30.000 TL',
+    surveyReviews: ['Anadolu Yakası’nın ana merkezlerinden. Metro direkt önünden geçiyor.'],
+    webReviews: ['Depreme dayanıklı sismik izolatörlü bina, modern çalışma şartları.'],
+  ),
+  Hospital(
+    id: 'istanbul_goztepe_sehir',
+    name: 'Göztepe Prof. Dr. Süleyman Yalçın Şehir H.',
+    city: 'İstanbul',
+    district: 'Kadıköy',
+    type: 'Şehir Hastanesi',
+    imageUrl: 'https://images.unsplash.com/photo-1586773860418-d37222d8fce3?auto=format&fit=crop&w=800&q=80',
+    kpss2024: 81.80,
+    kpss2025: 81.30,
+    workLoad: '8 / 10',
+    incentive: '11.500 TL - 14.500 TL',
+    shift: '08:00 - 08:00 (24 saat nöbet)',
+    rentRange: '28.000 TL - 40.000 TL',
+    surveyReviews: ['Kadıköy Göztepe’de merkezi konum, sosyal hayatın merkezinde.'],
+    webReviews: ['Marmaray ve metroya yakın, Anadolu yakasının en popüler hastanesi.'],
+  ),
+  Hospital(
+    id: 'istanbul_cemil_tascıoglu',
+    name: 'Okmeydanı Prof. Dr. Cemil Taşcıoğlu Şehir H.',
+    city: 'İstanbul',
+    district: 'Şişli',
+    type: 'Şehir Hastanesi',
+    imageUrl: 'https://images.unsplash.com/photo-1538108149393-fbbd81895907?auto=format&fit=crop&w=800&q=80',
+    kpss2024: 80.70,
+    kpss2025: 80.15,
+    workLoad: '9 / 10',
     incentive: '11.000 TL - 14.500 TL',
     shift: '08:00 - 08:00 (24 saat nöbet)',
-    rentRange: '16.000 TL - 22.000 TL',
-    surveyReviews: [
-      'Tramvay hattı hastaneye kadar uzatıldı, ulaşım çok rahatladı.',
-      'Bölgenin sanayi ve trafik kazaları dahil en büyük travma merkezi.'
-    ],
-    webReviews: [
-      'İstanbul’a 1 saat mesafede, hayat Marmara standartlarına göre daha ekonomik.'
-    ],
+    rentRange: '24.000 TL - 33.000 TL',
+    surveyReviews: ['Metrobüs hattının tam üstünde, Avrupa yakasının kalbinde.'],
+    webReviews: ['Vaka sayısı ve klinik çeşitliliği en yüksek şehir hastanelerinden biri.'],
   ),
 
-  // --- EGE & AKDENİZ ---
+  // --- İZMİR & EGE ---
   Hospital(
     id: 'izmir_sehir',
     name: 'İzmir Şehir Hastanesi',
@@ -531,14 +431,141 @@ final List<Hospital> initialHospitals = [
     incentive: '12.000 TL - 16.000 TL',
     shift: '08:00 - 08:00 (24 saat nöbet)',
     rentRange: '22.000 TL - 30.000 TL',
-    surveyReviews: [
-      'Ege Bölgesi’nin en büyük kompleksi. Bina manzarası ve standartları çok yüksek.',
-      'Bayraklı sırtlarında; ring otobüsleri ve personel servisleri düzenli işliyor.'
-    ],
-    webReviews: [
-      'Sosyal imkanları sınırsız, teşvik performansı bölgenin en iyilerinden.'
-    ],
+    surveyReviews: ['Ege Bölgesi’nin en büyük tesisi. Manzarası ve bina standartları yüksek.'],
+    webReviews: ['Ring otobüsleri ve personel servisleri düzenli, teşvik performansı iyi.'],
   ),
+  Hospital(
+    id: 'izmir_ataturk_eah',
+    name: 'İzmir Atatürk Eğitim ve Araştırma Hastanesi',
+    city: 'İzmir',
+    district: 'Karabağlar',
+    type: 'Eğitim ve Araştırma',
+    imageUrl: 'https://images.unsplash.com/photo-1519494026892-80bbd2d6fd0d?auto=format&fit=crop&w=800&q=80',
+    kpss2024: 83.75,
+    kpss2025: 83.25,
+    workLoad: '8 / 10',
+    incentive: '9.000 TL - 13.000 TL',
+    shift: '08:00 - 08:00 (24 saat nöbet)',
+    rentRange: '20.000 TL - 27.000 TL',
+    surveyReviews: ['İzmir’in en köklü sağlık kuruluşu (Yeşilyurt Devlet).'],
+    webReviews: ['Metronun hemen yanında, İzmir içi ulaşım son derece pratik.'],
+  ),
+  Hospital(
+    id: 'izmir_tepecik_eah',
+    name: 'İzmir Tepecik Eğitim ve Araştırma Hastanesi',
+    city: 'İzmir',
+    district: 'Konak',
+    type: 'Eğitim ve Araştırma',
+    imageUrl: 'https://images.unsplash.com/photo-1516549655169-df83a0774514?auto=format&fit=crop&w=800&q=80',
+    kpss2024: 83.10,
+    kpss2025: 82.60,
+    workLoad: '9 / 10',
+    incentive: '9.500 TL - 13.500 TL',
+    shift: '08:00 - 08:00 (24 saat nöbet)',
+    rentRange: '18.000 TL - 25.000 TL',
+    surveyReviews: ['Çok hareketli ve yoğun bir acil/çocuk kliniği var. Mesleki tecrübe kazandırır.'],
+    webReviews: ['Konak ve Alsancak’a çok yakın, ulaşım ağı mükemmel.'],
+  ),
+  Hospital(
+    id: 'aydin_ataturk',
+    name: 'Aydın Atatürk Devlet Hastanesi',
+    city: 'Aydın',
+    district: 'Efeler',
+    type: 'Devlet Hastanesi',
+    imageUrl: 'https://images.unsplash.com/photo-1505751172876-fa1923c5c528?auto=format&fit=crop&w=800&q=80',
+    kpss2024: 83.20,
+    kpss2025: 82.70,
+    workLoad: '6 / 10',
+    incentive: '6.000 TL - 9.000 TL',
+    shift: '08:00 - 08:00 (24 saat nöbet)',
+    rentRange: '15.000 TL - 22.000 TL',
+    surveyReviews: ['İş yükü dengeli, şehir sakin, İzmir ve sahillere ulaşım çok yakın.'],
+    webReviews: ['Ege’nin huzurlu ve ılıman ikliminde görev yapmak isteyenler için harika bir yer.'],
+  ),
+
+  // --- BURSA & BALIKESİR & ESKİŞEHİR ---
+  Hospital(
+    id: 'bursa_sehir',
+    name: 'Bursa Şehir Hastanesi',
+    city: 'Bursa',
+    district: 'Nilüfer',
+    type: 'Şehir Hastanesi',
+    imageUrl: 'https://images.unsplash.com/photo-1586773860418-d37222d8fce3?auto=format&fit=crop&w=800&q=80',
+    kpss2024: 83.15,
+    kpss2025: 82.60,
+    workLoad: '7 / 10',
+    incentive: '12.000 TL - 15.000 TL',
+    shift: '08:00 - 08:00 (24 saat nöbet)',
+    rentRange: '16.000 TL - 22.000 TL',
+    surveyReviews: ['Yemekhane ve temizlik hizmetleri düzenli. Personel servisi mevcut.'],
+    webReviews: ['Nilüfer ilçesi sosyal ve genç nüfusuyla yaşam kalitesi açısından çok avantajlı.'],
+  ),
+  Hospital(
+    id: 'bursa_yuksek_ihtisas',
+    name: 'Bursa Yüksek İhtisas EAH',
+    city: 'Bursa',
+    district: 'Yıldırım',
+    type: 'Eğitim ve Araştırma',
+    imageUrl: 'https://images.unsplash.com/photo-1579684385127-1ef15d508118?auto=format&fit=crop&w=800&q=80',
+    kpss2024: 82.95,
+    kpss2025: 82.45,
+    workLoad: '9 / 10',
+    incentive: '8.500 TL - 12.000 TL',
+    shift: '08:00 - 08:00 & 16-8',
+    rentRange: '15.000 TL - 20.000 TL',
+    surveyReviews: ['Metro durağının hemen önünde. Vaka sayısı çok yüksek köklü bir hastane.'],
+    webReviews: ['Bursa içi her noktadan kolay ulaşılabilir lokasyonda.'],
+  ),
+  Hospital(
+    id: 'balikesir_devlet',
+    name: 'Balıkesir Devlet Hastanesi',
+    city: 'Balıkesir',
+    district: 'Karesi',
+    type: 'Devlet Hastanesi',
+    imageUrl: 'https://images.unsplash.com/photo-1516549655169-df83a0774514?auto=format&fit=crop&w=800&q=80',
+    kpss2024: 83.00,
+    kpss2025: 82.55,
+    workLoad: '6 / 10',
+    incentive: '6.000 TL - 9.000 TL',
+    shift: '08:00 - 08:00 (24 saat nöbet)',
+    rentRange: '14.000 TL - 19.000 TL',
+    surveyReviews: ['Şehir merkezinde, sakin ve yürüyüş mesafesinde hayat.'],
+    webReviews: ['Ege ve Marmara kavşağında huzurlu bir şehir.'],
+  ),
+  Hospital(
+    id: 'eskisehir_sehir',
+    name: 'Eskişehir Şehir Hastanesi',
+    city: 'Eskişehir',
+    district: 'Odunpazarı',
+    type: 'Şehir Hastanesi',
+    imageUrl: 'https://images.unsplash.com/photo-1519494026892-80bbd2d6fd0d?auto=format&fit=crop&w=800&q=80',
+    kpss2024: 83.70,
+    kpss2025: 83.10,
+    workLoad: '7 / 10',
+    incentive: '8.000 TL - 11.000 TL',
+    shift: '08:00 - 08:00 (24 saat nöbet)',
+    rentRange: '14.000 TL - 20.000 TL',
+    surveyReviews: ['Tramvay kapısına kadar gelir. Şehir içi ulaşım mükemmel.'],
+    webReviews: ['Sosyal imkanlar ve genç yaşamı açısından en çok önerilen yerlerden biri.'],
+  ),
+  Hospital(
+    id: 'eskisehir_yunus_emre',
+    name: 'Eskişehir Yunus Emre Devlet Hastanesi',
+    city: 'Eskişehir',
+    district: 'Tepebaşı',
+    type: 'Devlet Hastanesi',
+    imageUrl: 'https://images.unsplash.com/photo-1505751172876-fa1923c5c528?auto=format&fit=crop&w=800&q=80',
+    kpss2024: 83.85,
+    kpss2025: 83.30,
+    workLoad: '7 / 10',
+    incentive: '7.500 TL - 10.500 TL',
+    shift: '08:00 - 08:00 (24 saat nöbet)',
+    rentRange: '15.000 TL - 22.000 TL',
+    surveyReviews: ['Tepebaşı ilçesinde, Bağlar ve üniversite bölgesine çok yakın.'],
+    webReviews: ['Eskişehir’in en köklü ve sevilen devlet hastanesi.'],
+  ),
+
+  // --- AKDENİZ & GÜNEY ---
   Hospital(
     id: 'antalya_sehir',
     name: 'Antalya Şehir Hastanesi',
@@ -552,13 +579,24 @@ final List<Hospital> initialHospitals = [
     incentive: '10.000 TL - 13.000 TL',
     shift: '08:00 - 08:00 (24 saat nöbet)',
     rentRange: '18.000 TL - 25.000 TL',
-    surveyReviews: [
-      'Yeni tesis olduğu için ortam ferah ve cihazlar son teknoloji.',
-      'Personel kadrosu tamamlandıkça nöbet yükü rahat bir sisteme kavuşuyor.'
-    ],
-    webReviews: [
-      'Tramvay bağlantısı mevcut, Akdeniz iklimi ve sosyal olanaklar için çok tercih ediliyor.'
-    ],
+    surveyReviews: ['Yeni tesis, ortam ferah ve cihazlar son model.'],
+    webReviews: ['Tramvay bağlantısı var, Antalya genelinde yaşamak isteyenler için popüler.'],
+  ),
+  Hospital(
+    id: 'antalya_eah',
+    name: 'Antalya Eğitim ve Araştırma Hastanesi',
+    city: 'Antalya',
+    district: 'Muratpaşa',
+    type: 'Eğitim ve Araştırma',
+    imageUrl: 'https://images.unsplash.com/photo-1587351021759-3e566b6af7cc?auto=format&fit=crop&w=800&q=80',
+    kpss2024: 83.60,
+    kpss2025: 83.15,
+    workLoad: '8 / 10',
+    incentive: '10.000 TL - 14.000 TL',
+    shift: '08:00 - 08:00 (24 saat nöbet)',
+    rentRange: '20.000 TL - 28.000 TL',
+    surveyReviews: ['Muratpaşa merkezde, denize ve şehir merkezine çok yakın.'],
+    webReviews: ['Vaka çeşitliliği zengin, sosyal hayat çok renkli.'],
   ),
   Hospital(
     id: 'adana_sehir',
@@ -573,13 +611,24 @@ final List<Hospital> initialHospitals = [
     incentive: '11.000 TL - 13.000 TL',
     shift: '24 Saat Nöbet & 16-08',
     rentRange: '15.000 TL - 20.000 TL',
-    surveyReviews: [
-      'Bölgenin ana referans hastanesi. Hasta yoğunluğu yüksek ama kurumsal düzen oturmuş.',
-      'Yemek ve taşıma personeli şirkete bağlı, hemşirelik dışı angaryalar az.'
-    ],
-    webReviews: [
-      'Teşvik ödemeleri bölge ortalamasına göre gayet yüksek ve düzenli yatıyor.'
-    ],
+    surveyReviews: ['Bölgenin ana referans hastanesi. Düzen ve sistem oturmuş.'],
+    webReviews: ['Teşvik ödemeleri bölge ortalamasına göre gayet yüksek ve düzenli.'],
+  ),
+  Hospital(
+    id: 'adana_seyhan',
+    name: 'Adana Seyhan Devlet Hastanesi',
+    city: 'Adana',
+    district: 'Seyhan',
+    type: 'Devlet Hastanesi',
+    imageUrl: 'https://images.unsplash.com/photo-1516549655169-df83a0774514?auto=format&fit=crop&w=800&q=80',
+    kpss2024: 82.95,
+    kpss2025: 82.50,
+    workLoad: '6 / 10',
+    incentive: '6.000 TL - 9.000 TL',
+    shift: '08:00 - 08:00 (24 saat nöbet)',
+    rentRange: '14.000 TL - 19.000 TL',
+    surveyReviews: ['Hastane çok merkezi konumda. Dışarıdan atanacaklar için ulaşım kolay.'],
+    webReviews: ['İkinci basamak olduğu için daha esnek ve rahat bir ortam.'],
   ),
   Hospital(
     id: 'mersin_sehir',
@@ -594,37 +643,27 @@ final List<Hospital> initialHospitals = [
     incentive: '10.500 TL - 14.000 TL',
     shift: '08:00 - 08:00 (24 saat nöbet)',
     rentRange: '15.000 TL - 21.000 TL',
-    surveyReviews: [
-      'Türkiye’nin ilk açılan şehir hastanelerinden biri; düzeni ve işleyişi tamamen oturmuş.',
-      'Hastanenin fiziki şartları ve yemekhanesi oldukça başarılı.'
-    ],
-    webReviews: [
-      'Akdeniz sahil şeridi, sosyal imkanlar ve uygun fiyatlı narenciye/gıda avantajı.'
-    ],
+    surveyReviews: ['İşleyişi tamamen oturmuş, yemek ve temizlik hizmetleri aksamaz.'],
+    webReviews: ['Akdeniz sahil kenti, uygun yaşam masrafları.'],
+  ),
+  Hospital(
+    id: 'hatay_dortyol',
+    name: 'Hatay Dörtyol Devlet Hastanesi',
+    city: 'Hatay',
+    district: 'Dörtyol',
+    type: 'Devlet Hastanesi',
+    imageUrl: 'https://images.unsplash.com/photo-1505751172876-fa1923c5c528?auto=format&fit=crop&w=800&q=80',
+    kpss2024: 82.10,
+    kpss2025: 81.65,
+    workLoad: '6 / 10',
+    incentive: '6.000 TL - 9.000 TL',
+    shift: '24 Saat Nöbet Usulü',
+    rentRange: '12.000 TL - 17.000 TL',
+    surveyReviews: ['Yeni yapılan sağlam bina, çalışma ortamı samimi.'],
+    webReviews: ['Denize yakın, Adana ve İskenderun’a ulaşım kolay.'],
   ),
 
-  // --- DOĞU & GÜNEYDOĞU ---
-  Hospital(
-    id: 'diyarbakir_gazi_yasargil',
-    name: 'Diyarbakır Gazi Yaşargil EAH',
-    city: 'Diyarbakır',
-    district: 'Yenişehir',
-    type: 'Eğitim ve Araştırma',
-    imageUrl: 'https://images.unsplash.com/photo-1519494026892-80bbd2d6fd0d?auto=format&fit=crop&w=800&q=80',
-    kpss2024: 82.30,
-    kpss2025: 81.70,
-    workLoad: '9 / 10',
-    incentive: '9.000 TL - 13.000 TL',
-    shift: '08:00 - 08:00 (24 saat nöbet)',
-    rentRange: '12.000 TL - 17.000 TL',
-    surveyReviews: [
-      'Güneydoğu Anadolu’nun en büyük sağlık merkezlerinden. Çok yoğun ama çok tecrübe kazandırır.',
-      'Ulaşım ağı dolmuşlarla gayet pratik.'
-    ],
-    webReviews: [
-      'Hizmet puanı yüksek; batıya tayin istemeyi planlayanlar için büyük puan avantajı sağlar.'
-    ],
-  ),
+  // --- DOĞU & GÜNEYDOĞU & DİĞER ---
   Hospital(
     id: 'erzurum_sehir',
     name: 'Erzurum Şehir Hastanesi',
@@ -638,13 +677,8 @@ final List<Hospital> initialHospitals = [
     incentive: '10.000 TL - 14.000 TL',
     shift: '08:00 - 08:00 (24 saat nöbet)',
     rentRange: '13.000 TL - 18.000 TL',
-    surveyReviews: [
-      'Kış aylarında kampüs içi ısıtma ve tüp geçitler çok iyi dizayn edilmiş.',
-      'Doğu Anadolu genelinden sevk alan bölgesel ana merkez.'
-    ],
-    webReviews: [
-      'Teşvikleri düzenli ve yüksek. Kış sporları ve doğa sevenler için cazip.'
-    ],
+    surveyReviews: ['Kışın kampüs içi ısıtma ve tüp geçitler çok iyi planlanmış.'],
+    webReviews: ['Doğu Anadolu genelinden sevk alan bölgesel ana merkez.'],
   ),
   Hospital(
     id: 'gaziantep_sehir',
@@ -659,13 +693,24 @@ final List<Hospital> initialHospitals = [
     incentive: '11.000 TL - 15.000 TL',
     shift: '08:00 - 08:00 (24 saat nöbet)',
     rentRange: '16.000 TL - 22.000 TL',
-    surveyReviews: [
-      'Yeni açılan dev kompleks. Tramvay hattı doğrudan hastaneye kadar geliyor.',
-      'Hasta sirkülasyonu yüksek, ameliyathane ve yoğun bakım birimleri çok dinamik.'
-    ],
-    webReviews: [
-      'Gaziantep gastronomi ve sanayi kenti, sosyal hayat hareketli.'
-    ],
+    surveyReviews: ['Yeni açılan dev kompleks. Tramvay doğrudan hastaneye kadar geliyor.'],
+    webReviews: ['Gaziantep gastronomi ve canlı şehir hayatına sahip.'],
+  ),
+  Hospital(
+    id: 'diyarbakir_gazi_yasargil',
+    name: 'Diyarbakır Gazi Yaşargil EAH',
+    city: 'Diyarbakır',
+    district: 'Yenişehir',
+    type: 'Eğitim ve Araştırma',
+    imageUrl: 'https://images.unsplash.com/photo-1519494026892-80bbd2d6fd0d?auto=format&fit=crop&w=800&q=80',
+    kpss2024: 82.30,
+    kpss2025: 81.70,
+    workLoad: '9 / 10',
+    incentive: '9.000 TL - 13.000 TL',
+    shift: '08:00 - 08:00 (24 saat nöbet)',
+    rentRange: '12.000 TL - 17.000 TL',
+    surveyReviews: ['Güneydoğu’nun en büyük hastanesi. Çok vaka görürsünüz.'],
+    webReviews: ['Hizmet puanı yüksek; gelecekte batıya tayin için büyük avantaj.'],
   ),
   Hospital(
     id: 'van_eah',
@@ -680,17 +725,44 @@ final List<Hospital> initialHospitals = [
     incentive: '9.000 TL - 12.500 TL',
     shift: '08:00 - 08:00 (24 saat nöbet)',
     rentRange: '11.000 TL - 16.000 TL',
-    surveyReviews: [
-      'Van Gölü kıyısında, manzarası ve hava kalitesi çok ferah bir yerleşkede.',
-      'Bölgenin tek 3. basamak referans hastanesi olduğu için çevre illerden sevk alır.'
-    ],
-    webReviews: [
-      'Edremit konutları hastaneye çok yakın, yaşam maliyetleri Doğu standartlarında uygundur.'
-    ],
+    surveyReviews: ['Van Gölü kıyısında temiz hava, ferah yerleşke.'],
+    webReviews: ['Edremit konutları hastaneye çok yakın, yaşam maliyeti uygun.'],
+  ),
+  Hospital(
+    id: 'elazig_sehir',
+    name: 'Elazığ Fethi Sekin Şehir Hastanesi',
+    city: 'Elazığ',
+    district: 'Merkez',
+    type: 'Şehir Hastanesi',
+    imageUrl: 'https://images.unsplash.com/photo-1516549655169-df83a0774514?auto=format&fit=crop&w=800&q=80',
+    kpss2024: 82.50,
+    kpss2025: 82.05,
+    workLoad: '7 / 10',
+    incentive: '10.000 TL - 13.500 TL',
+    shift: '08:00 - 08:00 (24 saat nöbet)',
+    rentRange: '12.000 TL - 17.000 TL',
+    surveyReviews: ['Modern ve oturmuş bir hastane, çevre illerden sevk alır.'],
+    webReviews: ['Elazığ sakin ve güvenli bir şehir.'],
+  ),
+  Hospital(
+    id: 'sanliurfa_eah',
+    name: 'Şanlıurfa Eğitim ve Araştırma Hastanesi',
+    city: 'Şanlıurfa',
+    district: 'Eyyübiye',
+    type: 'Eğitim ve Araştırma',
+    imageUrl: 'https://images.unsplash.com/photo-1538108149393-fbbd81895907?auto=format&fit=crop&w=800&q=80',
+    kpss2024: 81.90,
+    kpss2025: 81.40,
+    workLoad: '9 / 10',
+    incentive: '9.000 TL - 13.000 TL',
+    shift: '08:00 - 08:00 (24 saat nöbet)',
+    rentRange: '11.000 TL - 16.000 TL',
+    surveyReviews: ['Doğum ve çocuk klinikleri Türkiye’nin en yoğunlarından biridir.'],
+    webReviews: ['Hizmet puanı çok yüksek, atama rotasyonlarında avantajlı.'],
   ),
 ];
 
-// ---------------- ANA SAYFA & NAVİGASYON ----------------
+// ---------------- EKRAN AKIŞI ----------------
 class MainNavigationScreen extends StatefulWidget {
   const MainNavigationScreen({super.key});
 
@@ -780,7 +852,7 @@ class _MainNavigationScreenState extends State<MainNavigationScreen> {
           const NavigationDestination(
             icon: Icon(Icons.local_hospital_outlined),
             selectedIcon: Icon(Icons.local_hospital, color: Color(0xFF0D9488)),
-            label: 'Hastaneler',
+            label: 'Tüm Hastaneler',
           ),
           NavigationDestination(
             icon: Badge(
@@ -801,7 +873,7 @@ class _MainNavigationScreenState extends State<MainNavigationScreen> {
   }
 }
 
-// ---------------- HASTANE LİSTE EKRANI ----------------
+// ---------------- LİSTELEME EKRANI ----------------
 class HospitalListScreen extends StatefulWidget {
   final List<String> favoriteIds;
   final Function(String) onToggleFavorite;
@@ -826,7 +898,7 @@ class _HospitalListScreenState extends State<HospitalListScreen> {
 
   @override
   Widget build(BuildContext context) {
-    final cities = ['Tümü', ...initialHospitals.map((h) => h.city).toSet()];
+    final cities = ['Tümü', ...initialHospitals.map((h) => h.city).toSet().toList()..sort()];
 
     final filtered = initialHospitals.where((h) {
       final matchesSearch = h.name.toLowerCase().contains(_searchQuery.toLowerCase()) ||
@@ -838,7 +910,7 @@ class _HospitalListScreenState extends State<HospitalListScreen> {
 
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Hemşire Tercih Rehberi (83 KPSS)'),
+        title: Text('Hemşire Tercih Rehberi (${initialHospitals.length} Kurum)'),
       ),
       body: Column(
         children: [
@@ -850,7 +922,7 @@ class _HospitalListScreenState extends State<HospitalListScreen> {
                 TextField(
                   onChanged: (val) => setState(() => _searchQuery = val),
                   decoration: InputDecoration(
-                    hintText: 'Hastane, il veya ilçe ara (örn: Samsun, Ankara)...',
+                    hintText: 'Hastane, il veya ilçe ara (örn: Samsun, Tokat, Şehir)...',
                     prefixIcon: const Icon(Icons.search),
                     filled: true,
                     fillColor: const Color(0xFFF1F5F9),
@@ -922,7 +994,7 @@ class _HospitalListScreenState extends State<HospitalListScreen> {
   }
 }
 
-// ---------------- SÜRÜKLE-BIRAK SIRALAMA EKRANI ----------------
+// ---------------- SÜRÜKLE-BIRAK EKRANI ----------------
 class PreferenceListScreen extends StatelessWidget {
   final List<String> favoriteIds;
   final Function(List<String>) onReorder;
@@ -966,7 +1038,7 @@ class PreferenceListScreen extends StatelessWidget {
                     ),
                     const SizedBox(height: 8),
                     const Text(
-                      'Hastaneler sekmesinden kalp butonuna basarak kurumları listenize ekleyebilir, ardından basılı tutarak 1., 2., 3. tercih sıranızı kolayca belirleyebilirsiniz.',
+                      'Hastaneler sekmesinden kalp butonuna basarak kurumları buraya ekleyebilir, ardından basılı tutup sürükleyerek 1., 2., 3. tercih sıranızı kolayca belirleyebilirsiniz.',
                       style: TextStyle(color: Colors.grey),
                       textAlign: TextAlign.center,
                     ),
@@ -1055,7 +1127,7 @@ class PreferenceListScreen extends StatelessWidget {
   }
 }
 
-// ---------------- GÜÇLENDİRİLMİŞ HASTANE KARTI ----------------
+// ---------------- HASTANE KARTI BİLEŞENİ (FOTOĞRAF GARANTİLİ) ----------------
 class HospitalCard extends StatelessWidget {
   final Hospital hospital;
   final bool isFavorite;
@@ -1176,7 +1248,7 @@ class HospitalCard extends StatelessWidget {
       width: double.infinity,
       decoration: BoxDecoration(
         gradient: LinearGradient(
-          colors: [Colors.teal.shade700, Colors.teal.shade400],
+          colors: [Colors.teal.shade800, Colors.teal.shade500],
           begin: Alignment.topLeft,
           end: Alignment.bottomRight,
         ),
@@ -1209,7 +1281,6 @@ class HospitalCard extends StatelessWidget {
   }
 
   Widget _statusBadge(double basePoint) {
-    // 83 puana göre anlık durum
     final bool isLikely = 83.0 >= basePoint;
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 6, vertical: 3),
@@ -1230,7 +1301,7 @@ class HospitalCard extends StatelessWidget {
   }
 }
 
-// ---------------- HASTANE DETAY SAYFASI ----------------
+// ---------------- DETAY EKRANI ----------------
 class HospitalDetailScreen extends StatefulWidget {
   final Hospital hospital;
   final bool isFavorite;
@@ -1339,7 +1410,7 @@ class _HospitalDetailScreenState extends State<HospitalDetailScreen> {
                   ),
                   const SizedBox(height: 16),
 
-                  // Çalışma ve Yaşam Şartları
+                  // Şartlar
                   const Text('Çalışma ve Yaşam Şartları',
                       style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16)),
                   const SizedBox(height: 8),
@@ -1377,7 +1448,7 @@ class _HospitalDetailScreenState extends State<HospitalDetailScreen> {
                     controller: _noteController,
                     maxLines: 3,
                     decoration: InputDecoration(
-                      hintText: 'Örn: Canik kiraları Atakumdan uygun, Samsun Şehir Hastanesini 1. sıraya yazabilirim...',
+                      hintText: 'Örn: Samsun Şehir Hastanesi 1. tercih, Canik kiraları Atakum’a göre çok makul...',
                       filled: true,
                       fillColor: Colors.white,
                       border: OutlineInputBorder(borderRadius: BorderRadius.circular(10)),
