@@ -18,12 +18,12 @@ class HemsireTercihApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
         useMaterial3: true,
-        colorSchemeSeed: Colors.teal,
-        scaffoldBackgroundColor: const Color(0xFFF6F8FA),
+        colorSchemeSeed: const Color(0xFF0D9488),
+        scaffoldBackgroundColor: const Color(0xFFF8FAFC),
         appBarTheme: const AppBarTheme(
           elevation: 0,
           centerTitle: true,
-          backgroundColor: Colors.teal,
+          backgroundColor: Color(0xFF0D9488),
           foregroundColor: Colors.white,
         ),
       ),
@@ -38,16 +38,16 @@ class Hospital {
   final String name;
   final String city;
   final String district;
-  final String type; // Şehir, EAH, Devlet
+  final String type;
   final String imageUrl;
   final double kpss2024;
   final double kpss2025;
-  final String workLoad; // 10 üzerinden
-  final String incentive; // Teşvik
-  final String shift; // Nöbet usulü
-  final String rentRange; // Ortalama kira
-  final List<String> surveyReviews; // Rapor içi çalışan yorumları
-  final List<String> webReviews; // Dış saha / forum araştırmaları
+  final String workLoad;
+  final String incentive;
+  final String shift;
+  final String rentRange;
+  final List<String> surveyReviews;
+  final List<String> webReviews;
 
   Hospital({
     required this.id,
@@ -67,92 +67,29 @@ class Hospital {
   });
 }
 
-// ---------------- VERİ TABANI (ÖRNEK VE YENİ KURUMLAR) ----------------
+// ---------------- TÜRKİYE GENELİ KAPSAMLI VERİ HAVUZU ----------------
 final List<Hospital> initialHospitals = [
+  // --- SAMSUN & KARADENİZ ---
   Hospital(
     id: 'samsun_sehir',
     name: 'Samsun Şehir Hastanesi',
     city: 'Samsun',
     district: 'Canik',
     type: 'Şehir Hastanesi',
-    imageUrl: 'https://images.unsplash.com/photo-1519494026892-80bbd2d6fd0d?w=800',
+    imageUrl: 'https://images.unsplash.com/photo-1587351021759-3e566b6af7cc?auto=format&fit=crop&w=800&q=80',
     kpss2024: 83.45,
     kpss2025: 82.90,
     workLoad: '8 / 10',
     incentive: '12.000 TL - 16.000 TL',
-    shift: '08:00 - 08:00 (24 saat nöbet)',
+    shift: '08:00 - 08:00 (24 Saat) & 16-8',
     rentRange: '15.000 TL - 22.000 TL',
     surveyReviews: [
-      'Bina ve teknoloji son sistem. Başlarda birim transferleri yoğundu ancak düzen oturuyor.',
-      'Canik çevre yolunda olduğu için ulaşım servis ve ekspres otobüslerle sağlanıyor.'
+      'Bina ve tüm teknolojik altyapı sıfır ve son model. Geniş servisler ve dinlenme odaları mevcut.',
+      'Sistem ilk açılış sürecinde oturmaya başladığı için birim transferleri yaşanabiliyor.'
     ],
     webReviews: [
-      'Geniş servis alanları ve yeni cihazlar mevcut. Ameliyathane ve yoğun bakımlarda vardiyalar oturmuş durumda.',
-      'İl dışından gelecekler için Atakum tarafına göre hastane çevresi (Canik) kiraları bir tık daha makul.'
-    ],
-  ),
-  Hospital(
-    id: 'ankara_bilkent',
-    name: 'Ankara Bilkent Şehir Hastanesi',
-    city: 'Ankara',
-    district: 'Çankaya',
-    type: 'Şehir Hastanesi',
-    imageUrl: 'https://images.unsplash.com/photo-1586773860418-d37222d8fce3?w=800',
-    kpss2024: 84.10,
-    kpss2025: 83.60,
-    workLoad: '9 / 10',
-    incentive: '12.000 TL - 15.000 TL',
-    shift: '08:00 - 08:00 (24 Saat) & 16-8',
-    rentRange: '25.000 TL - 35.000 TL',
-    surveyReviews: [
-      'Hasta sirkülasyonu çok fazla. Çevre illerden sürekli yoğun bakım ve acil sevki geliyor.',
-      'Sistem işi ve akreditasyon belgelemesi fazla. Mesleki tecrübe için devasa bir okul.'
-    ],
-    webReviews: [
-      'Hastanenin kendi kampüsü çok büyük, binalar arası geçişler efor gerektiriyor.',
-      'Metroya doğrudan ring otobüsleri var. Genç hemşire kadrosu ağırlıkta.'
-    ],
-  ),
-  Hospital(
-    id: 'adana_sehir',
-    name: 'Adana Şehir Hastanesi',
-    city: 'Adana',
-    district: 'Yüreğir',
-    type: 'Şehir Hastanesi',
-    imageUrl: 'https://images.unsplash.com/photo-1516549655169-df83a0774514?w=800',
-    kpss2024: 82.80,
-    kpss2025: 82.40,
-    workLoad: '8 / 10',
-    incentive: '11.000 TL - 13.000 TL',
-    shift: '24 Saat Nöbet & 16-08',
-    rentRange: '15.000 TL - 20.000 TL',
-    surveyReviews: [
-      'Yoğun bir hastane, özellikle acil servis ve yoğun bakım temposu yüksek.',
-      'Yemek ve taşıma personeli şirkete bağlı olduğu için hemşirelik dışı angaryalar daha az.'
-    ],
-    webReviews: [
-      'Bölgenin ana referans hastanesi. Teşvik ödemeleri bölge standartlarına göre iyi ve düzenli yatar.'
-    ],
-  ),
-  Hospital(
-    id: 'basaksehir_cam_sakura',
-    name: 'Başakşehir Çam ve Sakura Şehir Hastanesi',
-    city: 'İstanbul',
-    district: 'Başakşehir',
-    type: 'Şehir Hastanesi',
-    imageUrl: 'https://images.unsplash.com/photo-1538108149393-fbbd81895907?w=800',
-    kpss2024: 80.50,
-    kpss2025: 79.90,
-    workLoad: '10 / 10',
-    incentive: '12.000 TL - 15.000 TL',
-    shift: '08:00 - 08:00 & 8-16/16-08',
-    rentRange: '25.000 TL - 32.000 TL',
-    surveyReviews: [
-      'Kağıtsız hastane sistemi var; ilaçlar bileklik barkoduyla veriliyor. Alışınca pratikleşiyor.',
-      'İş temposu yüksek, doğrudan metro durağı mevcut. Ev kiraları Başakşehir çevresinde yüksek.'
-    ],
-    webReviews: [
-      'Uluslararası standartta ekipmanlar var. Çok fazla hasta profili ve cerrahi vaka görerek hızlı uzmanlaşırsınız.'
+      'Canik çevre yolunda; ekspres belediye otobüsleri ve servislerle ulaşım rahat.',
+      'Atakum bölgesine kıyasla Canik ve İlkadım taraflarında ev kiraları daha makul seviyelerde.'
     ],
   ),
   Hospital(
@@ -161,19 +98,40 @@ final List<Hospital> initialHospitals = [
     city: 'Samsun',
     district: 'İlkadım',
     type: 'Eğitim ve Araştırma',
-    imageUrl: 'https://images.unsplash.com/photo-1579684385127-1ef15d508118?w=800',
+    imageUrl: 'https://images.unsplash.com/photo-1519494026892-80bbd2d6fd0d?auto=format&fit=crop&w=800&q=80',
     kpss2024: 83.10,
     kpss2025: 82.75,
     workLoad: '7 / 10',
     incentive: '8.000 TL - 12.000 TL',
-    shift: '08:00 - 08:00 (24 saat)',
+    shift: '08:00 - 08:00 (24 saat nöbet)',
     rentRange: '14.000 TL - 20.000 TL',
     surveyReviews: [
-      'Merkezi bir konuma sahip, dolmuş ve belediye otobüsüyle ulaşım çok pratik.',
-      'Köklü bir hastane olduğu için ekipler arası iletişim ve nöbet dayanışması oturmuş durumda.'
+      'Merkezi konumda, dolmuş ve belediye otobüsleri kapısına kadar gidiyor.',
+      'Köklü bir hastane; hemşire ekipleri deneyimli ve nöbet dayanışması yüksek.'
     ],
     webReviews: [
-      'Şehir hastanesinin açılmasıyla bazı birim yükleri dağıldı, çalışma ortamı daha dengeli hale geldi.'
+      'Şehir hastanesine bazı branşların kaymasıyla aşırı hasta yükü azaldı, çalışma ortamı dengelendi.'
+    ],
+  ),
+  Hospital(
+    id: 'samsun_gazi',
+    name: 'Samsun Gazi Devlet Hastanesi',
+    city: 'Samsun',
+    district: 'İlkadım',
+    type: 'Devlet Hastanesi',
+    imageUrl: 'https://images.unsplash.com/photo-1516549655169-df83a0774514?auto=format&fit=crop&w=800&q=80',
+    kpss2024: 83.30,
+    kpss2025: 82.95,
+    workLoad: '6 / 10',
+    incentive: '7.000 TL - 10.000 TL',
+    shift: '08:00 - 08:00 & 8-16',
+    rentRange: '13.000 TL - 18.000 TL',
+    surveyReviews: [
+      'Şehrin göbeğinde. Ulaşım sorunu kesinlikle yok.',
+      'İkinci basamak hastane; ağır travma vakaları EAH veya Şehir Hastanesine sevk ediliyor.'
+    ],
+    webReviews: [
+      'Huzurlu, nöbet usulü düzenli, çalışan memnuniyeti ortalamanın üzerinde.'
     ],
   ),
   Hospital(
@@ -182,24 +140,557 @@ final List<Hospital> initialHospitals = [
     city: 'Tokat',
     district: 'Reşadiye',
     type: 'Devlet Hastanesi',
-    imageUrl: 'https://images.unsplash.com/photo-1505751172876-fa1923c5c528?w=800',
+    imageUrl: 'https://images.unsplash.com/photo-1505751172876-fa1923c5c528?auto=format&fit=crop&w=800&q=80',
     kpss2024: 82.15,
     kpss2025: 81.80,
     workLoad: '4 / 10',
     incentive: '4.000 TL - 7.000 TL',
-    shift: '24 Saat Nöbet & Blok Off',
+    shift: '24 Saat Nöbet & Blok İzin',
     rentRange: '8.000 TL - 12.000 TL',
     surveyReviews: [
-      'İlçe hastanesi olduğu için iş yükü büyük şehirlere kıyasla oldukça sakin.',
-      'Nöbetleri blok tutup memlekete gitmek veya dinlenmek için geniş boşluklar yaratılabiliyor.'
+      'Küçük ilçe hastanesi. İş yükü büyük şehirlere kıyasla gayet sakin ve stressiz.',
+      'Blok nöbet sistemiyle memlekete gitmek için uzun süreli boşluklar alınabiliyor.'
     ],
     webReviews: [
-      'Yaşam giderleri çok düşük, birikim yapmak ve kafa dinlemek isteyenler için ideal bir tercih.'
+      'Yaşam giderleri çok uygun. Sakinlik ve birikim arayanlar için biçilmiş kaftan.'
+    ],
+  ),
+  Hospital(
+    id: 'tokat_eah',
+    name: 'Tokat Gaziosmanpaşa Üniversitesi & Devlet Hastanesi',
+    city: 'Tokat',
+    district: 'Merkez',
+    type: 'Devlet / EAH',
+    imageUrl: 'https://images.unsplash.com/photo-1579684385127-1ef15d508118?auto=format&fit=crop&w=800&q=80',
+    kpss2024: 83.20,
+    kpss2025: 82.80,
+    workLoad: '6 / 10',
+    incentive: '7.500 TL - 11.000 TL',
+    shift: '08:00 - 08:00 (24 saat nöbet)',
+    rentRange: '10.000 TL - 15.000 TL',
+    surveyReviews: [
+      'Merkezde hayat ucuz ve rahat. Ulaşım masrafı neredeyse yok denecek kadar az.',
+      'İdare genel olarak hemşirelerle uyumlu çalışıyor, mobbing şikayeti düşük.'
+    ],
+    webReviews: [
+      'Tokat merkez hem aile hayatı hem de ekonomik rahatlık açısından hemşirelerin gözde yerlerinden biri.'
+    ],
+  ),
+  Hospital(
+    id: 'amasya_eah',
+    name: 'Amasya Sabuncuoğlu Şerefeddin EAH',
+    city: 'Amasya',
+    district: 'Merkez',
+    type: 'Eğitim ve Araştırma',
+    imageUrl: 'https://images.unsplash.com/photo-1519494026892-80bbd2d6fd0d?auto=format&fit=crop&w=800&q=80',
+    kpss2024: 82.90,
+    kpss2025: 82.40,
+    workLoad: '7 / 10',
+    incentive: '8.000 TL - 11.500 TL',
+    shift: '08:00 - 08:00 & 16-8',
+    rentRange: '12.000 TL - 17.000 TL',
+    surveyReviews: [
+      'İl merkezinin tek büyük hastanesi. Nüfusa göre yoğunluk kaldırılabilir düzeyde.',
+      'Tarihi ve şirin bir şehir, yaşam masrafı makul.'
+    ],
+    webReviews: [
+      'Samsun ve Tokat aksında yer alıyor, ulaşım ağı kolay.'
+    ],
+  ),
+  Hospital(
+    id: 'corum_eah',
+    name: 'Çorum Erol Olçok EAH',
+    city: 'Çorum',
+    district: 'Merkez',
+    type: 'Eğitim ve Araştırma',
+    imageUrl: 'https://images.unsplash.com/photo-1505751172876-fa1923c5c528?auto=format&fit=crop&w=800&q=80',
+    kpss2024: 82.60,
+    kpss2025: 82.10,
+    workLoad: '8 / 10',
+    incentive: '9.000 TL - 12.000 TL',
+    shift: '08:00 - 08:00 (24 saat nöbet)',
+    rentRange: '12.000 TL - 17.000 TL',
+    surveyReviews: [
+      'İlin en büyük hastanesi, çevre ilçelerden çok fazla vaka gelir.',
+      'Ek mesai ücretleri ve teşvik düzenli yatar.'
+    ],
+    webReviews: [
+      'Hayat pahalılığı düşük, İç Anadolu-Karadeniz geçişinde sakin bir şehir.'
+    ],
+  ),
+  Hospital(
+    id: 'trabzon_kanuni',
+    name: 'Trabzon Kanuni EAH',
+    city: 'Trabzon',
+    district: 'Yomra',
+    type: 'Eğitim ve Araştırma',
+    imageUrl: 'https://images.unsplash.com/photo-1587351021759-3e566b6af7cc?auto=format&fit=crop&w=800&q=80',
+    kpss2024: 83.50,
+    kpss2025: 83.05,
+    workLoad: '8 / 10',
+    incentive: '9.000 TL - 13.000 TL',
+    shift: '08:00 - 08:00 (24 saat nöbet)',
+    rentRange: '15.000 TL - 22.000 TL',
+    surveyReviews: [
+      'Doğu Karadeniz’in sevk merkezi konumunda. Vaka çeşitliliği çok fazla.',
+      'Kaşüstü yerleşkesi ferah ve modern.'
+    ],
+    webReviews: [
+      'Deniz manzaralı kampüs, Yomra ve Kaşüstü bölgesinde sitelerde kiralık daireler mevcut.'
+    ],
+  ),
+  Hospital(
+    id: 'giresun_eah',
+    name: 'Giresun Eğitim ve Araştırma Hastanesi',
+    city: 'Giresun',
+    district: 'Merkez',
+    type: 'Eğitim ve Araştırma',
+    imageUrl: 'https://images.unsplash.com/photo-1516549655169-df83a0774514?auto=format&fit=crop&w=800&q=80',
+    kpss2024: 82.70,
+    kpss2025: 82.20,
+    workLoad: '8 / 10',
+    incentive: '8.000 TL - 11.000 TL',
+    shift: '08:00 - 08:00 (24 saat nöbet)',
+    rentRange: '13.000 TL - 18.000 TL',
+    surveyReviews: [
+      'Deniz kenarında konumlanmış modern bina. İl genelinin yükünü sırtlar.',
+      'Şehir güvenli, insanları sıcakkanlı.'
+    ],
+    webReviews: [
+      'Karadeniz sahil yolunda yer alır, dolmuşlarla merkeze 10 dakika.'
+    ],
+  ),
+  Hospital(
+    id: 'ordu_eah',
+    name: 'Ordu Eğitim ve Araştırma Hastanesi',
+    city: 'Ordu',
+    district: 'Altınordu',
+    type: 'Eğitim ve Araştırma',
+    imageUrl: 'https://images.unsplash.com/photo-1519494026892-80bbd2d6fd0d?auto=format&fit=crop&w=800&q=80',
+    kpss2024: 83.35,
+    kpss2025: 82.90,
+    workLoad: '8 / 10',
+    incentive: '8.500 TL - 12.000 TL',
+    shift: '08:00 - 08:00 (24 saat nöbet)',
+    rentRange: '14.000 TL - 20.000 TL',
+    surveyReviews: [
+      'Altınordu merkezinde sahil kordonuna yakın, şehir hayatı çok canlı.',
+      'Servislerde sirkülasyon var ancak ekip dayanışması yüksek.'
+    ],
+    webReviews: [
+      'Yeni şehir hastanesi projesi de sürdüğü için sağlık altyapısı hızla gelişen bir il.'
+    ],
+  ),
+
+  // --- ANKARA & İÇ ANADOLU ---
+  Hospital(
+    id: 'ankara_bilkent',
+    name: 'Ankara Bilkent Şehir Hastanesi',
+    city: 'Ankara',
+    district: 'Çankaya',
+    type: 'Şehir Hastanesi',
+    imageUrl: 'https://images.unsplash.com/photo-1586773860418-d37222d8fce3?auto=format&fit=crop&w=800&q=80',
+    kpss2024: 84.10,
+    kpss2025: 83.60,
+    workLoad: '9 / 10',
+    incentive: '12.000 TL - 15.000 TL',
+    shift: '08:00 - 08:00 & 16-8',
+    rentRange: '25.000 TL - 35.000 TL',
+    surveyReviews: [
+      'Devasa bir sağlık kenti. Her türlü ileri seviye cerrahi ve yoğun bakım vakası gelir.',
+      'Sistem işi ve evrak prosedürleri titizlikle denetlenir.'
+    ],
+    webReviews: [
+      'Metroya direkt ring otobüsleri var. Genç sağlık personeli nüfusu çok yoğun.'
+    ],
+  ),
+  Hospital(
+    id: 'ankara_etlik',
+    name: 'Ankara Etlik Şehir Hastanesi',
+    city: 'Ankara',
+    district: 'Keçiören',
+    type: 'Şehir Hastanesi',
+    imageUrl: 'https://images.unsplash.com/photo-1519494026892-80bbd2d6fd0d?auto=format&fit=crop&w=800&q=80',
+    kpss2024: 83.80,
+    kpss2025: 83.25,
+    workLoad: '8 / 10',
+    incentive: '11.000 TL - 14.000 TL',
+    shift: '08:00 - 08:00 (24 saat nöbet)',
+    rentRange: '20.000 TL - 28.000 TL',
+    surveyReviews: [
+      'Bina yeni ve ferah. Malzeme sıkıntısı yaşanmıyor.',
+      'Keçiören ve Yenimahalle aksında ev bulma şansı yüksek.'
+    ],
+    webReviews: [
+      'Teşvik ödemeleri düzenli, acil serviste mentör-mentee oryantasyon sistemi uygulanıyor.'
+    ],
+  ),
+  Hospital(
+    id: 'ankara_gulhane',
+    name: 'Ankara Gülhane EAH (GATA)',
+    city: 'Ankara',
+    district: 'Keçiören',
+    type: 'Eğitim ve Araştırma',
+    imageUrl: 'https://images.unsplash.com/photo-1516549655169-df83a0774514?auto=format&fit=crop&w=800&q=80',
+    kpss2024: 83.95,
+    kpss2025: 83.40,
+    workLoad: '7 / 10',
+    incentive: '9.000 TL - 13.000 TL',
+    shift: '08:00 - 08:00 & 16-8',
+    rentRange: '20.000 TL - 26.000 TL',
+    surveyReviews: [
+      'Geniş ormanlık kampüsü var. Kurumsal kültürü ve disiplini çok köklü.',
+      'Şehir hastanelerine göre daha kompakt ve derli toplu bir düzen var.'
+    ],
+    webReviews: [
+      'Etlik ve Keçiören metro/otobüs hatlarının kesişim noktasında.'
+    ],
+  ),
+  Hospital(
+    id: 'eskisehir_sehir',
+    name: 'Eskişehir Şehir Hastanesi',
+    city: 'Eskişehir',
+    district: 'Odunpazarı',
+    type: 'Şehir Hastanesi',
+    imageUrl: 'https://images.unsplash.com/photo-1587351021759-3e566b6af7cc?auto=format&fit=crop&w=800&q=80',
+    kpss2024: 83.70,
+    kpss2025: 83.10,
+    workLoad: '7 / 10',
+    incentive: '8.000 TL - 11.000 TL',
+    shift: '08:00 - 08:00 (24 saat nöbet)',
+    rentRange: '14.000 TL - 20.000 TL',
+    surveyReviews: [
+      'Tramvay hattı hastanenin kapısına kadar geliyor. Şehir içi ulaşım mükemmel.',
+      'Eskişehir sosyal imkanlar ve genç yaşamı açısından Türkiye’nin en keyifli illerinden.'
+    ],
+    webReviews: [
+      'Şehir hastaneleri arasında hemşire memnuniyeti en yüksek kurumlardan biri.'
+    ],
+  ),
+  Hospital(
+    id: 'kayseri_sehir',
+    name: 'Kayseri Şehir Hastanesi',
+    city: 'Kayseri',
+    district: 'Kocasinan',
+    type: 'Şehir Hastanesi',
+    imageUrl: 'https://images.unsplash.com/photo-1538108149393-fbbd81895907?auto=format&fit=crop&w=800&q=80',
+    kpss2024: 83.10,
+    kpss2025: 82.60,
+    workLoad: '8 / 10',
+    incentive: '10.000 TL - 14.000 TL',
+    shift: '08:00 - 08:00 (24 saat nöbet)',
+    rentRange: '13.000 TL - 19.000 TL',
+    surveyReviews: [
+      'Kampüs geniş ve teknolojik altyapısı çok kuvvetli.',
+      'Tramvay bağlantısı var, şehir merkezine ulaşım konforlu.'
+    ],
+    webReviews: [
+      'İç Anadolu’nun sanayi ve ticaret merkezinde, yaşam masrafları dengeli.'
+    ],
+  ),
+  Hospital(
+    id: 'konya_sehir',
+    name: 'Konya Şehir Hastanesi',
+    city: 'Konya',
+    district: 'Karatay',
+    type: 'Şehir Hastanesi',
+    imageUrl: 'https://images.unsplash.com/photo-1586773860418-d37222d8fce3?auto=format&fit=crop&w=800&q=80',
+    kpss2024: 83.25,
+    kpss2025: 82.75,
+    workLoad: '8 / 10',
+    incentive: '10.000 TL - 14.500 TL',
+    shift: '08:00 - 08:00 (24 saat nöbet)',
+    rentRange: '13.000 TL - 18.000 TL',
+    surveyReviews: [
+      'Geniş poliklinik ve yatak kapasitesi var. Çevre ilçelerden sevk yoğundur.',
+      'Tramvay ve otobüs hatlarıyla entegre ulaşım.'
+    ],
+    webReviews: [
+      'Geniş ve düzenli şehir planı, uygun ev kiraları sunar.'
+    ],
+  ),
+
+  // --- İSTANBUL & MARMARA ---
+  Hospital(
+    id: 'basaksehir_cam_sakura',
+    name: 'Başakşehir Çam ve Sakura Şehir Hastanesi',
+    city: 'İstanbul',
+    district: 'Başakşehir',
+    type: 'Şehir Hastanesi',
+    imageUrl: 'https://images.unsplash.com/photo-1538108149393-fbbd81895907?auto=format&fit=crop&w=800&q=80',
+    kpss2024: 80.50,
+    kpss2025: 79.90,
+    workLoad: '10 / 10',
+    incentive: '12.000 TL - 15.000 TL',
+    shift: '08:00 - 08:00 & 8-16/16-08',
+    rentRange: '25.000 TL - 32.000 TL',
+    surveyReviews: [
+      'Kağıtsız hastane; tüm ilaçlar hasta bileklik barkoduyla eşleştirilerek uygulanıyor.',
+      'İş temposu yüksek fakat metro istasyonu doğrudan hastanenin altına çıkıyor.'
+    ],
+    webReviews: [
+      'Kısa sürede üst düzey klinik ve cerrahi deneyim kazandırır. Teşvikler yüksektir.'
+    ],
+  ),
+  Hospital(
+    id: 'istanbul_bagcilar',
+    name: 'Bağcılar Eğitim ve Araştırma Hastanesi',
+    city: 'İstanbul',
+    district: 'Bağcılar',
+    type: 'Eğitim ve Araştırma',
+    imageUrl: 'https://images.unsplash.com/photo-1519494026892-80bbd2d6fd0d?auto=format&fit=crop&w=800&q=80',
+    kpss2024: 79.80,
+    kpss2025: 79.20,
+    workLoad: '8 / 10',
+    incentive: '9.000 TL - 12.000 TL',
+    shift: '08:00 - 08:00 & 16-8',
+    rentRange: '18.000 TL - 24.000 TL',
+    surveyReviews: [
+      'Metro ve tramvay bağlantısı çok rahat. Vaka yoğunluğu yüksek.',
+      'Nöbet sayıları adil dağıtılıyor.'
+    ],
+    webReviews: [
+      'İstanbul içi merkezi ulaşımı olan ve teşvikleri stabil yatan kurumlardan biri.'
+    ],
+  ),
+  Hospital(
+    id: 'istanbul_sadi_konuk',
+    name: 'Bakırköy Dr. Sadi Konuk EAH',
+    city: 'İstanbul',
+    district: 'Bakırköy',
+    type: 'Eğitim ve Araştırma',
+    imageUrl: 'https://images.unsplash.com/photo-1516549655169-df83a0774514?auto=format&fit=crop&w=800&q=80',
+    kpss2024: 81.10,
+    kpss2025: 80.60,
+    workLoad: '9 / 10',
+    incentive: '9.500 TL - 13.000 TL',
+    shift: '08:00 - 08:00 (24 saat nöbet)',
+    rentRange: '25.000 TL - 35.000 TL',
+    surveyReviews: [
+      'E-5 karayolunun bitişiğinde, metrobüs ve metro durağına yürüme mesafesinde.',
+      'İstanbul’un en köklü ve en yoğun acillerinden biri.'
+    ],
+    webReviews: [
+      'Lokasyon avantajı çok yüksek, çevre semtlerde sosyal imkanlar sınırsız.'
+    ],
+  ),
+  Hospital(
+    id: 'bursa_sehir',
+    name: 'Bursa Şehir Hastanesi',
+    city: 'Bursa',
+    district: 'Nilüfer',
+    type: 'Şehir Hastanesi',
+    imageUrl: 'https://images.unsplash.com/photo-1586773860418-d37222d8fce3?auto=format&fit=crop&w=800&q=80',
+    kpss2024: 83.15,
+    kpss2025: 82.60,
+    workLoad: '7 / 10',
+    incentive: '12.000 TL - 15.000 TL',
+    shift: '08:00 - 08:00 (24 saat nöbet)',
+    rentRange: '16.000 TL - 22.000 TL',
+    surveyReviews: [
+      'Yemekhane ve yardımcı personel hizmetleri şirket eliyle düzenli yürütülüyor.',
+      'Bölge hastanesi olduğu için yoğunluk var ancak nöbetler sonrası 3-4 gün blok izin alınabiliyor.'
+    ],
+    webReviews: [
+      'Nilüfer ilçesi sosyal imkanları ve genç nüfusuyla yaşam kalitesi açısından çok avantajlı.'
+    ],
+  ),
+  Hospital(
+    id: 'kocaeli_sehir',
+    name: 'Kocaeli Şehir Hastanesi',
+    city: 'Kocaeli',
+    district: 'İzmit',
+    type: 'Şehir Hastanesi',
+    imageUrl: 'https://images.unsplash.com/photo-1587351021759-3e566b6af7cc?auto=format&fit=crop&w=800&q=80',
+    kpss2024: 82.80,
+    kpss2025: 82.30,
+    workLoad: '8 / 10',
+    incentive: '11.000 TL - 14.500 TL',
+    shift: '08:00 - 08:00 (24 saat nöbet)',
+    rentRange: '16.000 TL - 22.000 TL',
+    surveyReviews: [
+      'Tramvay hattı hastaneye kadar uzatıldı, ulaşım çok rahatladı.',
+      'Bölgenin sanayi ve trafik kazaları dahil en büyük travma merkezi.'
+    ],
+    webReviews: [
+      'İstanbul’a 1 saat mesafede, hayat Marmara standartlarına göre daha ekonomik.'
+    ],
+  ),
+
+  // --- EGE & AKDENİZ ---
+  Hospital(
+    id: 'izmir_sehir',
+    name: 'İzmir Şehir Hastanesi',
+    city: 'İzmir',
+    district: 'Bayraklı',
+    type: 'Şehir Hastanesi',
+    imageUrl: 'https://images.unsplash.com/photo-1587351021759-3e566b6af7cc?auto=format&fit=crop&w=800&q=80',
+    kpss2024: 83.90,
+    kpss2025: 83.40,
+    workLoad: '8 / 10',
+    incentive: '12.000 TL - 16.000 TL',
+    shift: '08:00 - 08:00 (24 saat nöbet)',
+    rentRange: '22.000 TL - 30.000 TL',
+    surveyReviews: [
+      'Ege Bölgesi’nin en büyük kompleksi. Bina manzarası ve standartları çok yüksek.',
+      'Bayraklı sırtlarında; ring otobüsleri ve personel servisleri düzenli işliyor.'
+    ],
+    webReviews: [
+      'Sosyal imkanları sınırsız, teşvik performansı bölgenin en iyilerinden.'
+    ],
+  ),
+  Hospital(
+    id: 'antalya_sehir',
+    name: 'Antalya Şehir Hastanesi',
+    city: 'Antalya',
+    district: 'Kepez',
+    type: 'Şehir Hastanesi',
+    imageUrl: 'https://images.unsplash.com/photo-1516549655169-df83a0774514?auto=format&fit=crop&w=800&q=80',
+    kpss2024: 83.20,
+    kpss2025: 82.70,
+    workLoad: '7 / 10',
+    incentive: '10.000 TL - 13.000 TL',
+    shift: '08:00 - 08:00 (24 saat nöbet)',
+    rentRange: '18.000 TL - 25.000 TL',
+    surveyReviews: [
+      'Yeni tesis olduğu için ortam ferah ve cihazlar son teknoloji.',
+      'Personel kadrosu tamamlandıkça nöbet yükü rahat bir sisteme kavuşuyor.'
+    ],
+    webReviews: [
+      'Tramvay bağlantısı mevcut, Akdeniz iklimi ve sosyal olanaklar için çok tercih ediliyor.'
+    ],
+  ),
+  Hospital(
+    id: 'adana_sehir',
+    name: 'Adana Şehir Hastanesi',
+    city: 'Adana',
+    district: 'Yüreğir',
+    type: 'Şehir Hastanesi',
+    imageUrl: 'https://images.unsplash.com/photo-1587351021759-3e566b6af7cc?auto=format&fit=crop&w=800&q=80',
+    kpss2024: 82.80,
+    kpss2025: 82.40,
+    workLoad: '8 / 10',
+    incentive: '11.000 TL - 13.000 TL',
+    shift: '24 Saat Nöbet & 16-08',
+    rentRange: '15.000 TL - 20.000 TL',
+    surveyReviews: [
+      'Bölgenin ana referans hastanesi. Hasta yoğunluğu yüksek ama kurumsal düzen oturmuş.',
+      'Yemek ve taşıma personeli şirkete bağlı, hemşirelik dışı angaryalar az.'
+    ],
+    webReviews: [
+      'Teşvik ödemeleri bölge ortalamasına göre gayet yüksek ve düzenli yatıyor.'
+    ],
+  ),
+  Hospital(
+    id: 'mersin_sehir',
+    name: 'Mersin Şehir Hastanesi',
+    city: 'Mersin',
+    district: 'Toroslar',
+    type: 'Şehir Hastanesi',
+    imageUrl: 'https://images.unsplash.com/photo-1519494026892-80bbd2d6fd0d?auto=format&fit=crop&w=800&q=80',
+    kpss2024: 82.90,
+    kpss2025: 82.45,
+    workLoad: '7 / 10',
+    incentive: '10.500 TL - 14.000 TL',
+    shift: '08:00 - 08:00 (24 saat nöbet)',
+    rentRange: '15.000 TL - 21.000 TL',
+    surveyReviews: [
+      'Türkiye’nin ilk açılan şehir hastanelerinden biri; düzeni ve işleyişi tamamen oturmuş.',
+      'Hastanenin fiziki şartları ve yemekhanesi oldukça başarılı.'
+    ],
+    webReviews: [
+      'Akdeniz sahil şeridi, sosyal imkanlar ve uygun fiyatlı narenciye/gıda avantajı.'
+    ],
+  ),
+
+  // --- DOĞU & GÜNEYDOĞU ---
+  Hospital(
+    id: 'diyarbakir_gazi_yasargil',
+    name: 'Diyarbakır Gazi Yaşargil EAH',
+    city: 'Diyarbakır',
+    district: 'Yenişehir',
+    type: 'Eğitim ve Araştırma',
+    imageUrl: 'https://images.unsplash.com/photo-1519494026892-80bbd2d6fd0d?auto=format&fit=crop&w=800&q=80',
+    kpss2024: 82.30,
+    kpss2025: 81.70,
+    workLoad: '9 / 10',
+    incentive: '9.000 TL - 13.000 TL',
+    shift: '08:00 - 08:00 (24 saat nöbet)',
+    rentRange: '12.000 TL - 17.000 TL',
+    surveyReviews: [
+      'Güneydoğu Anadolu’nun en büyük sağlık merkezlerinden. Çok yoğun ama çok tecrübe kazandırır.',
+      'Ulaşım ağı dolmuşlarla gayet pratik.'
+    ],
+    webReviews: [
+      'Hizmet puanı yüksek; batıya tayin istemeyi planlayanlar için büyük puan avantajı sağlar.'
+    ],
+  ),
+  Hospital(
+    id: 'erzurum_sehir',
+    name: 'Erzurum Şehir Hastanesi',
+    city: 'Erzurum',
+    district: 'Palandöken',
+    type: 'Şehir Hastanesi',
+    imageUrl: 'https://images.unsplash.com/photo-1586773860418-d37222d8fce3?auto=format&fit=crop&w=800&q=80',
+    kpss2024: 82.40,
+    kpss2025: 81.90,
+    workLoad: '9 / 10',
+    incentive: '10.000 TL - 14.000 TL',
+    shift: '08:00 - 08:00 (24 saat nöbet)',
+    rentRange: '13.000 TL - 18.000 TL',
+    surveyReviews: [
+      'Kış aylarında kampüs içi ısıtma ve tüp geçitler çok iyi dizayn edilmiş.',
+      'Doğu Anadolu genelinden sevk alan bölgesel ana merkez.'
+    ],
+    webReviews: [
+      'Teşvikleri düzenli ve yüksek. Kış sporları ve doğa sevenler için cazip.'
+    ],
+  ),
+  Hospital(
+    id: 'gaziantep_sehir',
+    name: 'Gaziantep Şehir Hastanesi',
+    city: 'Gaziantep',
+    district: 'Şahinbey',
+    type: 'Şehir Hastanesi',
+    imageUrl: 'https://images.unsplash.com/photo-1587351021759-3e566b6af7cc?auto=format&fit=crop&w=800&q=80',
+    kpss2024: 82.10,
+    kpss2025: 81.60,
+    workLoad: '9 / 10',
+    incentive: '11.000 TL - 15.000 TL',
+    shift: '08:00 - 08:00 (24 saat nöbet)',
+    rentRange: '16.000 TL - 22.000 TL',
+    surveyReviews: [
+      'Yeni açılan dev kompleks. Tramvay hattı doğrudan hastaneye kadar geliyor.',
+      'Hasta sirkülasyonu yüksek, ameliyathane ve yoğun bakım birimleri çok dinamik.'
+    ],
+    webReviews: [
+      'Gaziantep gastronomi ve sanayi kenti, sosyal hayat hareketli.'
+    ],
+  ),
+  Hospital(
+    id: 'van_eah',
+    name: 'Van Eğitim ve Araştırma Hastanesi',
+    city: 'Van',
+    district: 'Edremit',
+    type: 'Eğitim ve Araştırma',
+    imageUrl: 'https://images.unsplash.com/photo-1505751172876-fa1923c5c528?auto=format&fit=crop&w=800&q=80',
+    kpss2024: 81.80,
+    kpss2025: 81.30,
+    workLoad: '8 / 10',
+    incentive: '9.000 TL - 12.500 TL',
+    shift: '08:00 - 08:00 (24 saat nöbet)',
+    rentRange: '11.000 TL - 16.000 TL',
+    surveyReviews: [
+      'Van Gölü kıyısında, manzarası ve hava kalitesi çok ferah bir yerleşkede.',
+      'Bölgenin tek 3. basamak referans hastanesi olduğu için çevre illerden sevk alır.'
+    ],
+    webReviews: [
+      'Edremit konutları hastaneye çok yakın, yaşam maliyetleri Doğu standartlarında uygundur.'
     ],
   ),
 ];
 
-// ---------------- ANA NAVİGASYON ----------------
+// ---------------- ANA SAYFA & NAVİGASYON ----------------
 class MainNavigationScreen extends StatefulWidget {
   const MainNavigationScreen({super.key});
 
@@ -288,8 +779,8 @@ class _MainNavigationScreenState extends State<MainNavigationScreen> {
         destinations: [
           const NavigationDestination(
             icon: Icon(Icons.local_hospital_outlined),
-            selectedIcon: Icon(Icons.local_hospital, color: Colors.teal),
-            label: 'Tüm Hastaneler',
+            selectedIcon: Icon(Icons.local_hospital, color: Color(0xFF0D9488)),
+            label: 'Hastaneler',
           ),
           NavigationDestination(
             icon: Badge(
@@ -300,7 +791,7 @@ class _MainNavigationScreenState extends State<MainNavigationScreen> {
             selectedIcon: Badge(
               label: Text('${_favoriteIds.length}'),
               isLabelVisible: _favoriteIds.isNotEmpty,
-              child: const Icon(Icons.format_list_numbered, color: Colors.teal),
+              child: const Icon(Icons.format_list_numbered, color: Color(0xFF0D9488)),
             ),
             label: 'Tercih Listem',
           ),
@@ -310,7 +801,7 @@ class _MainNavigationScreenState extends State<MainNavigationScreen> {
   }
 }
 
-// ---------------- EKRAN 1: TÜM HASTANELER LİSTESİ ----------------
+// ---------------- HASTANE LİSTE EKRANI ----------------
 class HospitalListScreen extends StatefulWidget {
   final List<String> favoriteIds;
   final Function(String) onToggleFavorite;
@@ -339,14 +830,15 @@ class _HospitalListScreenState extends State<HospitalListScreen> {
 
     final filtered = initialHospitals.where((h) {
       final matchesSearch = h.name.toLowerCase().contains(_searchQuery.toLowerCase()) ||
-          h.district.toLowerCase().contains(_searchQuery.toLowerCase());
+          h.district.toLowerCase().contains(_searchQuery.toLowerCase()) ||
+          h.city.toLowerCase().contains(_searchQuery.toLowerCase());
       final matchesCity = _selectedCity == 'Tümü' || h.city == _selectedCity;
       return matchesSearch && matchesCity;
     }).toList();
 
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Hemşire Tercih Rehberi'),
+        title: const Text('Hemşire Tercih Rehberi (83 KPSS)'),
       ),
       body: Column(
         children: [
@@ -358,10 +850,10 @@ class _HospitalListScreenState extends State<HospitalListScreen> {
                 TextField(
                   onChanged: (val) => setState(() => _searchQuery = val),
                   decoration: InputDecoration(
-                    hintText: 'Hastane veya ilçe ara...',
+                    hintText: 'Hastane, il veya ilçe ara (örn: Samsun, Ankara)...',
                     prefixIcon: const Icon(Icons.search),
                     filled: true,
-                    fillColor: const Color(0xFFF0F4F8),
+                    fillColor: const Color(0xFFF1F5F9),
                     border: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(12),
                       borderSide: BorderSide.none,
@@ -383,7 +875,7 @@ class _HospitalListScreenState extends State<HospitalListScreen> {
                           onSelected: (selected) {
                             if (selected) setState(() => _selectedCity = city);
                           },
-                          selectedColor: Colors.teal.shade100,
+                          selectedColor: const Color(0xFFCCFBF1),
                         ),
                       );
                     }).toList(),
@@ -430,7 +922,7 @@ class _HospitalListScreenState extends State<HospitalListScreen> {
   }
 }
 
-// ---------------- EKRAN 2: SÜRÜKLE-BIRAK TERCİH SIRALAMASI ----------------
+// ---------------- SÜRÜKLE-BIRAK SIRALAMA EKRANI ----------------
 class PreferenceListScreen extends StatelessWidget {
   final List<String> favoriteIds;
   final Function(List<String>) onReorder;
@@ -456,7 +948,7 @@ class PreferenceListScreen extends StatelessWidget {
 
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Tercih Sıralamam (Öncelik)'),
+        title: const Text('Öncelikli Tercih Sıralamam'),
       ),
       body: favHospitals.isEmpty
           ? Center(
@@ -469,12 +961,12 @@ class PreferenceListScreen extends StatelessWidget {
                     const SizedBox(height: 16),
                     const Text(
                       'Henüz tercih listenize hastane eklemediniz.',
-                      style: TextStyle(fontSize: 16, fontWeight: FontWeight.w600),
+                      style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
                       textAlign: TextAlign.center,
                     ),
                     const SizedBox(height: 8),
                     const Text(
-                      'Hastaneler sekmesinden kalp butonuna basarak listenizi oluşturabilir ve burada sürükleyerek sırasını ayarlayabilirsiniz.',
+                      'Hastaneler sekmesinden kalp butonuna basarak kurumları listenize ekleyebilir, ardından basılı tutarak 1., 2., 3. tercih sıranızı kolayca belirleyebilirsiniz.',
                       style: TextStyle(color: Colors.grey),
                       textAlign: TextAlign.center,
                     ),
@@ -486,15 +978,15 @@ class PreferenceListScreen extends StatelessWidget {
               children: [
                 Container(
                   padding: const EdgeInsets.all(12),
-                  color: Colors.teal.shade50,
+                  color: const Color(0xFFF0FDFA),
                   child: const Row(
                     children: [
-                      Icon(Icons.info_outline, color: Colors.teal, size: 20),
+                      Icon(Icons.info_outline, color: Color(0xFF0D9488), size: 20),
                       SizedBox(width: 8),
                       Expanded(
                         child: Text(
-                          'Sıralamayı değiştirmek için sağdaki tutamaçtan basılı tutup yukarı-aşağı sürükleyin.',
-                          style: TextStyle(fontSize: 12, color: Colors.teal),
+                          'Sıralamayı değiştirmek için sağdaki tutamaçtan basılı tutarak yukarı-aşağı sürükleyin.',
+                          style: TextStyle(fontSize: 12, color: Color(0xFF0F766E), fontWeight: FontWeight.w500),
                         ),
                       ),
                     ],
@@ -522,7 +1014,7 @@ class PreferenceListScreen extends StatelessWidget {
                         ),
                         child: ListTile(
                           leading: CircleAvatar(
-                            backgroundColor: Colors.teal,
+                            backgroundColor: const Color(0xFF0D9488),
                             foregroundColor: Colors.white,
                             child: Text(
                               '${index + 1}',
@@ -534,7 +1026,7 @@ class PreferenceListScreen extends StatelessWidget {
                             style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 14),
                           ),
                           subtitle: Text(
-                            '${h.city} • 2025 Tabanı: ${h.kpss2025}',
+                            '${h.city} • 2025 Taban: ${h.kpss2025}',
                             style: const TextStyle(fontSize: 12),
                           ),
                           trailing: const Icon(Icons.drag_handle, color: Colors.grey),
@@ -563,7 +1055,7 @@ class PreferenceListScreen extends StatelessWidget {
   }
 }
 
-// ---------------- HASTANE KARTI BİLEŞENİ ----------------
+// ---------------- GÜÇLENDİRİLMİŞ HASTANE KARTI ----------------
 class HospitalCard extends StatelessWidget {
   final Hospital hospital;
   final bool isFavorite;
@@ -596,27 +1088,19 @@ class HospitalCard extends StatelessWidget {
               children: [
                 CachedNetworkImage(
                   imageUrl: hospital.imageUrl,
-                  height: 140,
+                  height: 150,
                   width: double.infinity,
                   fit: BoxFit.cover,
-                  placeholder: (context, url) => Container(
-                    height: 140,
-                    color: Colors.grey.shade200,
-                    child: const Center(child: CircularProgressIndicator()),
-                  ),
-                  errorWidget: (context, url, err) => Container(
-                    height: 140,
-                    color: Colors.teal.shade100,
-                    child: const Icon(Icons.local_hospital, size: 50, color: Colors.teal),
-                  ),
+                  placeholder: (context, url) => _fallbackHospitalBanner(hospital),
+                  errorWidget: (context, url, err) => _fallbackHospitalBanner(hospital),
                 ),
                 Positioned(
-                  top: 8,
-                  left: 8,
+                  top: 10,
+                  left: 10,
                   child: Container(
-                    padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
+                    padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 4),
                     decoration: BoxDecoration(
-                      color: Colors.black.withOpacity(0.65),
+                      color: Colors.black.withOpacity(0.70),
                       borderRadius: BorderRadius.circular(8),
                     ),
                     child: Text(
@@ -628,12 +1112,15 @@ class HospitalCard extends StatelessWidget {
                 Positioned(
                   top: 4,
                   right: 4,
-                  child: IconButton(
-                    icon: Icon(
-                      isFavorite ? Icons.favorite : Icons.favorite_border,
-                      color: isFavorite ? Colors.red : Colors.white,
+                  child: CircleAvatar(
+                    backgroundColor: Colors.black.withOpacity(0.35),
+                    child: IconButton(
+                      icon: Icon(
+                        isFavorite ? Icons.favorite : Icons.favorite_border,
+                        color: isFavorite ? Colors.redAccent : Colors.white,
+                      ),
+                      onPressed: onToggleFavorite,
                     ),
-                    onPressed: onToggleFavorite,
                   ),
                 ),
               ],
@@ -654,8 +1141,8 @@ class HospitalCard extends StatelessWidget {
                       ),
                       if (hasNote)
                         const Tooltip(
-                          message: 'Kişisel notunuz var',
-                          child: Icon(Icons.note_alt, size: 18, color: Colors.amber),
+                          message: 'Kayıtlı kişisel notunuz var',
+                          child: Icon(Icons.note_alt, size: 20, color: Colors.amber),
                         ),
                     ],
                   ),
@@ -664,17 +1151,46 @@ class HospitalCard extends StatelessWidget {
                     '${hospital.city} / ${hospital.district}',
                     style: TextStyle(color: Colors.grey.shade600, fontSize: 13),
                   ),
-                  const Divider(height: 16),
+                  const Divider(height: 18),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       _badge('2024 Taban', '${hospital.kpss2024}'),
                       _badge('2025 Taban', '${hospital.kpss2025}'),
                       _badge('İş Yükü', hospital.workLoad),
+                      _statusBadge(hospital.kpss2025),
                     ],
                   ),
                 ],
               ),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+
+  Widget _fallbackHospitalBanner(Hospital h) {
+    return Container(
+      height: 150,
+      width: double.infinity,
+      decoration: BoxDecoration(
+        gradient: LinearGradient(
+          colors: [Colors.teal.shade700, Colors.teal.shade400],
+          begin: Alignment.topLeft,
+          end: Alignment.bottomRight,
+        ),
+      ),
+      child: Center(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            const Icon(Icons.apartment_rounded, size: 48, color: Colors.white),
+            const SizedBox(height: 4),
+            Text(
+              h.name,
+              style: const TextStyle(color: Colors.white, fontWeight: FontWeight.bold, fontSize: 13),
+              textAlign: TextAlign.center,
             ),
           ],
         ),
@@ -691,9 +1207,30 @@ class HospitalCard extends StatelessWidget {
       ],
     );
   }
+
+  Widget _statusBadge(double basePoint) {
+    // 83 puana göre anlık durum
+    final bool isLikely = 83.0 >= basePoint;
+    return Container(
+      padding: const EdgeInsets.symmetric(horizontal: 6, vertical: 3),
+      decoration: BoxDecoration(
+        color: isLikely ? Colors.green.shade50 : Colors.amber.shade50,
+        borderRadius: BorderRadius.circular(6),
+        border: Border.all(color: isLikely ? Colors.green.shade300 : Colors.amber.shade300),
+      ),
+      child: Text(
+        isLikely ? '83 Puan Gelir' : 'Sınırda / Yakın',
+        style: TextStyle(
+          fontSize: 10,
+          fontWeight: FontWeight.bold,
+          color: isLikely ? Colors.green.shade800 : Colors.amber.shade900,
+        ),
+      ),
+    );
+  }
 }
 
-// ---------------- EKRAN 3: DETAY, YORUMLAR VE NOT SAYFASI ----------------
+// ---------------- HASTANE DETAY SAYFASI ----------------
 class HospitalDetailScreen extends StatefulWidget {
   final Hospital hospital;
   final bool isFavorite;
@@ -755,9 +1292,19 @@ class _HospitalDetailScreenState extends State<HospitalDetailScreen> {
           children: [
             CachedNetworkImage(
               imageUrl: h.imageUrl,
-              height: 200,
+              height: 220,
               width: double.infinity,
               fit: BoxFit.cover,
+              placeholder: (context, url) => Container(
+                height: 220,
+                color: const Color(0xFF0D9488),
+                child: const Center(child: Icon(Icons.apartment, size: 64, color: Colors.white)),
+              ),
+              errorWidget: (context, url, err) => Container(
+                height: 220,
+                color: const Color(0xFF0D9488),
+                child: const Center(child: Icon(Icons.apartment, size: 64, color: Colors.white)),
+              ),
             ),
             Padding(
               padding: const EdgeInsets.all(16),
@@ -766,62 +1313,71 @@ class _HospitalDetailScreenState extends State<HospitalDetailScreen> {
                 children: [
                   Text(
                     h.name,
-                    style: const TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+                    style: const TextStyle(fontSize: 21, fontWeight: FontWeight.bold),
                   ),
                   Text(
-                    '${h.city} - ${h.district} (${h.type})',
+                    '${h.city} - ${h.district} • ${h.type}',
                     style: TextStyle(color: Colors.grey.shade600, fontSize: 14),
                   ),
                   const SizedBox(height: 16),
 
                   // KPSS Puan Özeti
                   Card(
-                    color: Colors.teal.shade50,
+                    color: const Color(0xFFF0FDFA),
                     shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
                     child: Padding(
-                      padding: const EdgeInsets.all(12),
+                      padding: const EdgeInsets.all(14),
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.spaceAround,
                         children: [
                           _infoItem('2024 KPSS Taban', '${h.kpss2024}'),
                           _infoItem('2025 KPSS Taban', '${h.kpss2025}'),
-                          _infoItem('İş Yükü', h.workLoad),
+                          _infoItem('İş Yükü Puanı', h.workLoad),
                         ],
                       ),
                     ),
                   ),
                   const SizedBox(height: 16),
 
-                  // Şartlar Listesi
-                  const Text('Çalışma ve Sosyal Koşullar', style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16)),
+                  // Çalışma ve Yaşam Şartları
+                  const Text('Çalışma ve Yaşam Şartları',
+                      style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16)),
                   const SizedBox(height: 8),
-                  _rowInfo(Icons.attach_money, 'Tahmini Teşvik', h.incentive),
-                  _rowInfo(Icons.schedule, 'Çalışma/Nöbet Düzeni', h.shift),
-                  _rowInfo(Icons.home, 'Ortalama Ev Kirası', h.rentRange),
+                  _rowInfo(Icons.payments_outlined, 'Ortalama Teşvik', h.incentive),
+                  _rowInfo(Icons.schedule, 'Nöbet & Çalışma Düzeni', h.shift),
+                  _rowInfo(Icons.home_outlined, 'Bölge Ev Kiraları', h.rentRange),
 
                   const Divider(height: 32),
 
-                  // Kişisel Not Bölümü
+                  // Kişisel Not Defteri
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      const Text('Kişisel Tercih Notum', style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16)),
-                      IconButton(
-                        icon: const Icon(Icons.save, color: Colors.teal),
+                      const Text('Kişisel Tercih Notum',
+                          style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16)),
+                      ElevatedButton.icon(
+                        style: ElevatedButton.styleFrom(
+                          backgroundColor: const Color(0xFF0D9488),
+                          foregroundColor: Colors.white,
+                          padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
+                        ),
+                        icon: const Icon(Icons.save, size: 16),
+                        label: const Text('Kaydet'),
                         onPressed: () {
                           widget.onSaveNote(_noteController.text);
                           ScaffoldMessenger.of(context).showSnackBar(
-                            const SnackBar(content: Text('Notunuz kaydedildi!')),
+                            const SnackBar(content: Text('Notunuz başarıyla kaydedildi!')),
                           );
                         },
                       ),
                     ],
                   ),
+                  const SizedBox(height: 8),
                   TextField(
                     controller: _noteController,
                     maxLines: 3,
                     decoration: InputDecoration(
-                      hintText: 'Örn: Lojman var mı araştır, acili çok yoğunmuş, teyzemlere yakın...',
+                      hintText: 'Örn: Canik kiraları Atakumdan uygun, Samsun Şehir Hastanesini 1. sıraya yazabilirim...',
                       filled: true,
                       fillColor: Colors.white,
                       border: OutlineInputBorder(borderRadius: BorderRadius.circular(10)),
@@ -830,19 +1386,19 @@ class _HospitalDetailScreenState extends State<HospitalDetailScreen> {
 
                   const Divider(height: 32),
 
-                  // PDF Raporu Geri Bildirimleri
+                  // Saha Raporu Geri Bildirimleri
                   const Text('Saha Raporu Verileri (Meslektaş Yanıtları)',
                       style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16)),
                   const SizedBox(height: 8),
-                  ...h.surveyReviews.map((r) => _commentBubble(r, Colors.blue.shade50, Colors.blue.shade800)),
+                  ...h.surveyReviews.map((r) => _commentBubble(r, const Color(0xFFEFF6FF), const Color(0xFF1E40AF))),
 
                   const SizedBox(height: 16),
 
-                  // İnternet / Bağımsız Saha Yorumları
-                  const Text('Bağımsız Saha & Forum Yorumları',
+                  // Bağımsız Saha & Forum Yorumları
+                  const Text('Bağımsız Saha & Güncel Forum Araştırması',
                       style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16)),
                   const SizedBox(height: 8),
-                  ...h.webReviews.map((r) => _commentBubble(r, Colors.green.shade50, Colors.green.shade900)),
+                  ...h.webReviews.map((r) => _commentBubble(r, const Color(0xFFF0FDF4), const Color(0xFF166534))),
                 ],
               ),
             ),
@@ -857,17 +1413,17 @@ class _HospitalDetailScreenState extends State<HospitalDetailScreen> {
       children: [
         Text(label, style: const TextStyle(fontSize: 11, color: Colors.grey)),
         const SizedBox(height: 2),
-        Text(val, style: const TextStyle(fontSize: 14, fontWeight: FontWeight.bold, color: Colors.teal)),
+        Text(val, style: const TextStyle(fontSize: 14, fontWeight: FontWeight.bold, color: Color(0xFF0D9488))),
       ],
     );
   }
 
   Widget _rowInfo(IconData icon, String title, String value) {
     return Padding(
-      padding: const EdgeInsets.symmetric(vertical: 4),
+      padding: const EdgeInsets.symmetric(vertical: 5),
       child: Row(
         children: [
-          Icon(icon, size: 18, color: Colors.teal),
+          Icon(icon, size: 20, color: const Color(0xFF0D9488)),
           const SizedBox(width: 8),
           Text('$title: ', style: const TextStyle(fontWeight: FontWeight.w600, fontSize: 13)),
           Expanded(child: Text(value, style: const TextStyle(fontSize: 13))),
@@ -885,7 +1441,7 @@ class _HospitalDetailScreenState extends State<HospitalDetailScreen> {
         color: bg,
         borderRadius: BorderRadius.circular(10),
       ),
-      child: Text(text, style: TextStyle(color: textColor, fontSize: 13)),
+      child: Text(text, style: TextStyle(color: textColor, fontSize: 13, height: 1.4)),
     );
   }
 }
