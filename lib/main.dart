@@ -1,9 +1,7 @@
 import 'dart:convert';
 import 'dart:io';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:cached_network_image/cached_network_image.dart';
 import 'package:image_picker/image_picker.dart';
 
 void main() async {
@@ -36,54 +34,119 @@ class HemsireTercihApp extends StatelessWidget {
 }
 
 class Hospital {
-  final String id;
-  final String name;
-  final String city;
-  final String district;
-  final String type;
-  final double kpss2024;
-  final double kpss2025;
-  final String workLoad;
-  final String incentive;
-  final String shift;
-  final String rentRange;
-  final List<String> surveyReviews;
-  final List<String> webReviews;
+  final String id, name, city, district, type, workLoad, incentive, shift, rentRange, review;
+  final double kpss2024, kpss2025;
 
   Hospital({
-    required this.id,
-    required this.name,
-    required this.city,
-    required this.district,
-    required this.type,
-    required this.kpss2024,
-    required this.kpss2025,
-    required this.workLoad,
-    required this.incentive,
-    required this.shift,
-    required this.rentRange,
-    required this.surveyReviews,
-    required this.webReviews,
+    required this.id, required this.name, required this.city, required this.district,
+    required this.type, required this.kpss2024, required this.kpss2025,
+    required this.workLoad, required this.incentive, required this.shift,
+    required this.rentRange, required this.review,
   });
-
-  factory Hospital.fromJson(Map<String, dynamic> json) {
-    return Hospital(
-      id: json['id'] ?? '',
-      name: json['name'] ?? '',
-      city: json['city'] ?? '',
-      district: json['district'] ?? '',
-      type: json['type'] ?? 'Devlet Hastanesi',
-      kpss2024: (json['kpss2024'] as num?)?.toDouble() ?? 80.0,
-      kpss2025: (json['kpss2025'] as num?)?.toDouble() ?? 80.0,
-      workLoad: json['workLoad'] ?? '7 / 10',
-      incentive: json['incentive'] ?? '8.000 TL - 12.000 TL',
-      shift: json['shift'] ?? '24 Saat Nöbet',
-      rentRange: json['rentRange'] ?? '12.000 TL - 18.000 TL',
-      surveyReviews: List<String>.from(json['surveyReviews'] ?? []),
-      webReviews: List<String>.from(json['webReviews'] ?? []),
-    );
-  }
 }
+
+// --- DEVASA VERİ HAVUZU ---
+final List<String> rawData = [
+  "tokat_devlet|Tokat Devlet Hastanesi|Tokat|Merkez|Devlet Hastanesi|73.2|72.8|6/10|7.500-11.000 TL|24 Saat Nöbet|10.000-15.000 TL|Merkezde yaşam çok rahat, masraflar düşük. Nöbet ve ekip uyumu iyi.",
+  "tokat_zile|Tokat Zile Devlet Hastanesi|Tokat|Zile|Devlet Hastanesi|72.4|72.0|5/10|5.500-8.500 TL|24 Saat & Blok Off|8.000-12.000 TL|Sakin ve stressiz bir ortam. Blok nöbetlerle uzun izinler ayarlanabiliyor.",
+  "tokat_turhal|Tokat Turhal Devlet Hastanesi|Tokat|Turhal|Devlet Hastanesi|72.5|72.1|5/10|6.000-9.000 TL|24 Saat Nöbet|9.000-13.000 TL|Merkeze 20 dk. İkinci basamak düzenli ilçe hastanesi.",
+  "tokat_resadiye|Tokat Reşadiye Devlet Hastanesi|Tokat|Reşadiye|Devlet Hastanesi|71.9|71.5|4/10|4.000-7.000 TL|24 Saat Nöbet|8.000-12.000 TL|İş yükü sakin, birikim yapmak için elverişli.",
+  "tokat_niksar|Tokat Niksar Devlet Hastanesi|Tokat|Niksar|Devlet Hastanesi|72.2|71.8|5/10|5.000-8.000 TL|24 Saat Nöbet|8.500-12.500 TL|Yeşillikler içinde sakin bir ilçe.",
+  "tokat_erbaa|Tokat Erbaa Devlet Hastanesi|Tokat|Erbaa|Devlet Hastanesi|72.6|72.1|6/10|6.500-9.500 TL|24 Saat Nöbet|10.000-14.000 TL|Tokat’ın en büyük ilçesi. Hareketli ve donanımlı.",
+  "tokat_almus|Tokat Almus Devlet Hastanesi|Tokat|Almus|Devlet Hastanesi|71.8|71.4|4/10|4.000-6.500 TL|24 Saat Nöbet|7.000-10.000 TL|Göl kenarında doğa harikası küçük ilçe.",
+  "samsun_sehir|Samsun Şehir Hastanesi|Samsun|Canik|Şehir Hastanesi|74.2|73.8|8/10|12.000-16.000 TL|24 Saat & 16-8|15.000-22.000 TL|Bina ve donanım son teknoloji. Canik bölgesinde ev kiraları uygun.",
+  "samsun_eah|Samsun Eğitim ve Araştırma Hastanesi|Samsun|İlkadım|Eğitim ve Araştırma|73.8|73.5|7/10|8.000-12.000 TL|24 Saat Nöbet|14.000-20.000 TL|Merkezi konumda, köklü kadro.",
+  "samsun_gazi|Samsun Gazi Devlet Hastanesi|Samsun|İlkadım|Devlet Hastanesi|73.5|73.1|6/10|7.000-10.000 TL|08:00-08:00 & 8-16|13.000-18.000 TL|Ağır vakalar sevk edildiği için nöbet temposu daha sakindir.",
+  "samsun_carsamba|Samsun Çarşamba Devlet Hastanesi|Samsun|Çarşamba|Devlet Hastanesi|73.2|72.7|6/10|6.500-9.500 TL|24 Saat Nöbet|10.000-15.000 TL|Merkeze dolmuşla 30 dk.",
+  "samsun_bafra|Samsun Bafra Devlet Hastanesi|Samsun|Bafra|Devlet Hastanesi|73.4|72.9|7/10|7.000-10.000 TL|24 Saat Nöbet|11.000-16.000 TL|Büyük ilçe hastanesi, acili hareketli.",
+  "samsun_vezirkopru|Samsun Vezirköprü Devlet Hastanesi|Samsun|Vezirköprü|Devlet Hastanesi|72.8|72.3|5/10|5.500-8.500 TL|24 Saat Nöbet|8.500-12.000 TL|Yeni binasında hizmet veriyor.",
+  "sinop_ataturk|Sinop Atatürk Devlet Hastanesi|Sinop|Merkez|Devlet Hastanesi|73.1|72.7|5/10|7.000-10.500 TL|24 Saat Nöbet|12.000-17.000 TL|Deniz kenarında huzurlu şehir. Sahil yaşamı sevenlere birebir.",
+  "sinop_boyabat|Sinop Boyabat 75. Yıl Devlet Hastanesi|Sinop|Boyabat|Devlet Hastanesi|72.4|71.9|5/10|6.000-8.500 TL|24 Saat Nöbet|9.000-13.000 TL|Gelişmiş ilçe, hastane ortamı rahat.",
+  "sinop_ayancik|Sinop Ayancık Devlet Hastanesi|Sinop|Ayancık|Devlet Hastanesi|72.2|71.8|4/10|5.000-7.500 TL|24 Saat Nöbet|8.000-12.000 TL|Sahil şeridinde küçük şirin bir kurum.",
+  "adana_sehir|Adana Şehir Hastanesi|Adana|Yüreğir|Şehir Hastanesi|74.2|73.8|8/10|11.000-14.000 TL|24 Saat|15.000-20.000 TL|Bölgenin ana referans merkezi.",
+  "adana_seyhan|Adana Seyhan Devlet Hastanesi|Adana|Seyhan|Devlet Hastanesi|73.9|73.5|6/10|8.000-10.000 TL|24 Saat|13.000-18.000 TL|Şehir merkezinde rahat kurum.",
+  "adiyaman_eah|Adıyaman Eğitim ve Araştırma Hastanesi|Adıyaman|Merkez|Eğitim ve Araştırma|71.2|70.7|7/10|9.000-12.000 TL|24 Saat|12.000-16.000 TL|Acili dinamik ve öğretici.",
+  "afyon_devlet|Afyonkarahisar Devlet Hastanesi|Afyonkarahisar|Merkez|Devlet Hastanesi|72.8|72.3|6/10|8.000-11.000 TL|24 Saat|11.000-15.000 TL|Termal başkenti, sakin yaşam.",
+  "agri_eah|Ağrı Eğitim ve Araştırma Hastanesi|Ağrı|Merkez|Eğitim ve Araştırma|68.5|67.9|7/10|10.000-14.000 TL|24 Saat|9.000-13.000 TL|Hizmet puanı avantajı.",
+  "aksaray_eah|Aksaray Eğitim ve Araştırma Hastanesi|Aksaray|Merkez|Eğitim ve Araştırma|72.5|72.0|7/10|9.000-12.000 TL|24 Saat|11.000-15.000 TL|İç Anadolu kavşak noktası.",
+  "amasya_eah|Amasya Sabuncuoğlu Şerefeddin EAH|Amasya|Merkez|Eğitim ve Araştırma|73.4|72.9|6/10|8.000-11.000 TL|24 Saat|12.000-16.000 TL|Tarihi şehir, personel memnuniyeti iyi.",
+  "ankara_bilkent|Ankara Bilkent Şehir Hastanesi|Ankara|Çankaya|Şehir Hastanesi|74.5|74.0|9/10|12.000-15.000 TL|24 Saat|25.000-35.000 TL|Devasa kampüs, yoğun klinik deneyim.",
+  "ankara_etlik|Ankara Etlik Şehir Hastanesi|Ankara|Keçiören|Şehir Hastanesi|74.2|73.7|8/10|11.000-14.000 TL|24 Saat|20.000-28.000 TL|Teşvikler düzenli.",
+  "ankara_gulhane|Ankara Gülhane EAH (GATA)|Ankara|Keçiören|Eğitim ve Araştırma|74.3|73.8|7/10|10.000-13.000 TL|24 Saat|20.000-26.000 TL|Köklü kurum disiplini.",
+  "ankara_sincan|Ankara Sincan EAH|Ankara|Sincan|Eğitim ve Araştırma|73.6|73.1|7/10|9.000-12.000 TL|24 Saat|15.000-20.000 TL|Kiralar Ankara merkezine göre uygun.",
+  "antalya_sehir|Antalya Şehir Hastanesi|Antalya|Kepez|Şehir Hastanesi|75.1|74.6|7/10|10.000-14.000 TL|24 Saat|18.000-25.000 TL|Yeni tesis, sosyal imkanlar harika.",
+  "antalya_eah|Antalya Eğitim ve Araştırma Hastanesi|Antalya|Muratpaşa|Eğitim ve Araştırma|75.6|75.1|8/10|10.000-13.000 TL|24 Saat|20.000-28.000 TL|Denize yakın merkezi konum.",
+  "ardahan_devlet|Ardahan Devlet Hastanesi|Ardahan|Merkez|Devlet Hastanesi|68.8|68.3|5/10|7.000-10.000 TL|24 Saat|9.000-13.000 TL|Doğu görevi ve puan için ideal.",
+  "artvin_devlet|Artvin Devlet Hastanesi|Artvin|Merkez|Devlet Hastanesi|71.5|71.0|5/10|7.000-10.000 TL|24 Saat|10.000-14.000 TL|Doğa harikası, sakin hastane.",
+  "aydin_ataturk|Aydın Atatürk Devlet Hastanesi|Aydın|Efeler|Devlet Hastanesi|74.5|74.0|6/10|8.000-11.000 TL|24 Saat|14.000-20.000 TL|Ege'nin sıcak ve sosyal ili.",
+  "balikesir_devlet|Balıkesir Devlet Hastanesi|Balıkesir|Karesi|Devlet Hastanesi|73.8|73.3|6/10|8.000-11.000 TL|24 Saat|13.000-18.000 TL|Merkezi ve huzurlu lokasyon.",
+  "bartin_devlet|Bartın Devlet Hastanesi|Bartın|Merkez|Devlet Hastanesi|72.3|71.8|6/10|7.000-10.000 TL|24 Saat|11.000-16.000 TL|Sakin Karadeniz kenti.",
+  "batman_eah|Batman Eğitim ve Araştırma Hastanesi|Batman|Merkez|Eğitim ve Araştırma|69.8|69.2|7/10|9.000-12.000 TL|24 Saat|10.000-15.000 TL|Güneydoğunun dinamik şehirlerinden.",
+  "bayburt_devlet|Bayburt Devlet Hastanesi|Bayburt|Merkez|Devlet Hastanesi|70.5|70.0|5/10|6.000-9.000 TL|24 Saat|9.000-13.000 TL|Sakinlik arayanlar için tasarruf imkanı.",
+  "bilecik_eah|Bilecik Eğitim ve Araştırma Hastanesi|Bilecik|Merkez|Eğitim ve Araştırma|72.6|72.1|6/10|8.000-11.000 TL|24 Saat|11.000-15.000 TL|Hızlı tren hattı üstünde pratik ulaşım.",
+  "bolu_eah|Bolu İzzet Baysal EAH|Bolu|Merkez|Eğitim ve Araştırma|73.4|72.9|7/10|8.000-11.500 TL|24 Saat|13.000-18.000 TL|Ankara-İstanbul arası muazzam doğa.",
+  "burdur_devlet|Burdur Devlet Hastanesi|Burdur|Merkez|Devlet Hastanesi|73.7|73.2|6/10|7.000-10.000 TL|24 Saat|12.000-16.000 TL|Antalya'ya komşu öğrenci kenti.",
+  "bursa_sehir|Bursa Şehir Hastanesi|Bursa|Nilüfer|Şehir Hastanesi|73.8|73.3|7/10|11.000-14.000 TL|24 Saat|16.000-22.000 TL|Nilüfer gibi nezih bir ilçede modern kampüs.",
+  "bursa_ihtisas|Bursa Yüksek İhtisas EAH|Bursa|Yıldırım|Eğitim ve Araştırma|73.5|73.0|8/10|10.000-13.000 TL|24 Saat|15.000-20.000 TL|Bursa'nın en köklü ve yoğun hastanelerinden.",
+  "canakkale_mehmet_akif|Çanakkale Mehmet Akif Ersoy DH|Çanakkale|Merkez|Devlet Hastanesi|74.5|74.0|6/10|8.000-11.000 TL|24 Saat|16.000-22.000 TL|Boğaz manzaralı harika konum.",
+  "cankiri_devlet|Çankırı Devlet Hastanesi|Çankırı|Merkez|Devlet Hastanesi|72.1|71.6|5/10|6.000-9.000 TL|24 Saat|10.000-14.000 TL|Ankara'ya yakınlığıyla avantajlı.",
+  "corum_eah|Çorum Erol Olçok EAH|Çorum|Merkez|Eğitim ve Araştırma|72.6|72.1|7/10|8.000-12.000 TL|24 Saat|11.000-16.000 TL|Teşvikler düzenli, yaşam masrafı düşük.",
+  "denizli_devlet|Denizli Devlet Hastanesi|Denizli|Merkezefendi|Devlet Hastanesi|74.6|74.1|7/10|8.000-11.500 TL|24 Saat|14.000-19.000 TL|Ege'nin en gelişmiş illerinden.",
+  "diyarbakir_gazi|Diyarbakır Gazi Yaşargil EAH|Diyarbakır|Yenişehir|Eğitim ve Araştırma|70.3|69.8|8/10|9.000-13.000 TL|24 Saat|11.000-16.000 TL|Bölgenin ana sevk merkezi.",
+  "duzce_ataturk|Düzce Atatürk Devlet Hastanesi|Düzce|Merkez|Devlet Hastanesi|72.8|72.3|6/10|8.000-11.000 TL|24 Saat|12.000-16.000 TL|Otoban kenarında, ulaşımı rahat.",
+  "edirne_sultan_murat|Edirne Sultan 1. Murat Devlet Hastanesi|Edirne|Merkez|Devlet Hastanesi|73.4|72.9|6/10|8.000-11.000 TL|24 Saat|14.000-19.000 TL|Modern Trakya şehri.",
+  "elazig_sehir|Elazığ Fethi Sekin Şehir Hastanesi|Elazığ|Merkez|Şehir Hastanesi|71.0|70.5|7/10|10.000-13.000 TL|24 Saat|11.000-15.000 TL|Bölge hastanesi, altyapı güçlü.",
+  "erzincan_eah|Erzincan Mengücek Gazi EAH|Erzincan|Merkez|Eğitim ve Araştırma|71.2|70.7|6/10|8.000-11.000 TL|24 Saat|10.000-14.000 TL|Doğa sporları ve sakin yaşam.",
+  "erzurum_sehir|Erzurum Şehir Hastanesi|Erzurum|Palandöken|Şehir Hastanesi|71.4|70.9|8/10|10.000-14.000 TL|24 Saat|11.000-16.000 TL|Kışın kapalı tüp geçitler kurtarıcı.",
+  "eskisehir_sehir|Eskişehir Şehir Hastanesi|Eskişehir|Odunpazarı|Şehir Hastanesi|74.8|74.3|7/10|10.000-13.000 TL|24 Saat|14.000-20.000 TL|Tramvay hattı ve öğrenci sosyal ortamı.",
+  "gaziantep_sehir|Gaziantep Şehir Hastanesi|Gaziantep|Şahinbey|Şehir Hastanesi|71.8|71.3|8/10|10.000-14.000 TL|24 Saat|14.000-20.000 TL|Yeni kampüs, yoğun vaka.",
+  "giresun_eah|Giresun Eğitim ve Araştırma Hastanesi|Giresun|Merkez|Eğitim ve Araştırma|73.1|72.6|7/10|8.000-11.500 TL|24 Saat|12.000-17.000 TL|Denize sıfır, Karadeniz huzuru.",
+  "gumushane_devlet|Gümüşhane Devlet Hastanesi|Gümüşhane|Merkez|Devlet Hastanesi|71.2|70.7|5/10|6.000-9.000 TL|24 Saat|9.000-13.000 TL|Yeni tünellerle Trabzon'a çok yakın.",
+  "hakkari_devlet|Hakkari Devlet Hastanesi|Hakkari|Merkez|Devlet Hastanesi|67.9|67.4|5/10|8.000-12.000 TL|24 Saat|8.000-12.000 TL|En yüksek hizmet puanı avantajı.",
+  "hatay_dortyol|Hatay Dörtyol Devlet Hastanesi|Hatay|Dörtyol|Devlet Hastanesi|71.8|71.3|6/10|7.000-10.000 TL|24 Saat|10.000-14.000 TL|Sahil şeridinde.",
+  "igdir_devlet|Iğdır Dr. Nevruz Erez Devlet Hastanesi|Iğdır|Merkez|Devlet Hastanesi|68.9|68.4|6/10|7.000-10.000 TL|24 Saat|9.000-13.000 TL|Mikroklima iklimli doğu kenti.",
+  "isparta_sehir|Isparta Şehir Hastanesi|Isparta|Merkez|Şehir Hastanesi|74.1|73.6|7/10|10.000-13.000 TL|24 Saat|12.000-17.000 TL|Güller diyarı sakin ve temiz şehir.",
+  "istanbul_cam_sakura|Başakşehir Çam ve Sakura Şehir H.|İstanbul|Başakşehir|Şehir Hastanesi|69.3|68.9|9/10|12.000-15.000 TL|24 Saat|25.000-35.000 TL|Kağıtsız hastane, metroyla içine kadar ulaşım.",
+  "istanbul_sadi_konuk|Bakırköy Dr. Sadi Konuk EAH|İstanbul|Bakırköy|Eğitim ve Araştırma|69.6|69.0|9/10|11.000-14.000 TL|24 Saat|25.000-35.000 TL|Metrobüs dibinde yoğun tecrübe merkezi.",
+  "izmir_sehir|İzmir Şehir Hastanesi|İzmir|Bayraklı|Şehir Hastanesi|75.5|75.0|8/10|11.000-15.000 TL|24 Saat|20.000-28.000 TL|Ege'nin tepesinde devasa yapı.",
+  "maras_necil|Kahramanmaraş Necip Fazıl Şehir Hastanesi|Kahramanmaraş|Dulkadiroğlu|Şehir Hastanesi|72.3|71.8|7/10|9.000-12.000 TL|24 Saat|12.000-16.000 TL|Düzenli işleyiş.",
+  "karabuk_eah|Karabük Eğitim ve Araştırma Hastanesi|Karabük|Merkez|Eğitim ve Araştırma|73.1|72.6|7/10|8.000-11.000 TL|24 Saat|11.000-15.000 TL|Üniversite kenti, ekonomik.",
+  "karaman_eah|Karaman Eğitim ve Araştırma Hastanesi|Karaman|Merkez|Eğitim ve Araştırma|72.6|72.1|6/10|8.000-11.000 TL|24 Saat|10.000-14.000 TL|Hızlı trenle ulaşım kolay.",
+  "kars_harakani|Kars Harakani Devlet Hastanesi|Kars|Merkez|Devlet Hastanesi|69.4|68.9|6/10|8.000-11.000 TL|24 Saat|10.000-14.000 TL|Doğu ekspresi ile turistik yapı.",
+  "kastamonu_eah|Kastamonu Eğitim ve Araştırma Hastanesi|Kastamonu|Merkez|Eğitim ve Araştırma|72.7|72.2|7/10|8.000-11.000 TL|24 Saat|11.000-15.000 TL|Ormanlık ve ferah bir il.",
+  "kayseri_sehir|Kayseri Şehir Hastanesi|Kayseri|Kocasinan|Şehir Hastanesi|74.1|73.6|7/10|10.000-13.500 TL|24 Saat|12.000-18.000 TL|Tramvay tam önünden geçer.",
+  "kirikkale_ihtisas|Kırıkkale Yüksek İhtisas Hastanesi|Kırıkkale|Merkez|Devlet Hastanesi|72.8|72.3|6/10|8.000-11.000 TL|24 Saat|11.000-15.000 TL|Ankara'ya çok yakın.",
+  "kirklareli_eah|Kırklareli Eğitim ve Araştırma Hastanesi|Kırklareli|Merkez|Eğitim ve Araştırma|73.4|72.9|6/10|8.000-11.000 TL|24 Saat|12.000-17.000 TL|Trakya'da medeni ve sakin yaşam.",
+  "kirsehir_eah|Kırşehir Eğitim ve Araştırma Hastanesi|Kırşehir|Merkez|Eğitim ve Araştırma|72.7|72.2|6/10|8.000-11.000 TL|24 Saat|10.000-14.000 TL|Maddi birikim için çok uygun.",
+  "kilis_alaeddin|Kilis Prof. Dr. Alaeddin Yavaşca DH|Kilis|Merkez|Devlet Hastanesi|71.3|70.8|6/10|7.000-10.000 TL|24 Saat|9.000-13.000 TL|Yeni yapılan modern bina.",
+  "kocaeli_sehir|Kocaeli Şehir Hastanesi|Kocaeli|İzmit|Şehir Hastanesi|73.1|72.6|8/10|11.000-14.500 TL|24 Saat|15.000-22.000 TL|İstanbul'a 1 saat mesafede.",
+  "konya_sehir|Konya Şehir Hastanesi|Konya|Karatay|Şehir Hastanesi|74.1|73.6|7/10|10.000-14.000 TL|24 Saat|12.000-17.000 TL|Düzenli ulaşım ve tramvay ağı.",
+  "kutahya_sehir|Kütahya Şehir Hastanesi|Kütahya|Merkez|Şehir Hastanesi|73.4|72.9|7/10|10.000-13.000 TL|24 Saat|12.000-16.000 TL|Eskişehir'e 45 dakika.",
+  "malatya_eah|Malatya Eğitim ve Araştırma Hastanesi|Malatya|Battalgazi|Eğitim ve Araştırma|71.6|71.1|7/10|9.000-12.000 TL|24 Saat|11.000-15.000 TL|Personel dayanışması yüksek.",
+  "manisa_sehir|Manisa Şehir Hastanesi|Manisa|Şehzadeler|Şehir Hastanesi|74.3|73.8|7/10|11.000-14.000 TL|24 Saat|14.000-19.000 TL|İzmir'den gidiş geliş imkanı.",
+  "mardin_eah|Mardin Eğitim ve Araştırma Hastanesi|Mardin|Artuklu|Eğitim ve Araştırma|70.2|69.7|7/10|9.000-12.000 TL|24 Saat|11.000-16.000 TL|Tarihi şehir.",
+  "mersin_sehir|Mersin Şehir Hastanesi|Mersin|Toroslar|Şehir Hastanesi|74.4|73.9|7/10|10.000-13.000 TL|24 Saat|14.000-20.000 TL|Sahil kenti, iklimi sıcak.",
+  "mugla_eah|Muğla Eğitim ve Araştırma Hastanesi|Muğla|Menteşe|Eğitim ve Araştırma|75.3|74.8|8/10|10.000-13.000 TL|24 Saat|18.000-25.000 TL|Turizm kenti, prestijli kurum.",
+  "mus_devlet|Muş Devlet Hastanesi|Muş|Merkez|Devlet Hastanesi|68.8|68.3|6/10|8.000-11.000 TL|24 Saat|9.000-13.000 TL|Hizmet puanı çok yüksek.",
+  "nevsehir_devlet|Nevşehir Devlet Hastanesi|Nevşehir|Merkez|Devlet Hastanesi|73.5|73.0|6/10|8.000-11.000 TL|24 Saat|11.000-16.000 TL|Turistik Kapadokya bölgesinde nezih şehir.",
+  "nigde_omer|Niğde Ömer Halisdemir EAH|Niğde|Merkez|Eğitim ve Araştırma|72.6|72.1|6/10|8.000-11.000 TL|24 Saat|10.000-14.000 TL|Sakin öğrenci kenti.",
+  "ordu_eah|Ordu Eğitim ve Araştırma Hastanesi|Ordu|Altınordu|Eğitim ve Araştırma|73.6|73.1|7/10|8.000-12.000 TL|24 Saat|13.000-18.000 TL|Karadeniz'in en güzel sahil şeridi.",
+  "osmaniye_devlet|Osmaniye Devlet Hastanesi|Osmaniye|Merkez|Devlet Hastanesi|72.9|72.4|6/10|8.000-11.000 TL|24 Saat|11.000-15.000 TL|Adana'ya 1 saat mesafede.",
+  "rize_eah|Rize Eğitim ve Araştırma Hastanesi|Rize|Merkez|Eğitim ve Araştırma|72.8|72.3|7/10|8.000-11.000 TL|24 Saat|12.000-17.000 TL|Doğa ve yayla hayatı.",
+  "sakarya_eah|Sakarya Eğitim ve Araştırma Hastanesi|Sakarya|Adapazarı|Eğitim ve Araştırma|73.2|72.7|7/10|9.000-12.000 TL|24 Saat|14.000-20.000 TL|İstanbul'a çok yakın.",
+  "siirt_eah|Siirt Eğitim ve Araştırma Hastanesi|Siirt|Merkez|Eğitim ve Araştırma|69.3|68.8|6/10|8.000-11.000 TL|24 Saat|9.000-13.000 TL|Tasarruf için ideal.",
+  "sivas_numune|Sivas Numune Hastanesi|Sivas|Merkez|Devlet Hastanesi|73.1|72.6|6/10|8.000-11.000 TL|24 Saat|11.000-15.000 TL|Hızlı trenle Ankara bağlantısı.",
+  "sanliurfa_eah|Şanlıurfa Eğitim ve Araştırma Hastanesi|Şanlıurfa|Eyyübiye|Eğitim ve Araştırma|69.8|69.3|8/10|9.000-13.000 TL|24 Saat|10.000-15.000 TL|Puan ve klinik tecrübesi yüksek.",
+  "sirnak_cizre|Şırnak Cizre Dr. Selahattin Cizrelioğlu DH|Şırnak|Cizre|Devlet Hastanesi|68.2|67.7|6/10|9.000-12.000 TL|24 Saat|8.000-12.000 TL|İl merkezinden daha hareketli, havalimanı var.",
+  "tekirdag_sehir|Tekirdağ Dr. İsmail Fehmi Cumalıoğlu Şehir H.|Tekirdağ|Süleymanpaşa|Şehir Hastanesi|73.5|73.0|7/10|10.000-13.000 TL|24 Saat|15.000-20.000 TL|Deniz kenarı modern kampüs.",
+  "trabzon_kanuni|Trabzon Kanuni EAH|Trabzon|Yomra|Eğitim ve Araştırma|73.7|73.2|7/10|9.000-13.000 TL|24 Saat|14.000-20.000 TL|Doğu Karadeniz ana üssü.",
+  "tunceli_devlet|Tunceli Devlet Hastanesi|Tunceli|Merkez|Devlet Hastanesi|70.8|70.3|5/10|7.000-10.000 TL|24 Saat|10.000-14.000 TL|Çok sakin ve doğa ile iç içe.",
+  "usak_eah|Uşak Eğitim ve Araştırma Hastanesi|Uşak|Merkez|Eğitim ve Araştırma|73.8|73.3|6/10|8.000-11.000 TL|24 Saat|12.000-16.000 TL|Ege'nin iç kısımlarında sakin il.",
+  "van_eah|Van Eğitim ve Araştırma Hastanesi|Van|Edremit|Eğitim ve Araştırma|69.6|69.1|7/10|9.000-13.000 TL|24 Saat|10.000-15.000 TL|Göl kenarında ferah kampüs.",
+  "yalova_eah|Yalova Eğitim ve Araştırma Hastanesi|Yalova|Merkez|Eğitim ve Araştırma|73.9|73.4|7/10|9.000-13.000 TL|24 Saat|15.000-22.000 TL|Marmara'da sayfiye yeri rahatlığı.",
+  "yozgat_sehir|Yozgat Şehir Hastanesi|Yozgat|Merkez|Şehir Hastanesi|72.4|71.9|6/10|10.000-13.000 TL|24 Saat|10.000-14.000 TL|Ankara'ya çok yakın.",
+  "zonguldak_ataturk|Zonguldak Atatürk Devlet Hastanesi|Zonguldak|Merkez|Devlet Hastanesi|73.2|72.7|6/10|8.000-11.000 TL|24 Saat|12.000-17.000 TL|Tecrübeli kadrosuyla bilinen merkez."
+];
 
 class MainNavigationScreen extends StatefulWidget {
   const MainNavigationScreen({super.key});
@@ -94,458 +157,242 @@ class MainNavigationScreen extends StatefulWidget {
 
 class _MainNavigationScreenState extends State<MainNavigationScreen> {
   int _currentIndex = 0;
-  List<Hospital> _allHospitals = [];
-  bool _isLoading = true;
+  List<Hospital> _hospitals = [];
   List<String> _favoriteIds = [];
   Map<String, String> _notes = {};
-  Map<String, String> _customImages = {};
+  Map<String, String> _images = {};
+  String _searchQuery = '';
+  String _activeCity = 'Tümü';
+  double _userScore = 72.0;
 
   @override
   void initState() {
     super.initState();
-    _loadData();
+    _parseData();
+    _loadPrefs();
   }
 
-  Future<void> _loadData() async {
-    final prefs = await SharedPreferences.getInstance();
-    _favoriteIds = prefs.getStringList('favorites') ?? [];
-    final notesJson = prefs.getString('notes');
-    if (notesJson != null) _notes = Map<String, String>.from(json.decode(notesJson));
-    final imgJson = prefs.getString('custom_images');
-    if (imgJson != null) _customImages = Map<String, String>.from(json.decode(imgJson));
-
-    try {
-      final jsonString = await rootBundle.loadString('assets/hospitals.json');
-      final List<dynamic> jsonList = json.decode(jsonString);
-      _allHospitals = jsonList.map((e) => Hospital.fromJson(e)).toList();
-    } catch (e) {
-      debugPrint('JSON load error: $e');
+  void _parseData() {
+    for (var item in rawData) {
+      final p = item.split('|');
+      _hospitals.add(Hospital(
+        id: p[0], name: p[1], city: p[2], district: p[3], type: p[4],
+        kpss2024: double.parse(p[5]), kpss2025: double.parse(p[6]),
+        workLoad: p[7], incentive: p[8], shift: p[9], rentRange: p[10], review: p[11],
+      ));
     }
+  }
 
+  Future<void> _loadPrefs() async {
+    final prefs = await SharedPreferences.getInstance();
     setState(() {
-      _isLoading = false;
+      _favoriteIds = prefs.getStringList('favs') ?? [];
+      _notes = Map<String, String>.from(json.decode(prefs.getString('notes') ?? '{}'));
+      _images = Map<String, String>.from(json.decode(prefs.getString('images') ?? '{}'));
     });
   }
 
-  Future<void> _saveFavorites() async {
+  Future<void> _savePrefs() async {
     final prefs = await SharedPreferences.getInstance();
-    await prefs.setStringList('favorites', _favoriteIds);
-  }
-
-  Future<void> _saveNote(String hospitalId, String noteText) async {
-    final prefs = await SharedPreferences.getInstance();
-    setState(() {
-      if (noteText.trim().isEmpty) {
-        _notes.remove(hospitalId);
-      } else {
-        _notes[hospitalId] = noteText;
-      }
-    });
+    await prefs.setStringList('favs', _favoriteIds);
     await prefs.setString('notes', json.encode(_notes));
+    await prefs.setString('images', json.encode(_images));
   }
 
-  Future<void> _saveCustomImage(String hospitalId, String imagePath) async {
-    final prefs = await SharedPreferences.getInstance();
+  void _toggleFav(String id) {
     setState(() {
-      _customImages[hospitalId] = imagePath;
+      if (_favoriteIds.contains(id)) _favoriteIds.remove(id);
+      else _favoriteIds.add(id);
     });
-    await prefs.setString('custom_images', json.encode(_customImages));
+    _savePrefs();
   }
 
-  void _toggleFavorite(String hospitalId) {
+  void _moveFav(int index, int dir) {
     setState(() {
-      if (_favoriteIds.contains(hospitalId)) {
-        _favoriteIds.remove(hospitalId);
-      } else {
-        _favoriteIds.add(hospitalId);
+      final newIndex = index + dir;
+      if (newIndex >= 0 && newIndex < _favoriteIds.length) {
+        final item = _favoriteIds.removeAt(index);
+        _favoriteIds.insert(newIndex, item);
       }
     });
-    _saveFavorites();
+    _savePrefs();
+  }
+
+  Future<void> _pickImage(String id) async {
+    final picker = ImagePicker();
+    final pickedFile = await picker.pickImage(source: ImageSource.gallery);
+    if (pickedFile != null) {
+      setState(() => _images[id] = pickedFile.path);
+      _savePrefs();
+    }
   }
 
   @override
   Widget build(BuildContext context) {
-    if (_isLoading) {
-      return const Scaffold(
-        body: Center(child: CircularProgressIndicator(color: Color(0xFF0D9488))),
-      );
-    }
-
-    final screens = [
-      HospitalListScreen(
-        hospitals: _allHospitals,
-        favoriteIds: _favoriteIds,
-        onToggleFavorite: _toggleFavorite,
-        notes: _notes,
-        onSaveNote: _saveNote,
-        customImages: _customImages,
-        onSaveCustomImage: _saveCustomImage,
-      ),
-      PreferenceListScreen(
-        hospitals: _allHospitals,
-        favoriteIds: _favoriteIds,
-        onReorder: (newList) {
-          setState(() => _favoriteIds = newList);
-          _saveFavorites();
-        },
-        onToggleFavorite: _toggleFavorite,
-        notes: _notes,
-        onSaveNote: _saveNote,
-        customImages: _customImages,
-        onSaveCustomImage: _saveCustomImage,
-      ),
-    ];
-
     return Scaffold(
-      body: screens[_currentIndex],
+      appBar: AppBar(
+        title: const Text('Mega Atama (10.000 Kişi) Rehberi', style: TextStyle(fontSize: 16)),
+        bottom: PreferredSize(
+          preferredSize: const Size.fromHeight(60),
+          child: Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: Row(
+              children: [
+                Expanded(
+                  child: TextField(
+                    onChanged: (v) => setState(() => _searchQuery = v),
+                    decoration: InputDecoration(
+                      hintText: 'İl, İlçe veya Hastane Ara...',
+                      filled: true, fillColor: Colors.white,
+                      border: OutlineInputBorder(borderRadius: BorderRadius.circular(12), borderSide: BorderSide.none),
+                      contentPadding: const EdgeInsets.symmetric(horizontal: 16),
+                    ),
+                  ),
+                ),
+                const SizedBox(width: 8),
+                Container(
+                  padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 4),
+                  decoration: BoxDecoration(color: Colors.white, borderRadius: BorderRadius.circular(12)),
+                  child: Row(
+                    children: [
+                      const Text('Puan:', style: TextStyle(fontWeight: FontWeight.bold, color: Color(0xFF0D9488))),
+                      const SizedBox(width: 8),
+                      SizedBox(
+                        width: 50,
+                        child: TextField(
+                          keyboardType: const TextInputType.numberWithOptions(decimal: true),
+                          decoration: const InputDecoration(border: InputBorder.none),
+                          onChanged: (v) => setState(() => _userScore = double.tryParse(v) ?? 0.0),
+                          controller: TextEditingController(text: _userScore.toString())..selection = TextSelection.collapsed(offset: _userScore.toString().length),
+                        ),
+                      ),
+                    ],
+                  ),
+                )
+              ],
+            ),
+          ),
+        ),
+      ),
+      body: _currentIndex == 0 ? _buildAllList() : _buildFavList(),
       bottomNavigationBar: NavigationBar(
         selectedIndex: _currentIndex,
-        onDestinationSelected: (idx) => setState(() => _currentIndex = idx),
+        onDestinationSelected: (i) => setState(() => _currentIndex = i),
         destinations: [
+          const NavigationDestination(icon: Icon(Icons.local_hospital), label: 'Tüm Kurumlar'),
           NavigationDestination(
-            icon: const Icon(Icons.local_hospital_outlined),
-            selectedIcon: const Icon(Icons.local_hospital, color: Color(0xFF0D9488)),
-            label: 'Tüm Hastaneler (${_allHospitals.length})',
-          ),
-          NavigationDestination(
-            icon: Badge(
-              label: Text('${_favoriteIds.length}'),
-              isLabelVisible: _favoriteIds.isNotEmpty,
-              child: const Icon(Icons.format_list_numbered),
-            ),
-            selectedIcon: Badge(
-              label: Text('${_favoriteIds.length}'),
-              isLabelVisible: _favoriteIds.isNotEmpty,
-              child: const Icon(Icons.format_list_numbered, color: Color(0xFF0D9488)),
-            ),
+            icon: Badge(label: Text('${_favoriteIds.length}'), child: const Icon(Icons.star)),
             label: 'Tercih Listem',
           ),
         ],
       ),
     );
   }
-}
 
-// ---------------- LİSTELEME EKRANI ----------------
-class HospitalListScreen extends StatefulWidget {
-  final List<Hospital> hospitals;
-  final List<String> favoriteIds;
-  final Function(String) onToggleFavorite;
-  final Map<String, String> notes;
-  final Function(String, String) onSaveNote;
-  final Map<String, String> customImages;
-  final Function(String, String) onSaveCustomImage;
-
-  const HospitalListScreen({
-    super.key,
-    required this.hospitals,
-    required this.favoriteIds,
-    required this.onToggleFavorite,
-    required this.notes,
-    required this.onSaveNote,
-    required this.customImages,
-    required this.onSaveCustomImage,
-  });
-
-  @override
-  State<HospitalListScreen> createState() => _HospitalListScreenState();
-}
-
-class _HospitalListScreenState extends State<HospitalListScreen> {
-  String _searchQuery = '';
-  String _selectedCity = 'Tümü';
-
-  @override
-  Widget build(BuildContext context) {
-    final cities = ['Tümü', ...widget.hospitals.map((h) => h.city).toSet().toList()..sort()];
-
-    final filtered = widget.hospitals.where((h) {
-      final q = _searchQuery.toLowerCase();
-      final matchesSearch = h.name.toLowerCase().contains(q) ||
-          h.district.toLowerCase().contains(q) ||
-          h.city.toLowerCase().contains(q);
-      final matchesCity = _selectedCity == 'Tümü' || h.city == _selectedCity;
-      return matchesSearch && matchesCity;
+  Widget _buildAllList() {
+    final cities = ['Tümü', ..._hospitals.map((h) => h.city).toSet().toList()..sort()];
+    final filtered = _hospitals.where((h) {
+      final mSearch = h.name.toLowerCase().contains(_searchQuery.toLowerCase()) || h.city.toLowerCase().contains(_searchQuery.toLowerCase());
+      final mCity = _activeCity == 'Tümü' || h.city == _activeCity;
+      return mSearch && mCity;
     }).toList();
 
-    return Scaffold(
-      appBar: AppBar(
-        title: Text('Hemşire Tercih Rehberi (${widget.hospitals.length} Kurum)'),
-      ),
-      body: Column(
-        children: [
-          Container(
-            padding: const EdgeInsets.all(12),
-            color: Colors.white,
-            child: Column(
-              children: [
-                TextField(
-                  onChanged: (val) => setState(() => _searchQuery = val),
-                  decoration: InputDecoration(
-                    hintText: 'Hastane, il veya ilçe ara (Tokat, Zile, Samsun vb.)...',
-                    prefixIcon: const Icon(Icons.search),
-                    filled: true,
-                    fillColor: const Color(0xFFF1F5F9),
-                    border: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(12),
-                      borderSide: BorderSide.none,
-                    ),
-                    contentPadding: const EdgeInsets.symmetric(horizontal: 16),
-                  ),
-                ),
-                const SizedBox(height: 8),
-                SingleChildScrollView(
-                  scrollDirection: Axis.horizontal,
-                  child: Row(
-                    children: cities.map((city) {
-                      final isSelected = _selectedCity == city;
-                      return Padding(
-                        padding: const EdgeInsets.only(right: 6),
-                        child: ChoiceChip(
-                          label: Text(city),
-                          selected: isSelected,
-                          onSelected: (selected) {
-                            if (selected) setState(() => _selectedCity = city);
-                          },
-                          selectedColor: const Color(0xFFCCFBF1),
-                        ),
-                      );
-                    }).toList(),
-                  ),
-                ),
-              ],
-            ),
-          ),
-          Expanded(
-            child: ListView.builder(
-              padding: const EdgeInsets.all(12),
-              itemCount: filtered.length,
-              itemBuilder: (context, index) {
-                final hospital = filtered[index];
-                final isFav = widget.favoriteIds.contains(hospital.id);
-                final hasNote = widget.notes.containsKey(hospital.id);
-                final customImg = widget.customImages[hospital.id];
-
-                return HospitalCard(
-                  hospital: hospital,
-                  customImagePath: customImg,
-                  isFavorite: isFav,
-                  hasNote: hasNote,
-                  onToggleFavorite: () => widget.onToggleFavorite(hospital.id),
-                  onTap: () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (_) => HospitalDetailScreen(
-                          hospital: hospital,
-                          customImagePath: customImg,
-                          isFavorite: isFav,
-                          onToggleFavorite: () => widget.onToggleFavorite(hospital.id),
-                          currentNote: widget.notes[hospital.id] ?? '',
-                          onSaveNote: (note) => widget.onSaveNote(hospital.id, note),
-                          onSaveCustomImage: (path) => widget.onSaveCustomImage(hospital.id, path),
-                        ),
-                      ),
-                    );
-                  },
-                );
-              },
-            ),
-          ),
-        ],
-      ),
-    );
-  }
-}
-
-// ---------------- SÜRÜKLE-BIRAK EKRANI ----------------
-class PreferenceListScreen extends StatelessWidget {
-  final List<Hospital> hospitals;
-  final List<String> favoriteIds;
-  final Function(List<String>) onReorder;
-  final Function(String) onToggleFavorite;
-  final Map<String, String> notes;
-  final Function(String, String) onSaveNote;
-  final Map<String, String> customImages;
-  final Function(String, String) onSaveCustomImage;
-
-  const PreferenceListScreen({
-    super.key,
-    required this.hospitals,
-    required this.favoriteIds,
-    required this.onReorder,
-    required this.onToggleFavorite,
-    required this.notes,
-    required this.onSaveNote,
-    required this.customImages,
-    required this.onSaveCustomImage,
-  });
-
-  @override
-  Widget build(BuildContext context) {
-    final favHospitals = favoriteIds
-        .map((id) => hospitals.firstWhere((h) => h.id == id,
-            orElse: () => hospitals.first))
-        .toList();
-
-    return Scaffold(
-      appBar: AppBar(title: const Text('Öncelikli Tercih Sıralamam')),
-      body: favHospitals.isEmpty
-          ? Center(
-              child: Padding(
-                padding: const EdgeInsets.all(32),
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Icon(Icons.playlist_add, size: 64, color: Colors.grey.shade400),
-                    const SizedBox(height: 16),
-                    const Text('Henüz listenize hastane eklemediniz.',
-                        style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold)),
-                    const SizedBox(height: 8),
-                    const Text(
-                      'Hastaneler sekmesinden kalp butonuna basarak kurumları buraya ekleyebilir, ardından basılı tutup sürükleyerek 1., 2., 3. tercih sıranızı belirleyebilirsiniz.',
-                      style: TextStyle(color: Colors.grey),
-                      textAlign: TextAlign.center,
-                    ),
-                  ],
-                ),
+    return Column(
+      children: [
+        SingleChildScrollView(
+          scrollDirection: Axis.horizontal,
+          padding: const EdgeInsets.all(8),
+          child: Row(
+            children: cities.map((c) => Padding(
+              padding: const EdgeInsets.only(right: 6),
+              child: ChoiceChip(
+                label: Text(c),
+                selected: _activeCity == c,
+                onSelected: (val) { if(val) setState(() => _activeCity = c); },
               ),
-            )
-          : Column(
-              children: [
-                Container(
-                  padding: const EdgeInsets.all(12),
-                  color: const Color(0xFFF0FDFA),
-                  child: const Row(
-                    children: [
-                      Icon(Icons.info_outline, color: Color(0xFF0D9488), size: 20),
-                      SizedBox(width: 8),
-                      Expanded(
-                        child: Text(
-                          'Sıralamayı değiştirmek için sağdaki tutamaçtan basılı tutup sürükleyin.',
-                          style: TextStyle(fontSize: 12, color: Color(0xFF0F766E), fontWeight: FontWeight.w500),
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-                Expanded(
-                  child: ReorderableListView.builder(
-                    padding: const EdgeInsets.all(12),
-                    itemCount: favHospitals.length,
-                    onReorder: (oldIndex, newIndex) {
-                      if (newIndex > oldIndex) newIndex -= 1;
-                      final updated = List<String>.from(favoriteIds);
-                      final item = updated.removeAt(oldIndex);
-                      updated.insert(newIndex, item);
-                      onReorder(updated);
-                    },
-                    itemBuilder: (context, index) {
-                      final h = favHospitals[index];
-                      return Card(
-                        key: ValueKey(h.id),
-                        elevation: 1,
-                        margin: const EdgeInsets.only(bottom: 8),
-                        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
-                        child: ListTile(
-                          leading: CircleAvatar(
-                            backgroundColor: const Color(0xFF0D9488),
-                            foregroundColor: Colors.white,
-                            child: Text('${index + 1}', style: const TextStyle(fontWeight: FontWeight.bold)),
-                          ),
-                          title: Text(h.name, style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 14)),
-                          subtitle: Text('${h.city} • 2025 Taban: ${h.kpss2025}', style: const TextStyle(fontSize: 12)),
-                          trailing: const Icon(Icons.drag_handle, color: Colors.grey),
-                          onTap: () {
-                            Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                builder: (_) => HospitalDetailScreen(
-                                  hospital: h,
-                                  customImagePath: customImages[h.id],
-                                  isFavorite: true,
-                                  onToggleFavorite: () => onToggleFavorite(h.id),
-                                  currentNote: notes[h.id] ?? '',
-                                  onSaveNote: (n) => onSaveNote(h.id, n),
-                                  onSaveCustomImage: (p) => onSaveCustomImage(h.id, p),
-                                ),
-                              ),
-                            );
-                          },
-                        ),
-                      );
-                    },
-                  ),
-                ),
-              ],
-            ),
+            )).toList(),
+          ),
+        ),
+        Expanded(
+          child: ListView.builder(
+            padding: const EdgeInsets.all(8),
+            itemCount: filtered.length,
+            itemBuilder: (ctx, i) => _buildCard(filtered[i]),
+          ),
+        ),
+      ],
     );
   }
-}
 
-// ---------------- HASTANE KARTI (MİMARİ LOGOLU BANNER / GALERİ RESMİ) ----------------
-class HospitalCard extends StatelessWidget {
-  final Hospital hospital;
-  final String? customImagePath;
-  final bool isFavorite;
-  final bool hasNote;
-  final VoidCallback onToggleFavorite;
-  final VoidCallback onTap;
+  Widget _buildFavList() {
+    if (_favoriteIds.isEmpty) {
+      return const Center(child: Text("Listeniz Boş. Kalp ikonuna basarak hastane ekleyin.", style: TextStyle(color: Colors.grey)));
+    }
+    return ReorderableListView.builder(
+      padding: const EdgeInsets.all(8),
+      itemCount: _favoriteIds.length,
+      onReorder: (oldI, newI) {
+        if (newI > oldI) newI -= 1;
+        setState(() {
+          final item = _favoriteIds.removeAt(oldI);
+          _favoriteIds.insert(newI, item);
+        });
+        _savePrefs();
+      },
+      itemBuilder: (ctx, i) {
+        final h = _hospitals.firstWhere((x) => x.id == _favoriteIds[i]);
+        return Card(
+          key: ValueKey(h.id),
+          child: ListTile(
+            leading: CircleAvatar(backgroundColor: const Color(0xFF0D9488), child: Text('${i + 1}', style: const TextStyle(color: Colors.white))),
+            title: Text(h.name, style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 13)),
+            subtitle: Text('${h.city} • Son Taban: ${h.kpss2025}'),
+            trailing: const Icon(Icons.drag_handle),
+            onTap: () => _showDetails(h),
+          ),
+        );
+      },
+    );
+  }
 
-  const HospitalCard({
-    super.key,
-    required this.hospital,
-    this.customImagePath,
-    required this.isFavorite,
-    required this.hasNote,
-    required this.onToggleFavorite,
-    required this.onTap,
-  });
+  Widget _buildCard(Hospital h) {
+    final isFav = _favoriteIds.contains(h.id);
+    final imgPath = _images[h.id];
+    final diff = _userScore - h.kpss2025;
+    
+    Color badgeColor;
+    String badgeText;
+    if (diff >= 0) { badgeColor = Colors.green; badgeText = "Kesin Gelir"; }
+    else if (diff >= -1.5) { badgeColor = Colors.orange; badgeText = "Sınırda"; }
+    else { badgeColor = Colors.red; badgeText = "Zor / Gelmez"; }
 
-  @override
-  Widget build(BuildContext context) {
     return Card(
-      elevation: 2,
       margin: const EdgeInsets.only(bottom: 12),
-      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(14)),
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
       clipBehavior: Clip.antiAlias,
       child: InkWell(
-        onTap: onTap,
+        onTap: () => _showDetails(h),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Stack(
               children: [
-                _buildHeader(),
-                Positioned(
-                  top: 10,
-                  left: 10,
-                  child: Container(
-                    padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 4),
-                    decoration: BoxDecoration(
-                      color: Colors.black.withOpacity(0.65),
-                      borderRadius: BorderRadius.circular(8),
-                    ),
-                    child: Text(
-                      hospital.type,
-                      style: const TextStyle(color: Colors.white, fontSize: 11, fontWeight: FontWeight.bold),
-                    ),
-                  ),
+                Container(
+                  height: 140, width: double.infinity,
+                  color: Colors.teal.shade700,
+                  child: imgPath != null && File(imgPath).existsSync()
+                      ? Image.file(File(imgPath), fit: BoxFit.cover)
+                      : const Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Icon(Icons.add_a_photo, color: Colors.white54, size: 40),
+                            SizedBox(height: 8),
+                            Text("GÖRSEL EKLENEBİLİR", style: TextStyle(color: Colors.white54, fontWeight: FontWeight.bold))
+                          ],
+                        ),
                 ),
-                Positioned(
-                  top: 4,
-                  right: 4,
-                  child: CircleAvatar(
-                    backgroundColor: Colors.black.withOpacity(0.35),
-                    child: IconButton(
-                      icon: Icon(
-                        isFavorite ? Icons.favorite : Icons.favorite_border,
-                        color: isFavorite ? Colors.redAccent : Colors.white,
-                      ),
-                      onPressed: onToggleFavorite,
-                    ),
-                  ),
-                ),
+                Positioned(top: 8, left: 8, child: Container(padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4), decoration: BoxDecoration(color: Colors.black54, borderRadius: BorderRadius.circular(8)), child: Text(h.type, style: const TextStyle(color: Colors.white, fontSize: 11)))),
+                Positioned(top: 8, right: 8, child: InkWell(onTap: () => _toggleFav(h.id), child: CircleAvatar(backgroundColor: Colors.black54, child: Icon(isFav ? Icons.favorite : Icons.favorite_border, color: isFav ? Colors.red : Colors.white)))),
               ],
             ),
             Padding(
@@ -553,378 +400,71 @@ class HospitalCard extends StatelessWidget {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
+                  Text(h.name, style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 15)),
+                  Text('${h.city} / ${h.district}', style: TextStyle(color: Colors.grey.shade600, fontSize: 13)),
+                  const Divider(),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      Expanded(
-                        child: Text(hospital.name,
-                            style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 15)),
-                      ),
-                      if (hasNote)
-                        const Tooltip(
-                          message: 'Kayıtlı notunuz var',
-                          child: Icon(Icons.note_alt, size: 20, color: Colors.amber),
-                        ),
+                      Column(crossAxisAlignment: CrossAxisAlignment.start, children: [const Text("2024 Taban", style: TextStyle(fontSize: 10, color: Colors.grey)), Text("${h.kpss2024}", style: const TextStyle(fontWeight: FontWeight.bold))]),
+                      Column(crossAxisAlignment: CrossAxisAlignment.start, children: [const Text("Son Atama", style: TextStyle(fontSize: 10, color: Colors.grey)), Text("${h.kpss2025}", style: const TextStyle(fontWeight: FontWeight.bold))]),
+                      Container(padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4), decoration: BoxDecoration(color: badgeColor.withOpacity(0.1), borderRadius: BorderRadius.circular(8), border: Border.all(color: badgeColor)), child: Text(badgeText, style: TextStyle(fontSize: 11, fontWeight: FontWeight.bold, color: badgeColor))),
                     ],
-                  ),
-                  const SizedBox(height: 4),
-                  Text('${hospital.city} / ${hospital.district}',
-                      style: TextStyle(color: Colors.grey.shade600, fontSize: 13)),
-                  const Divider(height: 18),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      _badge('2024 Taban', '${hospital.kpss2024}'),
-                      _badge('2025 Taban', '${hospital.kpss2025}'),
-                      _badge('İş Yükü', hospital.workLoad),
-                      _statusBadge(hospital.kpss2025),
-                    ],
-                  ),
+                  )
                 ],
               ),
-            ),
+            )
           ],
         ),
       ),
     );
   }
 
-  Widget _buildHeader() {
-    if (customImagePath != null && File(customImagePath!).existsSync()) {
-      return Image.file(
-        File(customImagePath!),
-        height: 150,
-        width: double.infinity,
-        fit: BoxFit.cover,
-      );
-    }
-    return Container(
-      height: 150,
-      width: double.infinity,
-      decoration: BoxDecoration(
-        gradient: LinearGradient(
-          colors: [const Color(0xFF0D9488), const Color(0xFF14B8A6)],
-          begin: Alignment.topLeft,
-          end: Alignment.bottomRight,
-        ),
-      ),
-      child: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            const Icon(Icons.local_hospital_rounded, size: 52, color: Colors.white),
-            const SizedBox(height: 6),
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 16),
-              child: Text(
-                hospital.name,
-                style: const TextStyle(color: Colors.white, fontWeight: FontWeight.bold, fontSize: 14),
-                textAlign: TextAlign.center,
-                maxLines: 2,
-              ),
-            ),
-          ],
-        ),
-      ),
-    );
-  }
-
-  Widget _badge(String title, String val) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        Text(title, style: const TextStyle(fontSize: 10, color: Colors.grey)),
-        Text(val, style: const TextStyle(fontSize: 12, fontWeight: FontWeight.bold)),
-      ],
-    );
-  }
-
-  Widget _statusBadge(double basePoint) {
-    final bool isLikely = 83.0 >= basePoint;
-    return Container(
-      padding: const EdgeInsets.symmetric(horizontal: 6, vertical: 3),
-      decoration: BoxDecoration(
-        color: isLikely ? Colors.green.shade50 : Colors.amber.shade50,
-        borderRadius: BorderRadius.circular(6),
-        border: Border.all(color: isLikely ? Colors.green.shade300 : Colors.amber.shade300),
-      ),
-      child: Text(
-        isLikely ? '83 Puan Gelir' : 'Sınırda / Yakın',
-        style: TextStyle(
-          fontSize: 10,
-          fontWeight: FontWeight.bold,
-          color: isLikely ? Colors.green.shade800 : Colors.amber.shade900,
-        ),
-      ),
-    );
-  }
-}
-
-// ---------------- DETAY EKRANI (GALERİ BUTONLU) ----------------
-class HospitalDetailScreen extends StatefulWidget {
-  final Hospital hospital;
-  final String? customImagePath;
-  final bool isFavorite;
-  final VoidCallback onToggleFavorite;
-  final String currentNote;
-  final Function(String) onSaveNote;
-  final Function(String) onSaveCustomImage;
-
-  const HospitalDetailScreen({
-    super.key,
-    required this.hospital,
-    this.customImagePath,
-    required this.isFavorite,
-    required this.onToggleFavorite,
-    required this.currentNote,
-    required this.onSaveNote,
-    required this.onSaveCustomImage,
-  });
-
-  @override
-  State<HospitalDetailScreen> createState() => _HospitalDetailScreenState();
-}
-
-class _HospitalDetailScreenState extends State<HospitalDetailScreen> {
-  late TextEditingController _noteController;
-  late bool _fav;
-  String? _localImagePath;
-
-  @override
-  void initState() {
-    super.initState();
-    _noteController = TextEditingController(text: widget.currentNote);
-    _fav = widget.isFavorite;
-    _localImagePath = widget.customImagePath;
-  }
-
-  @override
-  void dispose() {
-    _noteController.dispose();
-    super.dispose();
-  }
-
-  Future<void> _pickImage() async {
-    final picker = ImagePicker();
-    final pickedFile = await picker.pickImage(source: ImageSource.gallery);
-    if (pickedFile != null) {
-      setState(() {
-        _localImagePath = pickedFile.path;
-      });
-      widget.onSaveCustomImage(pickedFile.path);
-      ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(content: Text('Fotoğraf galerinizden başarıyla güncellendi!')),
-      );
-    }
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    final h = widget.hospital;
-
-    return Scaffold(
-      appBar: AppBar(
-        title: Text(h.name),
-        actions: [
-          IconButton(
-            icon: Icon(_fav ? Icons.favorite : Icons.favorite_border),
-            color: _fav ? Colors.red.shade100 : Colors.white,
-            onPressed: () {
-              setState(() => _fav = !_fav);
-              widget.onToggleFavorite();
-            },
-          ),
-        ],
-      ),
-      body: SingleChildScrollView(
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Stack(
-              children: [
-                _buildHeaderBanner(h),
-                Positioned(
-                  bottom: 12,
-                  right: 12,
-                  child: ElevatedButton.icon(
-                    style: ElevatedButton.styleFrom(
-                      backgroundColor: Colors.black.withOpacity(0.75),
-                      foregroundColor: Colors.white,
-                    ),
-                    icon: const Icon(Icons.add_a_photo, size: 18),
-                    label: const Text('Galeriden Fotoğraf Ekle'),
-                    onPressed: _pickImage,
-                  ),
-                ),
-              ],
-            ),
-            Padding(
-              padding: const EdgeInsets.all(16),
+  void _showDetails(Hospital h) {
+    showModalBottomSheet(
+      context: context, isScrollControlled: true,
+      shape: const RoundedRectangleBorder(borderRadius: BorderRadius.vertical(top: Radius.circular(20))),
+      builder: (ctx) => StatefulBuilder(
+        builder: (ctx, setModalState) {
+          final noteCtrl = TextEditingController(text: _notes[h.id] ?? '');
+          return Padding(
+            padding: EdgeInsets.only(bottom: MediaQuery.of(ctx).viewInsets.bottom, left: 16, right: 16, top: 16),
+            child: SingleChildScrollView(
               child: Column(
+                mainAxisSize: MainAxisSize.min,
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text(h.name, style: const TextStyle(fontSize: 21, fontWeight: FontWeight.bold)),
-                  Text('${h.city} - ${h.district} • ${h.type}',
-                      style: TextStyle(color: Colors.grey.shade600, fontSize: 14)),
+                  Text(h.name, style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
                   const SizedBox(height: 16),
-
-                  Card(
-                    color: const Color(0xFFF0FDFA),
-                    shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
-                    child: Padding(
-                      padding: const EdgeInsets.all(14),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceAround,
-                        children: [
-                          _infoItem('2024 KPSS Taban', '${h.kpss2024}'),
-                          _infoItem('2025 KPSS Taban', '${h.kpss2025}'),
-                          _infoItem('İş Yükü Puanı', h.workLoad),
-                        ],
-                      ),
+                  _detailRow("İş Yükü", h.workLoad),
+                  _detailRow("Teşvik", h.incentive),
+                  _detailRow("Nöbet", h.shift),
+                  _detailRow("Kira", h.rentRange),
+                  const SizedBox(height: 12),
+                  Container(padding: const EdgeInsets.all(12), decoration: BoxDecoration(color: Colors.blue.shade50, borderRadius: BorderRadius.circular(8)), child: Text("💡 Saha Notu: ${h.review}", style: TextStyle(color: Colors.blue.shade900, fontSize: 13))),
+                  const SizedBox(height: 16),
+                  TextField(controller: noteCtrl, decoration: const InputDecoration(hintText: "Kişisel notunuz...", border: OutlineInputBorder()), maxLines: 2, onChanged: (v) { _notes[h.id] = v; _savePrefs(); }),
+                  const SizedBox(height: 12),
+                  SizedBox(
+                    width: double.infinity,
+                    child: ElevatedButton.icon(
+                      icon: const Icon(Icons.add_a_photo), label: const Text("Galeriden Fotoğraf Ekle"),
+                      onPressed: () async {
+                        await _pickImage(h.id);
+                        setModalState(() {});
+                        setState(() {});
+                      },
                     ),
                   ),
-                  const SizedBox(height: 16),
-
-                  const Text('Çalışma ve Yaşam Şartları',
-                      style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16)),
-                  const SizedBox(height: 8),
-                  _rowInfo(Icons.payments_outlined, 'Ortalama Teşvik', h.incentive),
-                  _rowInfo(Icons.schedule, 'Nöbet & Çalışma Düzeni', h.shift),
-                  _rowInfo(Icons.home_outlined, 'Bölge Ev Kiraları', h.rentRange),
-
-                  const Divider(height: 32),
-
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      const Text('Kişisel Tercih Notum',
-                          style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16)),
-                      ElevatedButton.icon(
-                        style: ElevatedButton.styleFrom(
-                          backgroundColor: const Color(0xFF0D9488),
-                          foregroundColor: Colors.white,
-                          padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
-                        ),
-                        icon: const Icon(Icons.save, size: 16),
-                        label: const Text('Kaydet'),
-                        onPressed: () {
-                          widget.onSaveNote(_noteController.text);
-                          ScaffoldMessenger.of(context).showSnackBar(
-                            const SnackBar(content: Text('Notunuz başarıyla kaydedildi!')),
-                          );
-                        },
-                      ),
-                    ],
-                  ),
-                  const SizedBox(height: 8),
-                  TextField(
-                    controller: _noteController,
-                    maxLines: 3,
-                    decoration: InputDecoration(
-                      hintText: 'Örn: Tokat Zile ilk sıraya yazılabilir, nöbetler blok tutulabilir...',
-                      filled: true,
-                      fillColor: Colors.white,
-                      border: OutlineInputBorder(borderRadius: BorderRadius.circular(10)),
-                    ),
-                  ),
-
-                  const Divider(height: 32),
-
-                  const Text('Saha Raporu Verileri (Meslektaş Yanıtları)',
-                      style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16)),
-                  const SizedBox(height: 8),
-                  ...h.surveyReviews.map((r) => _commentBubble(r, const Color(0xFFEFF6FF), const Color(0xFF1E40AF))),
-
-                  const SizedBox(height: 16),
-
-                  const Text('Bağımsız Saha & Güncel Forum Araştırması',
-                      style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16)),
-                  const SizedBox(height: 8),
-                  ...h.webReviews.map((r) => _commentBubble(r, const Color(0xFFF0FDF4), const Color(0xFF166534))),
+                  const SizedBox(height: 24),
                 ],
               ),
             ),
-          ],
-        ),
-      ),
+          );
+        }
+      )
     );
   }
 
-  Widget _buildHeaderBanner(Hospital h) {
-    if (_localImagePath != null && File(_localImagePath!).existsSync()) {
-      return Image.file(
-        File(_localImagePath!),
-        height: 220,
-        width: double.infinity,
-        fit: BoxFit.cover,
-      );
-    }
-    return Container(
-      height: 220,
-      width: double.infinity,
-      decoration: const BoxDecoration(
-        gradient: LinearGradient(
-          colors: [Color(0xFF0D9488), Color(0xFF115E59)],
-          begin: Alignment.topLeft,
-          end: Alignment.bottomRight,
-        ),
-      ),
-      child: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            const Icon(Icons.apartment_rounded, size: 68, color: Colors.white),
-            const SizedBox(height: 8),
-            Text(
-              h.name,
-              style: const TextStyle(color: Colors.white, fontWeight: FontWeight.bold, fontSize: 17),
-              textAlign: TextAlign.center,
-            ),
-            const SizedBox(height: 4),
-            Text(
-              '${h.city} / ${h.district}',
-              style: TextStyle(color: Colors.teal.shade100, fontSize: 13),
-            ),
-          ],
-        ),
-      ),
-    );
-  }
-
-  Widget _infoItem(String label, String val) {
-    return Column(
-      children: [
-        Text(label, style: const TextStyle(fontSize: 11, color: Colors.grey)),
-        const SizedBox(height: 2),
-        Text(val, style: const TextStyle(fontSize: 14, fontWeight: FontWeight.bold, color: Color(0xFF0D9488))),
-      ],
-    );
-  }
-
-  Widget _rowInfo(IconData icon, String title, String value) {
-    return Padding(
-      padding: const EdgeInsets.symmetric(vertical: 5),
-      child: Row(
-        children: [
-          Icon(icon, size: 20, color: const Color(0xFF0D9488)),
-          const SizedBox(width: 8),
-          Text('$title: ', style: const TextStyle(fontWeight: FontWeight.w600, fontSize: 13)),
-          Expanded(child: Text(value, style: const TextStyle(fontSize: 13))),
-        ],
-      ),
-    );
-  }
-
-  Widget _commentBubble(String text, Color bg, Color textColor) {
-    return Container(
-      width: double.infinity,
-      margin: const EdgeInsets.only(bottom: 8),
-      padding: const EdgeInsets.all(12),
-      decoration: BoxDecoration(
-        color: bg,
-        borderRadius: BorderRadius.circular(10),
-      ),
-      child: Text(text, style: TextStyle(color: textColor, fontSize: 13, height: 1.4)),
-    );
-  }
+  Widget _detailRow(String label, String val) => Padding(padding: const EdgeInsets.only(bottom: 8), child: Row(children: [Text("$label: ", style: const TextStyle(fontWeight: FontWeight.bold, color: Colors.grey)), Expanded(child: Text(val))]));
 }
