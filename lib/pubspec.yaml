@@ -1,0 +1,17 @@
+name: hemsire_tercih
+description: "KPSS Hemsire Tercih Rehberi"
+publish_to: "none"
+version: 1.0.0+1
+
+environment:
+  sdk: ">=3.0.0 <4.0.0"
+
+dependencies:
+  flutter:
+    sdk: flutter
+  shared_preferences: ^2.2.2
+  cached_network_image: ^3.3.1
+  cupertino_icons: ^1.0.6
+
+flutter:
+  uses-material-design: true
