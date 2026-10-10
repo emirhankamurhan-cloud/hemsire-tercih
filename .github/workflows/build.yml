@@ -15,14 +15,19 @@ jobs:
         with:
           channel: 'stable'
 
-      - name: Install dependencies
-        run: flutter pub get
-
-      - name: Build APK
-        run: flutter build apk --release
+      - name: Scaffold Flutter App
+        run: |
+          mkdir -p temp_app
+          cd temp_app
+          flutter create --org com.hemsire.tercih hemsire_tercih
+          cd hemsire_tercih
+          flutter pub add shared_preferences cached_network_image cupertino_icons
+          cp ../../lib/main.dart lib/main.dart
+          flutter build apk --release
+          cp build/app/outputs/flutter-apk/app-release.apk ../../app-release.apk
 
       - name: Upload APK
         uses: actions/upload-artifact@v4
         with:
           name: hemsire-tercih-apk
-          path: build/app/outputs/flutter-apk/app-release.apk
+          path: app-release.apk
