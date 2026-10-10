@@ -22,6 +22,10 @@ jobs:
           flutter create --org com.hemsire.tercih hemsire_tercih
           cd hemsire_tercih
           flutter pub add shared_preferences cached_network_image cupertino_icons
+          
+          # Android internet iznini otomatik ekle (Fotoğrafların kesin yüklenmesi için)
+          sed -i '/<application/i <uses-permission android:name="android.permission.INTERNET"/>' android/app/src/main/AndroidManifest.xml
+          
           cp ../../lib/main.dart lib/main.dart
           flutter build apk --release
           cp build/app/outputs/flutter-apk/app-release.apk ../../app-release.apk
