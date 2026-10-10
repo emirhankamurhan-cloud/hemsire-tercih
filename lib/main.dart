@@ -55,7 +55,6 @@ final List<String> rawData = [
   "tokat_resadiye|Tokat Reşadiye Devlet Hastanesi|Tokat|Reşadiye|Devlet Hastanesi|71.9|71.5|4/10|4.000-7.000 TL|24 Saat Nöbet|8.000-12.000 TL|İş yükü çok sakin, yıpranma payı az, maddi birikim yapmak için elverişli.|Mesleki gelişim ve vaka çeşitliliği açısından çok yetersiz, mahrumiyet hissi yaratabilir.",
   "tokat_niksar|Tokat Niksar Devlet Hastanesi|Tokat|Niksar|Devlet Hastanesi|72.2|71.8|5/10|5.000-8.000 TL|24 Saat Nöbet|8.500-12.500 TL|Doğası güzel, yeşillikler içinde bir ilçe. Hastane şartları standart.|Sosyal çevre edinmek bekar personeller için zaman alabiliyor.",
   "tokat_erbaa|Tokat Erbaa Devlet Hastanesi|Tokat|Erbaa|Devlet Hastanesi|72.6|72.1|6/10|6.500-9.500 TL|24 Saat Nöbet|10.000-14.000 TL|Tokat’ın en gelişmiş ve büyük ilçesi. Sosyal imkanları diğer ilçelere göre iyi.|Hastane hasta sirkülasyonu açısından merkez hastanesi gibi yoğun olabiliyor.",
-  "tokat_almus|Tokat Almus Devlet Hastanesi|Tokat|Almus|Devlet Hastanesi|71.8|71.4|4/10|4.000-6.500 TL|24 Saat Nöbet|7.000-10.000 TL|Göl kenarında doğa harikası küçük ilçe.|Merkeze ulaşım kış aylarında zorlayıcı.",
   
   "samsun_sehir|Samsun Şehir Hastanesi|Samsun|Canik|Şehir Hastanesi|74.2|73.8|9/10|12.000-16.000 TL|24 Saat & 16-8|15.000-22.000 TL|Bina, yoğun bakımlar ve donanım son teknoloji. Canik'te kiralar Atakum'a göre daha uygun.|Çok devasa olduğu için içi ulaşım ve adımlama çok yorucu. Kurumsal işleyiş hala tam oturmadı, angarya iş yükü fazla.",
   "samsun_eah|Samsun Eğitim ve Araştırma Hastanesi|Samsun|İlkadım|Eğitim ve Araştırma|73.8|73.5|8/10|8.000-12.000 TL|24 Saat Nöbet|14.000-20.000 TL|Merkezi konumda, köklü kadro, tecrübeli ekipler var. Vaka çeşitliliği muazzam.|Şehir hastanesi açılsa da acili hala bölgenin en yoğun yerlerinden. Otopark ve trafik sorunu var.",
@@ -68,23 +67,12 @@ final List<String> rawData = [
   "sinop_boyabat|Sinop Boyabat 75. Yıl Devlet Hastanesi|Sinop|Boyabat|Devlet Hastanesi|72.4|71.9|5/10|6.000-8.500 TL|24 Saat Nöbet|9.000-13.000 TL|İl merkezine göre iç kısımlarda, yaşam çok daha ucuz.|Sahil şeridinde olmaması bazıları için dezavantaj.",
   "sinop_ayancik|Sinop Ayancık Devlet Hastanesi|Sinop|Ayancık|Devlet Hastanesi|72.2|71.8|4/10|5.000-7.500 TL|24 Saat Nöbet|8.000-12.000 TL|Sahil şeridinde küçük şirin bir kurum.|Kışın sosyal hayat neredeyse duruyor.",
 
-  "adana_sehir|Adana Şehir Hastanesi|Adana|Yüreğir|Şehir Hastanesi|74.2|73.8|8/10|11.000-14.000 TL|24 Saat Nöbet|15.000-20.000 TL|Bölgenin ana referans merkezi, teşvikleri çok tatmin edici.|Yaz aylarında inanılmaz sıcak. Acil servis yoğunluğu ve şiddet vakaları zaman zaman yorucu.",
   "ankara_bilkent|Ankara Bilkent Şehir Hastanesi|Ankara|Çankaya|Şehir Hastanesi|74.5|74.0|10/10|12.000-15.000 TL|24 Saat & 16-8|25.000-35.000 TL|Her türlü vaka görülür, mesleki gelişim için en büyük akademi. Sosyal imkanlar sonsuz.|Kampüs çok büyük, nöbetçi için fiziksel adımlama yorucu. Hasta sirkülasyonu aşırı fazla.",
-  "ankara_etlik|Ankara Etlik Şehir Hastanesi|Ankara|Keçiören|Şehir Hastanesi|74.2|73.7|8/10|11.000-14.000 TL|24 Saat Nöbet|20.000-28.000 TL|Malzeme sıkıntısı yok, ev imkanları geniş.|Birimler arası koordinasyon hala oturma aşamasında.",
-  "antalya_sehir|Antalya Şehir Hastanesi|Antalya|Kepez|Şehir Hastanesi|75.1|74.6|7/10|10.000-14.000 TL|24 Saat Nöbet|18.000-25.000 TL|Yeni tesis, ortam ferah. Tramvay var.|Yaz aylarında turizm yoğunluğu iş yükünü artırır.",
-  "bursa_sehir|Bursa Şehir Hastanesi|Bursa|Nilüfer|Şehir Hastanesi|73.8|73.3|7/10|11.000-14.000 TL|24 Saat Nöbet|16.000-22.000 TL|Nilüfer gibi nezih bir ilçede modern kampüs.|Merkeze olan uzaklık dezavantaj.",
-  "diyarbakir_gazi|Diyarbakır Gazi Yaşargil EAH|Diyarbakır|Yenişehir|Eğitim ve Araştırma|70.3|69.8|9/10|9.000-13.000 TL|24 Saat Nöbet|11.000-16.000 TL|Hizmet puanı çok yüksek, doğu görevini yaparken mesleki tecrübenin zirvesine ulaşılır.|Hasta ve hasta yakını profilini yönetmek bazen ciddi krizlere neden olabiliyor.",
-  "erzurum_sehir|Erzurum Şehir Hastanesi|Erzurum|Palandöken|Şehir Hastanesi|71.4|70.9|8/10|10.000-14.000 TL|24 Saat Nöbet|11.000-16.000 TL|Kışın kapalı tüp geçitler kurtarıcı.|Aşırı soğuk iklim alışkın olmayanlar için zorlayıcı.",
-  "eskisehir_sehir|Eskişehir Şehir Hastanesi|Eskişehir|Odunpazarı|Şehir Hastanesi|74.8|74.3|7/10|10.000-13.000 TL|24 Saat Nöbet|14.000-20.000 TL|Tramvay hattı ve öğrenci sosyal ortamı mükemmel.|Popüler olduğu için tayin ve yer değiştirme işlemleri zor olabilir.",
-  "gaziantep_sehir|Gaziantep Şehir Hastanesi|Gaziantep|Şahinbey|Şehir Hastanesi|71.8|71.3|8/10|10.000-14.000 TL|24 Saat Nöbet|14.000-20.000 TL|Yeni kampüs, modern teşhis üniteleri.|Şehrin genel trafik ve yaşam karmaşası.",
   "istanbul_cam_sakura|Başakşehir Çam ve Sakura Şehir H.|İstanbul|Başakşehir|Şehir Hastanesi|69.3|68.9|10/10|12.000-15.000 TL|24 Saat Nöbet|25.000-35.000 TL|Kağıtsız hastane altyapısı, metroyla direkt içine kadar ulaşım.|İstanbul pahalılığı ve aşırı kalabalık. Yoğun bakımlarda tükenmişlik sendromu sık görülür.",
   "izmir_sehir|İzmir Şehir Hastanesi|İzmir|Bayraklı|Şehir Hastanesi|75.5|75.0|9/10|11.000-15.000 TL|24 Saat Nöbet|20.000-28.000 TL|Bina yeni, manzarası var. Ege'nin en prestijli yapısı.|Tepede yer alıyor, ring beklemek can sıkıcı. Yeni açıldığı için malzeme tedarik süreçleri bazen aksıyor.",
-  "kayseri_sehir|Kayseri Şehir Hastanesi|Kayseri|Kocasinan|Şehir Hastanesi|74.1|73.6|7/10|10.000-13.500 TL|24 Saat Nöbet|12.000-18.000 TL|Tramvay tam önünden geçer.|Sanayi şehri yoğunluğu.",
-  "kocaeli_sehir|Kocaeli Şehir Hastanesi|Kocaeli|İzmit|Şehir Hastanesi|73.1|72.6|8/10|11.000-14.500 TL|24 Saat Nöbet|15.000-22.000 TL|İstanbul'a 1 saat mesafede sanayi merkezi.|Hava kirliliği sorunu zaman zaman hissedilir.",
-  "konya_sehir|Konya Şehir Hastanesi|Konya|Karatay|Şehir Hastanesi|74.1|73.6|7/10|10.000-14.000 TL|24 Saat Nöbet|12.000-17.000 TL|Düzenli ulaşım ve tramvay ağı.|Kampüs dışı sosyal alanlar sınırlı.",
-  "sanliurfa_eah|Şanlıurfa Eğitim ve Araştırma Hastanesi|Şanlıurfa|Eyyübiye|Eğitim ve Araştırma|69.8|69.3|8/10|9.000-13.000 TL|24 Saat Nöbet|10.000-15.000 TL|Puan ve klinik tecrübesi yüksek.|Doğum klinikleri Türkiye'nin en yoğunudur.",
-  "van_eah|Van Eğitim ve Araştırma Hastanesi|Van|Edremit|Eğitim ve Araştırma|69.6|69.1|7/10|9.000-13.000 TL|24 Saat Nöbet|10.000-15.000 TL|Göl kenarında ferah kampüs, kiralar uygun.|Kış şartları oldukça serttir.",
-  "zonguldak_ataturk|Zonguldak Atatürk Devlet Hastanesi|Zonguldak|Merkez|Devlet Hastanesi|73.2|72.7|6/10|8.000-11.000 TL|24 Saat Nöbet|12.000-17.000 TL|Tecrübeli kadrosuyla bilinen merkez.|Madenci bölgesi, solunum yolları vakaları çok fazladır."
+  "adana_sehir|Adana Şehir Hastanesi|Adana|Yüreğir|Şehir Hastanesi|74.2|73.8|8/10|11.000-14.000 TL|24 Saat Nöbet|15.000-20.000 TL|Bölgenin ana referans merkezi, teşvikleri çok tatmin edici.|Yaz aylarında inanılmaz sıcak. Acil servis yoğunluğu ve şiddet vakaları zaman zaman yorucu.",
+  "trabzon_kanuni|Trabzon Kanuni EAH|Trabzon|Yomra|Eğitim ve Araştırma|73.7|73.2|8/10|9.000-13.000 TL|24 Saat Nöbet|14.000-20.000 TL|Deniz manzaralı kampüs. Tecrübeli kadrosu ve köklü yapısı var.|Doğu Karadeniz'in tüm ağır vakalarının sevki buraya geldiği için iş yükü asla bitmez.",
+  "diyarbakir_gazi|Diyarbakır Gazi Yaşargil EAH|Diyarbakır|Yenişehir|Eğitim ve Araştırma|70.3|69.8|9/10|9.000-13.000 TL|24 Saat Nöbet|11.000-16.000 TL|Hizmet puanı çok yüksek, doğu görevini yaparken mesleki tecrübenin zirvesine ulaşılır.|Hasta ve hasta yakını profilini yönetmek bazen ciddi krizlere neden olabiliyor."
 ];
 
 class MainNavigationScreen extends StatefulWidget {
@@ -113,40 +101,52 @@ class _MainNavigationScreenState extends State<MainNavigationScreen> {
 
   void _parseData() {
     for (var item in rawData) {
-      final p = item.split('|');
-      // Veri yapısının doğru indekslendiğinden emin olalım.
-      // id [0], name [1], city [2], district [3], type [4], k24 [5], k25 [6], wl [7], inc [8], shift [9], rent [10], pros [11], cons [12]
-      final hasProsCons = p.length > 12;
-      _hospitals.add(Hospital(
-        id: p[0], name: p[1], city: p[2], district: p[3], type: p[4],
-        kpss2024: double.tryParse(p[5]) ?? 70.0, 
-        kpss2025: double.tryParse(p[6]) ?? 70.0,
-        workLoad: p.length > 7 ? p[7] : '7/10',
-        incentive: p.length > 8 ? p[8] : '8.000 - 11.000 TL',
-        shift: p.length > 9 ? p[9] : '24 Saat Nöbet',
-        rentRange: p.length > 10 ? p[10] : '12.000 - 18.000 TL',
-        pros: hasProsCons ? p[11] : 'Kurumun genel işleyişi oturmuş durumda.',
-        cons: hasProsCons ? p[12] : 'Dönemsel personel eksikliği yaşanabilir.',
-      ));
+      try {
+        final p = item.split('|');
+        if (p.length >= 7) {
+          final isDetailed = p.length > 7;
+          _hospitals.add(Hospital(
+            id: p[0], name: p[1], city: p[2], district: p[3], type: p[4],
+            kpss2024: double.tryParse(p[5]) ?? 70.0, 
+            kpss2025: double.tryParse(p[6]) ?? 70.0,
+            workLoad: isDetailed ? p[7] : '7/10',
+            incentive: isDetailed ? p[8] : '8.000 - 11.000 TL',
+            shift: isDetailed ? p[9] : '24 Saat Nöbet',
+            rentRange: isDetailed ? p[10] : '12.000 - 18.000 TL',
+            pros: isDetailed && p.length > 11 ? p[11] : 'Kurumun genel işleyişi oturmuş durumda.',
+            cons: isDetailed && p.length > 12 ? p[12] : 'Dönemsel personel eksikliği yaşanabilir.',
+          ));
+        }
+      } catch (e) {
+        debugPrint('Veri parse hatası: $item');
+      }
     }
   }
 
   Future<void> _loadPrefs() async {
-    final prefs = await SharedPreferences.getInstance();
-    setState(() {
-      _favoriteIds = prefs.getStringList('favs') ?? [];
-      final notesStr = prefs.getString('notes');
-      if (notesStr != null) _notes = Map<String, String>.from(json.decode(notesStr));
-      final imagesStr = prefs.getString('images');
-      if (imagesStr != null) _images = Map<String, String>.from(json.decode(imagesStr));
-    });
+    try {
+      final prefs = await SharedPreferences.getInstance();
+      setState(() {
+        _favoriteIds = prefs.getStringList('favs') ?? [];
+        final notesStr = prefs.getString('notes');
+        if (notesStr != null) _notes = Map<String, String>.from(json.decode(notesStr));
+        final imagesStr = prefs.getString('images');
+        if (imagesStr != null) _images = Map<String, String>.from(json.decode(imagesStr));
+      });
+    } catch (e) {
+      debugPrint('Prefs yükleme hatası: $e');
+    }
   }
 
   Future<void> _savePrefs() async {
-    final prefs = await SharedPreferences.getInstance();
-    await prefs.setStringList('favs', _favoriteIds);
-    await prefs.setString('notes', json.encode(_notes));
-    await prefs.setString('images', json.encode(_images));
+    try {
+      final prefs = await SharedPreferences.getInstance();
+      await prefs.setStringList('favs', _favoriteIds);
+      await prefs.setString('notes', json.encode(_notes));
+      await prefs.setString('images', json.encode(_images));
+    } catch (e) {
+      debugPrint('Prefs kaydetme hatası: $e');
+    }
   }
 
   void _toggleFav(String id) {
@@ -158,37 +158,48 @@ class _MainNavigationScreenState extends State<MainNavigationScreen> {
   }
 
   Future<void> _pickImage(String id) async {
-    final picker = ImagePicker();
-    final pickedFile = await picker.pickImage(source: ImageSource.gallery);
-    if (pickedFile != null) {
-      setState(() => _images[id] = pickedFile.path);
-      _savePrefs();
+    try {
+      final picker = ImagePicker();
+      final pickedFile = await picker.pickImage(source: ImageSource.gallery);
+      if (pickedFile != null) {
+        setState(() => _images[id] = pickedFile.path);
+        _savePrefs();
+      }
+    } catch (e) {
+      debugPrint('Resim seçme hatası: $e');
     }
   }
 
-  Future<void> _openMap(String name, String city) async {
+  Future<void> _launchURL(Uri url) async {
+    try {
+      if (await canLaunchUrl(url)) {
+        await launchUrl(url, mode: LaunchMode.externalApplication);
+      }
+    } catch (e) {
+      debugPrint('URL açma hatası: $e');
+    }
+  }
+
+  void _openMap(String name, String city) {
     final query = Uri.encodeComponent("$name $city");
-    final url = Uri.parse("https://www.google.com/maps/search/?api=1&query=$query");
-    if (await canLaunchUrl(url)) {
-      await launchUrl(url, mode: LaunchMode.externalApplication);
-    }
+    _launchURL(Uri.parse("https://www.google.com/maps/search/?api=1&query=$query"));
   }
 
-  Future<void> _openSahibinden(String city, String district) async {
+  void _openSahibinden(String city, String district) {
     String format(String text) => text.toLowerCase().replaceAll(' ', '-').replaceAll('ı', 'i').replaceAll('ö', 'o').replaceAll('ü', 'u').replaceAll('ç', 'c').replaceAll('ş', 's').replaceAll('ğ', 'g');
     final c = format(city);
     final d = format(district);
-    final url = Uri.parse("https://www.sahibinden.com/kiralik-daire/$c-$d");
-    if (await canLaunchUrl(url)) {
-      await launchUrl(url, mode: LaunchMode.externalApplication);
-    }
+    _launchURL(Uri.parse("https://www.sahibinden.com/kiralik-daire/$c-$d"));
   }
 
   void _copyOSYMFormat() {
     String text = "ÖSYM TERCİH LİSTEM:\n\n";
     for (int i = 0; i < _favoriteIds.length; i++) {
-      final h = _hospitals.firstWhere((x) => x.id == _favoriteIds[i], orElse: () => _hospitals[0]);
-      text += "${i + 1}. TERCİH: ${h.name} (${h.city}/${h.district})\n";
+      final idx = _hospitals.indexWhere((x) => x.id == _favoriteIds[i]);
+      if (idx != -1) {
+        final h = _hospitals[idx];
+        text += "${i + 1}. TERCİH: ${h.name} (${h.city}/${h.district})\n";
+      }
     }
     Clipboard.setData(ClipboardData(text: text));
     ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text('Tercih listeniz ÖSYM şablonunda kopyalandı!', style: TextStyle(fontWeight: FontWeight.bold))));
@@ -318,7 +329,10 @@ class _MainNavigationScreenState extends State<MainNavigationScreen> {
               _savePrefs();
             },
             itemBuilder: (ctx, i) {
-              final h = _hospitals.firstWhere((x) => x.id == _favoriteIds[i], orElse: () => _hospitals[0]);
+              final idx = _hospitals.indexWhere((x) => x.id == _favoriteIds[i]);
+              if (idx == -1) return const SizedBox.shrink();
+              final h = _hospitals[idx];
+              
               return Card(
                 key: ValueKey(h.id),
                 child: ListTile(
