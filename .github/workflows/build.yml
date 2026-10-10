@@ -14,6 +14,8 @@ jobs:
       - uses: subosito/flutter-action@v2
         with:
           channel: 'stable'
+          # Flutter sürümünü sabitleyerek paket uyumsuzluklarının önüne geçiyoruz
+          flutter-version: '3.22.2'
 
       - name: Scaffold Flutter App
         run: |
@@ -21,12 +23,17 @@ jobs:
           cd temp_app
           flutter create --org com.hemsire.tercih hemsire_tercih
           cd hemsire_tercih
-          flutter pub add shared_preferences cached_network_image cupertino_icons image_picker
           
-          # Android internet ve galeri izinleri
+          # Paketlerin versiyonlarını belirterek olası çakışmaları önlüyoruz
+          flutter pub add shared_preferences:^2.2.3 image_picker:^1.1.2 url_launcher:^6.2.6
+          
+          # Android izinleri (Harita ve Galeri için)
           sed -i '/<application/i <uses-permission android:name="android.permission.INTERNET"/>' android/app/src/main/AndroidManifest.xml
           sed -i '/<application/i <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>' android/app/src/main/AndroidManifest.xml
           sed -i '/<application/i <uses-permission android:name="android.permission.READ_MEDIA_IMAGES"/>' android/app/src/main/AndroidManifest.xml
+          
+          # Android build yapılandırması
+          sed -i 's/minSdkVersion flutter.minSdkVersion/minSdkVersion 21/g' android/app/build.gradle
           
           cp ../../lib/main.dart lib/main.dart
           flutter build apk --release
