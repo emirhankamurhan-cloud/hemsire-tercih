@@ -131,8 +131,6 @@ class _MainNavigationScreenState extends State<MainNavigationScreen> {
     }
   }
 
-  // --- YENİ: AKILLI GÖRSEL TANIMA MOTORU ---
-  // Uygulama açılırken assets klasörünün içindeki dosya isimlerini tarar
   Future<void> _loadBundledAssets() async {
     try {
       final manifestContent = await rootBundle.loadString('AssetManifest.json');
@@ -145,52 +143,50 @@ class _MainNavigationScreenState extends State<MainNavigationScreen> {
     }
   }
 
-  // Türkçe ve boşluklu düzensiz isimleri standardize eden fonksiyon
   String _normalizeString(String text) {
     return text.toLowerCase()
       .replaceAll('ı', 'i').replaceAll('ö', 'o').replaceAll('ü', 'u')
       .replaceAll('ç', 'c').replaceAll('ş', 's').replaceAll('ğ', 'g')
       .replaceAll('hastanesi', '').replaceAll('eah', '').replaceAll('dh', '')
-      .replaceAll(RegExp(r'[^a-z0-9]'), ''); // Boşlukları ve noktalama işaretlerini siler
+      .replaceAll(RegExp(r'[^a-z0-9]'), ''); 
   }
 
-  // Hastaneye uygun fotoğrafı bulur
   String? _findMatchingAsset(Hospital h) {
     final normHospName = _normalizeString(h.name);
     final normHospCity = _normalizeString(h.city);
 
     for (String assetPath in _bundledAssets) {
-      // Örn: assets/Samsun Şehir.jpg -> samsunsehir
-      final fileName = assetPath.split('/').last.split('.').first; 
+      // JPEG VE JPG DESTEĞİ: Dosya adını uzantıdan ayırıyoruz
+      final parts = assetPath.split('/').last.split('.');
+      if (parts.isEmpty) continue;
+      
+      final fileName = parts.first; 
       final normFileName = _normalizeString(fileName);
 
-      // Kullanıcının yazdığı isim hastane adını tam içeriyorsa (Örn: samsunsehir == samsunsehir)
       if (normHospName.contains(normFileName) || normFileName.contains(normHospName)) {
         return assetPath;
       }
-      // Veya şehir ve tip ikilisi eşleşiyorsa (Örn: ziledevlet -> tokatziledevlet)
       if (normFileName.contains(normHospCity) && normHospName.contains(normFileName.replaceAll(normHospCity, ''))) {
         return assetPath;
       }
     }
-    // Geriye dönük ID bazlı kontrol (eskisi gibi tokat_devlet.jpg yazanlar için)
-    if (_bundledAssets.contains('assets/${h.id}.jpg')) {
-      return 'assets/${h.id}.jpg';
-    }
+    
+    // Eski sistem ID kontrolü (hem jpg hem jpeg)
+    if (_bundledAssets.contains('assets/${h.id}.jpg')) return 'assets/${h.id}.jpg';
+    if (_bundledAssets.contains('assets/${h.id}.jpeg')) return 'assets/${h.id}.jpeg';
+    
     return null;
   }
 
-  // Akıllı Görsel Motoru Widget'ı
   Widget _buildImageEngine(Hospital h) {
-    final personalImage = _images[h.id]; // Telefondan eklenen özel resim (varsa)
-    final bundledAsset = _findMatchingAsset(h); // APK içine akıllıca gömülen resim (varsa)
+    final personalImage = _images[h.id]; 
+    final bundledAsset = _findMatchingAsset(h); 
 
     if (personalImage != null && File(personalImage).existsSync()) {
       return Image.file(File(personalImage), fit: BoxFit.cover);
     } else if (bundledAsset != null) {
       return Image.asset(bundledAsset, fit: BoxFit.cover);
     } else {
-      // Resim yoksa standart şık afiş
       return const Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
@@ -201,17 +197,20 @@ class _MainNavigationScreenState extends State<MainNavigationScreen> {
       );
     }
   }
-  // ---------------------------------------------
 
   Future<void> _loadPrefs() async {
-    final prefs = await SharedPreferences.getInstance();
-    setState(() {
-      _favoriteIds = prefs.getStringList('favs') ?? [];
-      final notesStr = prefs.getString('notes');
-      if (notesStr != null) _notes = Map<String, String>.from(json.decode(notesStr));
-      final imagesStr = prefs.getString('images');
-      if (imagesStr != null) _images = Map<String, String>.from(json.decode(imagesStr));
-    });
+    try {
+      final prefs = await SharedPreferences.getInstance();
+      setState(() {
+        _favoriteIds = prefs.getStringList('favs') ?? [];
+        final notesStr = prefs.getString('notes');
+        if (notesStr != null) _notes = Map<String, String>.from(json.decode(notesStr));
+        final imagesStr = prefs.getString('images');
+        if (imagesStr != null) _images = Map<String, String>.from(json.decode(imagesStr));
+      });
+    } catch (e) {
+      debugPrint('Prefs yükleme hatası: $e');
+    }
   }
 
   Future<void> _savePrefs() async {
@@ -230,11 +229,15 @@ class _MainNavigationScreenState extends State<MainNavigationScreen> {
   }
 
   Future<void> _pickImage(String id) async {
-    final picker = ImagePicker();
-    final pickedFile = await picker.pickImage(source: ImageSource.gallery);
-    if (pickedFile != null) {
-      setState(() => _images[id] = pickedFile.path);
-      _savePrefs();
+    try {
+      final picker = ImagePicker();
+      final pickedFile = await picker.pickImage(source: ImageSource.gallery);
+      if (pickedFile != null) {
+        setState(() => _images[id] = pickedFile.path);
+        _savePrefs();
+      }
+    } catch (e) {
+      debugPrint('Resim seçme hatası: $e');
     }
   }
 
@@ -379,7 +382,7 @@ class _MainNavigationScreenState extends State<MainNavigationScreen> {
                 Container(
                   height: 140, width: double.infinity,
                   color: Colors.teal.shade700,
-                  // Akıllı Görsel Motoru Devrede
+                  // Akıllı JPEG ve JPG Destekli Motor
                   child: _buildImageEngine(h),
                 ),
                 Positioned(top: 8, left: 8, child: Container(padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4), decoration: BoxDecoration(color: Colors.black54, borderRadius: BorderRadius.circular(8)), child: Text(h.type, style: const TextStyle(color: Colors.white, fontSize: 11)))),
