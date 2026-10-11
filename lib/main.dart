@@ -55,6 +55,7 @@ final List<String> rawData = [
   "tokat_resadiye|Tokat Reşadiye Devlet Hastanesi|Tokat|Reşadiye|Devlet Hastanesi|71.9|71.5|4/10|4.000-7.000 TL|24 Saat Nöbet|8.000-12.000 TL|İş yükü çok sakin, yıpranma payı az, maddi birikim yapmak için elverişli.|Mesleki gelişim ve vaka çeşitliliği açısından çok yetersiz, mahrumiyet hissi yaratabilir.",
   "tokat_niksar|Tokat Niksar Devlet Hastanesi|Tokat|Niksar|Devlet Hastanesi|72.2|71.8|5/10|5.000-8.000 TL|24 Saat Nöbet|8.500-12.500 TL|Doğası güzel, yeşillikler içinde bir ilçe. Hastane şartları standart.|Sosyal çevre edinmek bekar personeller için zaman alabiliyor.",
   "tokat_erbaa|Tokat Erbaa Devlet Hastanesi|Tokat|Erbaa|Devlet Hastanesi|72.6|72.1|6/10|6.500-9.500 TL|24 Saat Nöbet|10.000-14.000 TL|Tokat’ın en gelişmiş ve büyük ilçesi. Sosyal imkanları diğer ilçelere göre iyi.|Hastane hasta sirkülasyonu açısından merkez hastanesi gibi yoğun olabiliyor.",
+  "tokat_almus|Tokat Almus Devlet Hastanesi|Tokat|Almus|Devlet Hastanesi|71.8|71.4|4/10|4.000-6.500 TL|24 Saat Nöbet|7.000-10.000 TL|Göl kenarında doğa harikası küçük ilçe.|Merkeze ulaşım kış aylarında zorlayıcı.",
   
   "samsun_sehir|Samsun Şehir Hastanesi|Samsun|Canik|Şehir Hastanesi|74.2|73.8|9/10|12.000-16.000 TL|24 Saat & 16-8|15.000-22.000 TL|Bina, yoğun bakımlar ve donanım son teknoloji. Canik'te kiralar Atakum'a göre daha uygun.|Çok devasa olduğu için içi ulaşım ve adımlama çok yorucu. Kurumsal işleyiş hala tam oturmadı, angarya iş yükü fazla.",
   "samsun_eah|Samsun Eğitim ve Araştırma Hastanesi|Samsun|İlkadım|Eğitim ve Araştırma|73.8|73.5|8/10|8.000-12.000 TL|24 Saat Nöbet|14.000-20.000 TL|Merkezi konumda, köklü kadro, tecrübeli ekipler var. Vaka çeşitliliği muazzam.|Şehir hastanesi açılsa da acili hala bölgenin en yoğun yerlerinden. Otopark ve trafik sorunu var.",
@@ -72,7 +73,11 @@ final List<String> rawData = [
   "izmir_sehir|İzmir Şehir Hastanesi|İzmir|Bayraklı|Şehir Hastanesi|75.5|75.0|9/10|11.000-15.000 TL|24 Saat Nöbet|20.000-28.000 TL|Bina yeni, manzarası var. Ege'nin en prestijli yapısı.|Tepede yer alıyor, ring beklemek can sıkıcı. Yeni açıldığı için malzeme tedarik süreçleri bazen aksıyor.",
   "adana_sehir|Adana Şehir Hastanesi|Adana|Yüreğir|Şehir Hastanesi|74.2|73.8|8/10|11.000-14.000 TL|24 Saat Nöbet|15.000-20.000 TL|Bölgenin ana referans merkezi, teşvikleri çok tatmin edici.|Yaz aylarında inanılmaz sıcak. Acil servis yoğunluğu ve şiddet vakaları zaman zaman yorucu.",
   "trabzon_kanuni|Trabzon Kanuni EAH|Trabzon|Yomra|Eğitim ve Araştırma|73.7|73.2|8/10|9.000-13.000 TL|24 Saat Nöbet|14.000-20.000 TL|Deniz manzaralı kampüs. Tecrübeli kadrosu ve köklü yapısı var.|Doğu Karadeniz'in tüm ağır vakalarının sevki buraya geldiği için iş yükü asla bitmez.",
-  "diyarbakir_gazi|Diyarbakır Gazi Yaşargil EAH|Diyarbakır|Yenişehir|Eğitim ve Araştırma|70.3|69.8|9/10|9.000-13.000 TL|24 Saat Nöbet|11.000-16.000 TL|Hizmet puanı çok yüksek, doğu görevini yaparken mesleki tecrübenin zirvesine ulaşılır.|Hasta ve hasta yakını profilini yönetmek bazen ciddi krizlere neden olabiliyor."
+  "diyarbakir_gazi|Diyarbakır Gazi Yaşargil EAH|Diyarbakır|Yenişehir|Eğitim ve Araştırma|70.3|69.8|9/10|9.000-13.000 TL|24 Saat Nöbet|11.000-16.000 TL|Hizmet puanı çok yüksek, doğu görevini yaparken mesleki tecrübenin zirvesine ulaşılır.|Hasta ve hasta yakını profilini yönetmek bazen ciddi krizlere neden olabiliyor.",
+  "antalya_sehir|Antalya Şehir Hastanesi|Antalya|Kepez|Şehir Hastanesi|75.1|74.6|7/10|10.000-14.000 TL|24 Saat Nöbet|18.000-25.000 TL|Yeni tesis, sosyal imkanlar harika.|Yaz aylarında turizm yoğunluğu iş yükünü artırır.",
+  "bursa_sehir|Bursa Şehir Hastanesi|Bursa|Nilüfer|Şehir Hastanesi|73.8|73.3|7/10|11.000-14.000 TL|24 Saat Nöbet|16.000-22.000 TL|Nilüfer gibi nezih bir ilçede modern kampüs.|Büyük şehir karmaşası merkeze giden yollarda yorucu olabilir.",
+  "kayseri_sehir|Kayseri Şehir Hastanesi|Kayseri|Kocasinan|Şehir Hastanesi|74.1|73.6|7/10|10.000-13.500 TL|24 Saat Nöbet|12.000-18.000 TL|Tramvay tam önünden geçer.|Sanayi şehri olması hasebiyle sanayi kazaları çok görülür.",
+  "eskisehir_sehir|Eskişehir Şehir Hastanesi|Eskişehir|Odunpazarı|Şehir Hastanesi|74.8|74.3|7/10|10.000-13.000 TL|24 Saat Nöbet|14.000-20.000 TL|Öğrenci kenti, tramvay hattı var, sosyal ortamı mükemmel.|Türkiye'nin en popüler illerinden biri olduğu için tayin süreçleri çok yavaş işler."
 ];
 
 class MainNavigationScreen extends StatefulWidget {
@@ -87,7 +92,9 @@ class _MainNavigationScreenState extends State<MainNavigationScreen> {
   List<Hospital> _hospitals = [];
   List<String> _favoriteIds = [];
   Map<String, String> _notes = {};
-  Map<String, String> _images = {};
+  Map<String, String> _images = {}; // Kişisel olarak telefondan eklenen fotoğraflar
+  List<String> _bundledAssets = []; // GitHub'a atılan gömülü resimlerin listesi
+  
   String _searchQuery = '';
   String _activeCity = 'Tümü';
   double _userScore = 72.0;
@@ -97,6 +104,7 @@ class _MainNavigationScreenState extends State<MainNavigationScreen> {
     super.initState();
     _parseData();
     _loadPrefs();
+    _loadBundledAssets();
   }
 
   void _parseData() {
@@ -123,30 +131,94 @@ class _MainNavigationScreenState extends State<MainNavigationScreen> {
     }
   }
 
-  Future<void> _loadPrefs() async {
+  // --- YENİ: AKILLI GÖRSEL TANIMA MOTORU ---
+  // Uygulama açılırken assets klasörünün içindeki dosya isimlerini tarar
+  Future<void> _loadBundledAssets() async {
     try {
-      final prefs = await SharedPreferences.getInstance();
+      final manifestContent = await rootBundle.loadString('AssetManifest.json');
+      final Map<String, dynamic> manifestMap = json.decode(manifestContent);
       setState(() {
-        _favoriteIds = prefs.getStringList('favs') ?? [];
-        final notesStr = prefs.getString('notes');
-        if (notesStr != null) _notes = Map<String, String>.from(json.decode(notesStr));
-        final imagesStr = prefs.getString('images');
-        if (imagesStr != null) _images = Map<String, String>.from(json.decode(imagesStr));
+        _bundledAssets = manifestMap.keys.where((String key) => key.startsWith('assets/')).toList();
       });
     } catch (e) {
-      debugPrint('Prefs yükleme hatası: $e');
+      debugPrint("Asset yükleme hatası: $e");
     }
   }
 
-  Future<void> _savePrefs() async {
-    try {
-      final prefs = await SharedPreferences.getInstance();
-      await prefs.setStringList('favs', _favoriteIds);
-      await prefs.setString('notes', json.encode(_notes));
-      await prefs.setString('images', json.encode(_images));
-    } catch (e) {
-      debugPrint('Prefs kaydetme hatası: $e');
+  // Türkçe ve boşluklu düzensiz isimleri standardize eden fonksiyon
+  String _normalizeString(String text) {
+    return text.toLowerCase()
+      .replaceAll('ı', 'i').replaceAll('ö', 'o').replaceAll('ü', 'u')
+      .replaceAll('ç', 'c').replaceAll('ş', 's').replaceAll('ğ', 'g')
+      .replaceAll('hastanesi', '').replaceAll('eah', '').replaceAll('dh', '')
+      .replaceAll(RegExp(r'[^a-z0-9]'), ''); // Boşlukları ve noktalama işaretlerini siler
+  }
+
+  // Hastaneye uygun fotoğrafı bulur
+  String? _findMatchingAsset(Hospital h) {
+    final normHospName = _normalizeString(h.name);
+    final normHospCity = _normalizeString(h.city);
+
+    for (String assetPath in _bundledAssets) {
+      // Örn: assets/Samsun Şehir.jpg -> samsunsehir
+      final fileName = assetPath.split('/').last.split('.').first; 
+      final normFileName = _normalizeString(fileName);
+
+      // Kullanıcının yazdığı isim hastane adını tam içeriyorsa (Örn: samsunsehir == samsunsehir)
+      if (normHospName.contains(normFileName) || normFileName.contains(normHospName)) {
+        return assetPath;
+      }
+      // Veya şehir ve tip ikilisi eşleşiyorsa (Örn: ziledevlet -> tokatziledevlet)
+      if (normFileName.contains(normHospCity) && normHospName.contains(normFileName.replaceAll(normHospCity, ''))) {
+        return assetPath;
+      }
     }
+    // Geriye dönük ID bazlı kontrol (eskisi gibi tokat_devlet.jpg yazanlar için)
+    if (_bundledAssets.contains('assets/${h.id}.jpg')) {
+      return 'assets/${h.id}.jpg';
+    }
+    return null;
+  }
+
+  // Akıllı Görsel Motoru Widget'ı
+  Widget _buildImageEngine(Hospital h) {
+    final personalImage = _images[h.id]; // Telefondan eklenen özel resim (varsa)
+    final bundledAsset = _findMatchingAsset(h); // APK içine akıllıca gömülen resim (varsa)
+
+    if (personalImage != null && File(personalImage).existsSync()) {
+      return Image.file(File(personalImage), fit: BoxFit.cover);
+    } else if (bundledAsset != null) {
+      return Image.asset(bundledAsset, fit: BoxFit.cover);
+    } else {
+      // Resim yoksa standart şık afiş
+      return const Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          Icon(Icons.apartment, color: Colors.white54, size: 40),
+          SizedBox(height: 8),
+          Text("GÖRSEL EKLENEBİLİR", style: TextStyle(color: Colors.white54, fontWeight: FontWeight.bold))
+        ],
+      );
+    }
+  }
+  // ---------------------------------------------
+
+  Future<void> _loadPrefs() async {
+    final prefs = await SharedPreferences.getInstance();
+    setState(() {
+      _favoriteIds = prefs.getStringList('favs') ?? [];
+      final notesStr = prefs.getString('notes');
+      if (notesStr != null) _notes = Map<String, String>.from(json.decode(notesStr));
+      final imagesStr = prefs.getString('images');
+      if (imagesStr != null) _images = Map<String, String>.from(json.decode(imagesStr));
+    });
+  }
+
+  Future<void> _savePrefs() async {
+    final prefs = await SharedPreferences.getInstance();
+    await prefs.setStringList('favs', _favoriteIds);
+    await prefs.setString('notes', json.encode(_notes));
+    await prefs.setString('images', json.encode(_images));
   }
 
   void _toggleFav(String id) {
@@ -158,38 +230,26 @@ class _MainNavigationScreenState extends State<MainNavigationScreen> {
   }
 
   Future<void> _pickImage(String id) async {
-    try {
-      final picker = ImagePicker();
-      final pickedFile = await picker.pickImage(source: ImageSource.gallery);
-      if (pickedFile != null) {
-        setState(() => _images[id] = pickedFile.path);
-        _savePrefs();
-      }
-    } catch (e) {
-      debugPrint('Resim seçme hatası: $e');
+    final picker = ImagePicker();
+    final pickedFile = await picker.pickImage(source: ImageSource.gallery);
+    if (pickedFile != null) {
+      setState(() => _images[id] = pickedFile.path);
+      _savePrefs();
     }
   }
 
   Future<void> _launchURL(Uri url) async {
-    try {
-      if (await canLaunchUrl(url)) {
-        await launchUrl(url, mode: LaunchMode.externalApplication);
-      }
-    } catch (e) {
-      debugPrint('URL açma hatası: $e');
-    }
+    if (await canLaunchUrl(url)) await launchUrl(url, mode: LaunchMode.externalApplication);
   }
 
   void _openMap(String name, String city) {
-    final query = Uri.encodeComponent("$name $city");
+    final query = Uri.encodeComponent("$name$city");
     _launchURL(Uri.parse("https://www.google.com/maps/search/?api=1&query=$query"));
   }
 
   void _openSahibinden(String city, String district) {
     String format(String text) => text.toLowerCase().replaceAll(' ', '-').replaceAll('ı', 'i').replaceAll('ö', 'o').replaceAll('ü', 'u').replaceAll('ç', 'c').replaceAll('ş', 's').replaceAll('ğ', 'g');
-    final c = format(city);
-    final d = format(district);
-    _launchURL(Uri.parse("https://www.sahibinden.com/kiralik-daire/$c-$d"));
+    _launchURL(Uri.parse("https://www.sahibinden.com/kiralik-daire/${format(city)}-${format(district)}"));
   }
 
   void _copyOSYMFormat() {
@@ -219,13 +279,7 @@ class _MainNavigationScreenState extends State<MainNavigationScreen> {
                 Expanded(
                   child: TextField(
                     onChanged: (v) => setState(() => _searchQuery = v),
-                    decoration: InputDecoration(
-                      hintText: 'Hastane veya İlçe Ara...',
-                      filled: true, fillColor: Colors.white,
-                      border: OutlineInputBorder(borderRadius: BorderRadius.circular(12), borderSide: BorderSide.none),
-                      contentPadding: const EdgeInsets.symmetric(horizontal: 16),
-                      prefixIcon: const Icon(Icons.search, size: 20),
-                    ),
+                    decoration: InputDecoration(hintText: 'Hastane veya İlçe Ara...', filled: true, fillColor: Colors.white, border: OutlineInputBorder(borderRadius: BorderRadius.circular(12), borderSide: BorderSide.none), contentPadding: const EdgeInsets.symmetric(horizontal: 16), prefixIcon: const Icon(Icons.search, size: 20)),
                   ),
                 ),
                 const SizedBox(width: 8),
@@ -236,15 +290,7 @@ class _MainNavigationScreenState extends State<MainNavigationScreen> {
                     children: [
                       const Text('Puan:', style: TextStyle(fontWeight: FontWeight.bold, color: Color(0xFF0D9488))),
                       const SizedBox(width: 8),
-                      SizedBox(
-                        width: 50,
-                        child: TextField(
-                          keyboardType: const TextInputType.numberWithOptions(decimal: true),
-                          decoration: const InputDecoration(border: InputBorder.none),
-                          onChanged: (v) => setState(() => _userScore = double.tryParse(v) ?? 0.0),
-                          controller: TextEditingController(text: _userScore.toString())..selection = TextSelection.collapsed(offset: _userScore.toString().length),
-                        ),
-                      ),
+                      SizedBox(width: 50, child: TextField(keyboardType: const TextInputType.numberWithOptions(decimal: true), decoration: const InputDecoration(border: InputBorder.none), onChanged: (v) => setState(() => _userScore = double.tryParse(v) ?? 0.0), controller: TextEditingController(text: _userScore.toString())..selection = TextSelection.collapsed(offset: _userScore.toString().length))),
                     ],
                   ),
                 )
@@ -259,10 +305,7 @@ class _MainNavigationScreenState extends State<MainNavigationScreen> {
         onDestinationSelected: (i) => setState(() => _currentIndex = i),
         destinations: [
           const NavigationDestination(icon: Icon(Icons.local_hospital), label: 'Hastaneler'),
-          NavigationDestination(
-            icon: Badge(label: Text('${_favoriteIds.length}'), child: const Icon(Icons.star)),
-            label: 'Tercih Listem',
-          ),
+          NavigationDestination(icon: Badge(label: Text('${_favoriteIds.length}'), child: const Icon(Icons.star)), label: 'Tercih Listem'),
           const NavigationDestination(icon: Icon(Icons.calculate), label: 'Maaş/Nöbet'),
         ],
       ),
@@ -285,93 +328,42 @@ class _MainNavigationScreenState extends State<MainNavigationScreen> {
 
     return Column(
       children: [
-        SingleChildScrollView(
-          scrollDirection: Axis.horizontal,
-          padding: const EdgeInsets.all(8),
-          child: Row(
-            children: cities.map((c) => Padding(
-              padding: const EdgeInsets.only(right: 6),
-              child: ChoiceChip(
-                label: Text(c),
-                selected: _activeCity == c,
-                onSelected: (val) { if(val) setState(() => _activeCity = c); },
-              ),
-            )).toList(),
-          ),
-        ),
-        Expanded(
-          child: ListView.builder(
-            padding: const EdgeInsets.all(8),
-            itemCount: filtered.length,
-            itemBuilder: (ctx, i) => _buildCard(filtered[i]),
-          ),
-        ),
+        SingleChildScrollView(scrollDirection: Axis.horizontal, padding: const EdgeInsets.all(8), child: Row(children: cities.map((c) => Padding(padding: const EdgeInsets.only(right: 6), child: ChoiceChip(label: Text(c), selected: _activeCity == c, onSelected: (val) { if(val) setState(() => _activeCity = c); }))).toList())),
+        Expanded(child: ListView.builder(padding: const EdgeInsets.all(8), itemCount: filtered.length, itemBuilder: (ctx, i) => _buildCard(filtered[i]))),
       ],
     );
   }
 
   Widget _buildFavList() {
-    if (_favoriteIds.isEmpty) {
-      return const Center(child: Text("Listeniz Boş. Kalp ikonuna basarak hastane ekleyin.", style: TextStyle(color: Colors.grey)));
-    }
+    if (_favoriteIds.isEmpty) return const Center(child: Text("Listeniz Boş. Kalp ikonuna basarak hastane ekleyin.", style: TextStyle(color: Colors.grey)));
     return Column(
       children: [
         Expanded(
           child: ReorderableListView.builder(
-            padding: const EdgeInsets.all(8),
-            itemCount: _favoriteIds.length,
+            padding: const EdgeInsets.all(8), itemCount: _favoriteIds.length,
             onReorder: (oldI, newI) {
               if (newI > oldI) newI -= 1;
-              setState(() {
-                final item = _favoriteIds.removeAt(oldI);
-                _favoriteIds.insert(newI, item);
-              });
+              setState(() { final item = _favoriteIds.removeAt(oldI); _favoriteIds.insert(newI, item); });
               _savePrefs();
             },
             itemBuilder: (ctx, i) {
               final idx = _hospitals.indexWhere((x) => x.id == _favoriteIds[i]);
               if (idx == -1) return const SizedBox.shrink();
               final h = _hospitals[idx];
-              
-              return Card(
-                key: ValueKey(h.id),
-                child: ListTile(
-                  leading: CircleAvatar(backgroundColor: const Color(0xFF0D9488), child: Text('${i + 1}', style: const TextStyle(color: Colors.white))),
-                  title: Text(h.name, style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 13)),
-                  subtitle: Text('${h.city} • Son Taban: ${h.kpss2025}'),
-                  trailing: const Icon(Icons.drag_handle),
-                  onTap: () => _showDetails(h),
-                ),
-              );
+              return Card(key: ValueKey(h.id), child: ListTile(leading: CircleAvatar(backgroundColor: const Color(0xFF0D9488), child: Text('${i + 1}', style: const TextStyle(color: Colors.white))), title: Text(h.name, style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 13)), subtitle: Text('${h.city} • Son Taban: ${h.kpss2025}'), trailing: const Icon(Icons.drag_handle), onTap: () => _showDetails(h)));
             },
           ),
         ),
-        Padding(
-          padding: const EdgeInsets.all(16.0),
-          child: SizedBox(
-            width: double.infinity,
-            child: ElevatedButton.icon(
-              icon: const Icon(Icons.copy),
-              label: const Text("ÖSYM İçin Listeyi Kopyala"),
-              style: ElevatedButton.styleFrom(backgroundColor: const Color(0xFF0D9488), foregroundColor: Colors.white, padding: const EdgeInsets.all(12)),
-              onPressed: _copyOSYMFormat,
-            ),
-          ),
-        )
+        Padding(padding: const EdgeInsets.all(16.0), child: SizedBox(width: double.infinity, child: ElevatedButton.icon(icon: const Icon(Icons.copy), label: const Text("ÖSYM İçin Listeyi Kopyala"), style: ElevatedButton.styleFrom(backgroundColor: const Color(0xFF0D9488), foregroundColor: Colors.white, padding: const EdgeInsets.all(12)), onPressed: _copyOSYMFormat)))
       ],
     );
   }
 
   Widget _buildCard(Hospital h) {
     final isFav = _favoriteIds.contains(h.id);
-    final imgPath = _images[h.id];
     final diff = _userScore - h.kpss2025;
-    
-    Color badgeColor;
-    String badgeText;
-    if (diff >= 0) { badgeColor = Colors.green; badgeText = "Kesin Gelir"; }
-    else if (diff >= -1.5) { badgeColor = Colors.orange; badgeText = "Sınırda"; }
-    else { badgeColor = Colors.red; badgeText = "Zor / Gelmez"; }
+    Color badgeColor = diff >= 0 ? Colors.green : (diff >= -1.5 ? Colors.orange : Colors.red);
+    String badgeText = diff >= 0 ? "Kesin Gelir" : (diff >= -1.5 ? "Sınırda" : "Zor / Gelmez");
 
     return Card(
       margin: const EdgeInsets.only(bottom: 12),
@@ -387,16 +379,8 @@ class _MainNavigationScreenState extends State<MainNavigationScreen> {
                 Container(
                   height: 140, width: double.infinity,
                   color: Colors.teal.shade700,
-                  child: imgPath != null && File(imgPath).existsSync()
-                      ? Image.file(File(imgPath), fit: BoxFit.cover)
-                      : const Column(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            Icon(Icons.apartment, color: Colors.white54, size: 40),
-                            SizedBox(height: 8),
-                            Text("GÖRSEL EKLENEBİLİR", style: TextStyle(color: Colors.white54, fontWeight: FontWeight.bold))
-                          ],
-                        ),
+                  // Akıllı Görsel Motoru Devrede
+                  child: _buildImageEngine(h),
                 ),
                 Positioned(top: 8, left: 8, child: Container(padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4), decoration: BoxDecoration(color: Colors.black54, borderRadius: BorderRadius.circular(8)), child: Text(h.type, style: const TextStyle(color: Colors.white, fontSize: 11)))),
                 Positioned(top: 8, right: 8, child: InkWell(onTap: () => _toggleFav(h.id), child: CircleAvatar(backgroundColor: Colors.black54, child: Icon(isFav ? Icons.favorite : Icons.favorite_border, color: isFav ? Colors.red : Colors.white)))),
@@ -408,7 +392,7 @@ class _MainNavigationScreenState extends State<MainNavigationScreen> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(h.name, style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 15)),
-                  Text('${h.city} / ${h.district}', style: TextStyle(color: Colors.grey.shade600, fontSize: 13)),
+                  Text('${h.city} /${h.district}', style: TextStyle(color: Colors.grey.shade600, fontSize: 13)),
                   const Divider(),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -435,187 +419,4 @@ class _MainNavigationScreenState extends State<MainNavigationScreen> {
         builder: (ctx, setModalState) {
           final noteCtrl = TextEditingController(text: _notes[h.id] ?? '');
           return Padding(
-            padding: EdgeInsets.only(bottom: MediaQuery.of(ctx).viewInsets.bottom, left: 16, right: 16, top: 16),
-            child: SingleChildScrollView(
-              child: Column(
-                mainAxisSize: MainAxisSize.min,
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(h.name, style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
-                  const SizedBox(height: 12),
-                  
-                  Row(
-                    children: [
-                      Expanded(
-                        child: OutlinedButton.icon(
-                          icon: const Icon(Icons.map, size: 16), label: const Text("Haritada Gör", style: TextStyle(fontSize: 12)),
-                          onPressed: () => _openMap(h.name, h.city),
-                        ),
-                      ),
-                      const SizedBox(width: 8),
-                      Expanded(
-                        child: OutlinedButton.icon(
-                          icon: const Icon(Icons.home_work, size: 16), label: const Text("Ev Ara", style: TextStyle(fontSize: 12)),
-                          onPressed: () => _openSahibinden(h.city, h.district),
-                        ),
-                      ),
-                    ],
-                  ),
-                  const Divider(),
-
-                  Row(
-                    children: [
-                      Expanded(child: _detailBox("İş Yükü", h.workLoad, Icons.trending_up)),
-                      const SizedBox(width: 8),
-                      Expanded(child: _detailBox("Teşvik", h.incentive, Icons.payments)),
-                    ],
-                  ),
-                  const SizedBox(height: 8),
-                  Row(
-                    children: [
-                      Expanded(child: _detailBox("Nöbet", h.shift, Icons.schedule)),
-                      const SizedBox(width: 8),
-                      Expanded(child: _detailBox("Ev Kirası", h.rentRange, Icons.home)),
-                    ],
-                  ),
-                  const SizedBox(height: 16),
-                  
-                  Container(
-                    width: double.infinity, padding: const EdgeInsets.all(12),
-                    decoration: BoxDecoration(color: Colors.blueGrey.shade50, borderRadius: BorderRadius.circular(8)),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Row(children: [const Icon(Icons.business, size: 16, color: Colors.blueGrey), const SizedBox(width: 4), Text("Lojman Durumu: ", style: TextStyle(fontWeight: FontWeight.bold, color: Colors.blueGrey.shade900)), Expanded(child: Text(h.lojmanDurumu, style: TextStyle(color: Colors.blueGrey.shade800)))]),
-                        const SizedBox(height: 6),
-                        Row(children: [const Icon(Icons.school, size: 16, color: Colors.blueGrey), const SizedBox(width: 4), Text("Eğitim/Y.Lisans Toleransı: ", style: TextStyle(fontWeight: FontWeight.bold, color: Colors.blueGrey.shade900)), Expanded(child: Text(h.egitimToleransi, style: TextStyle(color: Colors.blueGrey.shade800)))]),
-                      ],
-                    ),
-                  ),
-                  const SizedBox(height: 16),
-
-                  Container(
-                    width: double.infinity, padding: const EdgeInsets.all(12),
-                    decoration: BoxDecoration(color: Colors.green.shade50, borderRadius: BorderRadius.circular(8), border: Border(left: const BorderSide(color: Colors.green, width: 4))),
-                    child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [Text("🟢 Artıları", style: TextStyle(fontWeight: FontWeight.bold, color: Colors.green.shade900)), const SizedBox(height: 4), Text(h.pros, style: TextStyle(color: Colors.green.shade900, fontSize: 13))]),
-                  ),
-                  const SizedBox(height: 8),
-                  Container(
-                    width: double.infinity, padding: const EdgeInsets.all(12),
-                    decoration: BoxDecoration(color: Colors.red.shade50, borderRadius: BorderRadius.circular(8), border: Border(left: const BorderSide(color: Colors.red, width: 4))),
-                    child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [Text("🔴 Eksileri", style: TextStyle(fontWeight: FontWeight.bold, color: Colors.red.shade900)), const SizedBox(height: 4), Text(h.cons, style: TextStyle(color: Colors.red.shade900, fontSize: 13))]),
-                  ),
-                  
-                  const SizedBox(height: 16),
-                  TextField(controller: noteCtrl, decoration: const InputDecoration(hintText: "Kişisel notunuz...", border: OutlineInputBorder()), maxLines: 2, onChanged: (v) { _notes[h.id] = v; _savePrefs(); }),
-                  const SizedBox(height: 12),
-                  SizedBox(
-                    width: double.infinity,
-                    child: ElevatedButton.icon(
-                      icon: const Icon(Icons.add_a_photo), label: const Text("Galeriden Fotoğraf Değiştir"),
-                      style: ElevatedButton.styleFrom(backgroundColor: const Color(0xFF0D9488), foregroundColor: Colors.white),
-                      onPressed: () async { await _pickImage(h.id); setModalState(() {}); setState(() {}); },
-                    ),
-                  ),
-                  const SizedBox(height: 24),
-                ],
-              ),
-            ),
-          );
-        }
-      )
-    );
-  }
-
-  Widget _detailBox(String title, String val, IconData icon) {
-    return Container(
-      padding: const EdgeInsets.all(8),
-      decoration: BoxDecoration(color: Colors.grey.shade100, borderRadius: BorderRadius.circular(8), border: Border.all(color: Colors.grey.shade300)),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Row(children: [Icon(icon, size: 14, color: Colors.grey.shade600), const SizedBox(width: 4), Text(title, style: TextStyle(fontSize: 10, color: Colors.grey.shade600, fontWeight: FontWeight.bold))]),
-          const SizedBox(height: 4),
-          Text(val, style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 12)),
-        ],
-      ),
-    );
-  }
-}
-
-class CalculatorScreen extends StatefulWidget {
-  const CalculatorScreen({super.key});
-  @override
-  State<CalculatorScreen> createState() => _CalculatorScreenState();
-}
-
-class _CalculatorScreenState extends State<CalculatorScreen> {
-  double _baseSalary = 45000;
-  double _incentive = 11000;
-  double _extraHours = 24;
-  final double _hourlyRate = 160.0;
-
-  @override
-  Widget build(BuildContext context) {
-    final extraPay = _extraHours * _hourlyRate;
-    final totalPay = _baseSalary + _incentive + extraPay;
-
-    return Padding(
-      padding: const EdgeInsets.all(16.0),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          const Text("Nöbet & Maaş Simülatörü", style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold)),
-          const SizedBox(height: 8),
-          const Text("130 saatlik zorunlu mesainin üzerine tuttuğunuz ekstra nöbetlere göre o ay cebinize girecek tahmini net tutarı hesaplayın.", style: TextStyle(color: Colors.grey)),
-          const SizedBox(height: 24),
-          
-          _inputRow("Taban Maaş (TL)", _baseSalary, (v) => setState(() => _baseSalary = v)),
-          const SizedBox(height: 12),
-          _inputRow("Ortalama Teşvik/Ek Ödeme (TL)", _incentive, (v) => setState(() => _incentive = v)),
-          const SizedBox(height: 12),
-          _inputRow("Fazla Mesai / Nöbet (Saat)", _extraHours, (v) => setState(() => _extraHours = v)),
-          
-          const Spacer(),
-          Container(
-            padding: const EdgeInsets.all(20),
-            decoration: BoxDecoration(color: const Color(0xFF0D9488), borderRadius: BorderRadius.circular(16)),
-            child: Column(
-              children: [
-                Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [const Text("Nöbet Ücreti Getirisi:", style: TextStyle(color: Colors.white70)), Text("+${extraPay.toStringAsFixed(0)} TL", style: const TextStyle(color: Colors.white, fontWeight: FontWeight.bold))]),
-                const Divider(color: Colors.white30, height: 24),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    const Text("Toplam Tahmini Kazanç:", style: TextStyle(color: Colors.white, fontSize: 16, fontWeight: FontWeight.bold)),
-                    Text("${totalPay.toStringAsFixed(0)} TL", style: const TextStyle(color: Colors.yellow, fontSize: 22, fontWeight: FontWeight.bold)),
-                  ],
-                ),
-              ],
-            ),
-          ),
-          const SizedBox(height: 16),
-        ],
-      ),
-    );
-  }
-
-  Widget _inputRow(String label, double val, Function(double) onChanged) {
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-      children: [
-        Expanded(child: Text(label, style: const TextStyle(fontWeight: FontWeight.bold))),
-        SizedBox(
-          width: 100,
-          child: TextField(
-            keyboardType: TextInputType.number,
-            textAlign: TextAlign.right,
-            decoration: const InputDecoration(border: OutlineInputBorder(), contentPadding: EdgeInsets.symmetric(horizontal: 8, vertical: 8)),
-            controller: TextEditingController(text: val.toStringAsFixed(0))..selection = TextSelection.collapsed(offset: val.toStringAsFixed(0).length),
-            onChanged: (v) => onChanged(double.tryParse(v) ?? 0),
-          ),
-        ),
-      ],
-    );
-  }
-}
+            padding: EdgeInsets.only(bottom: MediaQuery.of(ctx).view
