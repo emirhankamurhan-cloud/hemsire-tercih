@@ -92,19 +92,28 @@ class _MainNavigationScreenState extends State<MainNavigationScreen> {
   List<Hospital> _hospitals = [];
   List<String> _favoriteIds = [];
   Map<String, String> _notes = {};
-  Map<String, String> _images = {}; // Kişisel olarak telefondan eklenen fotoğraflar
-  List<String> _bundledAssets = []; // GitHub'a atılan gömülü resimlerin listesi
+  Map<String, String> _images = {}; 
+  List<String> _bundledAssets = []; 
   
   String _searchQuery = '';
   String _activeCity = 'Tümü';
+  
   double _userScore = 72.0;
+  late TextEditingController _scoreController;
 
   @override
   void initState() {
     super.initState();
+    _scoreController = TextEditingController(text: _userScore.toString());
     _parseData();
     _loadPrefs();
     _loadBundledAssets();
+  }
+
+  @override
+  void dispose() {
+    _scoreController.dispose();
+    super.dispose();
   }
 
   void _parseData() {
@@ -156,7 +165,6 @@ class _MainNavigationScreenState extends State<MainNavigationScreen> {
     final normHospCity = _normalizeString(h.city);
 
     for (String assetPath in _bundledAssets) {
-      // JPEG VE JPG DESTEĞİ: Dosya adını uzantıdan ayırıyoruz
       final parts = assetPath.split('/').last.split('.');
       if (parts.isEmpty) continue;
       
@@ -171,7 +179,6 @@ class _MainNavigationScreenState extends State<MainNavigationScreen> {
       }
     }
     
-    // Eski sistem ID kontrolü (hem jpg hem jpeg)
     if (_bundledAssets.contains('assets/${h.id}.jpg')) return 'assets/${h.id}.jpg';
     if (_bundledAssets.contains('assets/${h.id}.jpeg')) return 'assets/${h.id}.jpeg';
     
@@ -207,6 +214,10 @@ class _MainNavigationScreenState extends State<MainNavigationScreen> {
         if (notesStr != null) _notes = Map<String, String>.from(json.decode(notesStr));
         final imagesStr = prefs.getString('images');
         if (imagesStr != null) _images = Map<String, String>.from(json.decode(imagesStr));
+        
+        // Puan hafızadan çekiliyor
+        _userScore = prefs.getDouble('userScore') ?? 72.0;
+        _scoreController.text = _userScore.toString();
       });
     } catch (e) {
       debugPrint('Prefs yükleme hatası: $e');
@@ -218,6 +229,8 @@ class _MainNavigationScreenState extends State<MainNavigationScreen> {
     await prefs.setStringList('favs', _favoriteIds);
     await prefs.setString('notes', json.encode(_notes));
     await prefs.setString('images', json.encode(_images));
+    // Puan hafızaya kaydediliyor
+    await prefs.setDouble('userScore', _userScore);
   }
 
   void _toggleFav(String id) {
@@ -293,7 +306,18 @@ class _MainNavigationScreenState extends State<MainNavigationScreen> {
                     children: [
                       const Text('Puan:', style: TextStyle(fontWeight: FontWeight.bold, color: Color(0xFF0D9488))),
                       const SizedBox(width: 8),
-                      SizedBox(width: 50, child: TextField(keyboardType: const TextInputType.numberWithOptions(decimal: true), decoration: const InputDecoration(border: InputBorder.none), onChanged: (v) => setState(() => _userScore = double.tryParse(v) ?? 0.0), controller: TextEditingController(text: _userScore.toString())..selection = TextSelection.collapsed(offset: _userScore.toString().length))),
+                      SizedBox(
+                        width: 50, 
+                        child: TextField(
+                          controller: _scoreController,
+                          keyboardType: const TextInputType.numberWithOptions(decimal: true), 
+                          decoration: const InputDecoration(border: InputBorder.none), 
+                          onChanged: (v) {
+                            setState(() => _userScore = double.tryParse(v) ?? 0.0);
+                            _savePrefs(); // Puan değiştiği an hafızaya kaydeder
+                          }
+                        )
+                      ),
                     ],
                   ),
                 )
@@ -382,7 +406,6 @@ class _MainNavigationScreenState extends State<MainNavigationScreen> {
                 Container(
                   height: 140, width: double.infinity,
                   color: Colors.teal.shade700,
-                  // Akıllı JPEG ve JPG Destekli Motor
                   child: _buildImageEngine(h),
                 ),
                 Positioned(top: 8, left: 8, child: Container(padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4), decoration: BoxDecoration(color: Colors.black54, borderRadius: BorderRadius.circular(8)), child: Text(h.type, style: const TextStyle(color: Colors.white, fontSize: 11)))),
