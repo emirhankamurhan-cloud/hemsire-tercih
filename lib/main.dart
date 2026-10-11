@@ -243,7 +243,7 @@ class _MainNavigationScreenState extends State<MainNavigationScreen> {
   }
 
   void _openMap(String name, String city) {
-    final query = Uri.encodeComponent("$name$city");
+    final query = Uri.encodeComponent("$name $city");
     _launchURL(Uri.parse("https://www.google.com/maps/search/?api=1&query=$query"));
   }
 
@@ -392,7 +392,7 @@ class _MainNavigationScreenState extends State<MainNavigationScreen> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(h.name, style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 15)),
-                  Text('${h.city} /${h.district}', style: TextStyle(color: Colors.grey.shade600, fontSize: 13)),
+                  Text('${h.city} / ${h.district}', style: TextStyle(color: Colors.grey.shade600, fontSize: 13)),
                   const Divider(),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -419,4 +419,118 @@ class _MainNavigationScreenState extends State<MainNavigationScreen> {
         builder: (ctx, setModalState) {
           final noteCtrl = TextEditingController(text: _notes[h.id] ?? '');
           return Padding(
-            padding: EdgeInsets.only(bottom: MediaQuery.of(ctx).view
+            padding: EdgeInsets.only(bottom: MediaQuery.of(ctx).viewInsets.bottom, left: 16, right: 16, top: 16),
+            child: SingleChildScrollView(
+              child: Column(
+                mainAxisSize: MainAxisSize.min, crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(h.name, style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
+                  const SizedBox(height: 12),
+                  Row(
+                    children: [
+                      Expanded(child: OutlinedButton.icon(icon: const Icon(Icons.map, size: 16), label: const Text("Haritada Gör", style: TextStyle(fontSize: 12)), onPressed: () => _openMap(h.name, h.city))),
+                      const SizedBox(width: 8),
+                      Expanded(child: OutlinedButton.icon(icon: const Icon(Icons.home_work, size: 16), label: const Text("Ev Ara", style: TextStyle(fontSize: 12)), onPressed: () => _openSahibinden(h.city, h.district))),
+                    ],
+                  ),
+                  const Divider(),
+                  Row(children: [Expanded(child: _detailBox("İş Yükü", h.workLoad, Icons.trending_up)), const SizedBox(width: 8), Expanded(child: _detailBox("Teşvik", h.incentive, Icons.payments))]),
+                  const SizedBox(height: 8),
+                  Row(children: [Expanded(child: _detailBox("Nöbet", h.shift, Icons.schedule)), const SizedBox(width: 8), Expanded(child: _detailBox("Ev Kirası", h.rentRange, Icons.home))]),
+                  const SizedBox(height: 16),
+                  Container(width: double.infinity, padding: const EdgeInsets.all(12), decoration: BoxDecoration(color: Colors.blueGrey.shade50, borderRadius: BorderRadius.circular(8)), child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [Row(children: [const Icon(Icons.business, size: 16, color: Colors.blueGrey), const SizedBox(width: 4), Text("Lojman Durumu: ", style: TextStyle(fontWeight: FontWeight.bold, color: Colors.blueGrey.shade900)), Expanded(child: Text(h.lojmanDurumu, style: TextStyle(color: Colors.blueGrey.shade800)))]), const SizedBox(height: 6), Row(children: [const Icon(Icons.school, size: 16, color: Colors.blueGrey), const SizedBox(width: 4), Text("Eğitim Toleransı: ", style: TextStyle(fontWeight: FontWeight.bold, color: Colors.blueGrey.shade900)), Expanded(child: Text(h.egitimToleransi, style: TextStyle(color: Colors.blueGrey.shade800)))])])),
+                  const SizedBox(height: 16),
+                  Container(width: double.infinity, padding: const EdgeInsets.all(12), decoration: BoxDecoration(color: Colors.green.shade50, borderRadius: BorderRadius.circular(8), border: Border(left: const BorderSide(color: Colors.green, width: 4))), child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [Text("🟢 Artıları", style: TextStyle(fontWeight: FontWeight.bold, color: Colors.green.shade900)), const SizedBox(height: 4), Text(h.pros, style: TextStyle(color: Colors.green.shade900, fontSize: 13))])),
+                  const SizedBox(height: 8),
+                  Container(width: double.infinity, padding: const EdgeInsets.all(12), decoration: BoxDecoration(color: Colors.red.shade50, borderRadius: BorderRadius.circular(8), border: Border(left: const BorderSide(color: Colors.red, width: 4))), child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [Text("🔴 Eksileri", style: TextStyle(fontWeight: FontWeight.bold, color: Colors.red.shade900)), const SizedBox(height: 4), Text(h.cons, style: TextStyle(color: Colors.red.shade900, fontSize: 13))])),
+                  const SizedBox(height: 16),
+                  TextField(controller: noteCtrl, decoration: const InputDecoration(hintText: "Kişisel notunuz...", border: OutlineInputBorder()), maxLines: 2, onChanged: (v) { _notes[h.id] = v; _savePrefs(); }),
+                  const SizedBox(height: 12),
+                  SizedBox(
+                    width: double.infinity,
+                    child: ElevatedButton.icon(
+                      icon: const Icon(Icons.add_a_photo), label: const Text("Telefondan Şahsi Görsel Ekle"),
+                      style: ElevatedButton.styleFrom(backgroundColor: const Color(0xFF0D9488), foregroundColor: Colors.white),
+                      onPressed: () async { await _pickImage(h.id); setModalState(() {}); setState(() {}); },
+                    ),
+                  ),
+                  const SizedBox(height: 24),
+                ],
+              ),
+            ),
+          );
+        }
+      )
+    );
+  }
+
+  Widget _detailBox(String title, String val, IconData icon) {
+    return Container(
+      padding: const EdgeInsets.all(8),
+      decoration: BoxDecoration(color: Colors.grey.shade100, borderRadius: BorderRadius.circular(8), border: Border.all(color: Colors.grey.shade300)),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [Row(children: [Icon(icon, size: 14, color: Colors.grey.shade600), const SizedBox(width: 4), Text(title, style: TextStyle(fontSize: 10, color: Colors.grey.shade600, fontWeight: FontWeight.bold))]), const SizedBox(height: 4), Text(val, style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 12))],
+      ),
+    );
+  }
+}
+
+class CalculatorScreen extends StatefulWidget {
+  const CalculatorScreen({super.key});
+  @override
+  State<CalculatorScreen> createState() => _CalculatorScreenState();
+}
+
+class _CalculatorScreenState extends State<CalculatorScreen> {
+  double _baseSalary = 45000;
+  double _incentive = 11000;
+  double _extraHours = 24;
+  final double _hourlyRate = 160.0;
+
+  @override
+  Widget build(BuildContext context) {
+    final extraPay = _extraHours * _hourlyRate;
+    final totalPay = _baseSalary + _incentive + extraPay;
+
+    return Padding(
+      padding: const EdgeInsets.all(16.0),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          const Text("Nöbet & Maaş Simülatörü", style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold)),
+          const SizedBox(height: 8),
+          const Text("130 saatlik zorunlu mesainin üzerine tuttuğunuz ekstra nöbetlere göre o ay cebinize girecek tahmini net tutarı hesaplayın.", style: TextStyle(color: Colors.grey)),
+          const SizedBox(height: 24),
+          _inputRow("Taban Maaş (TL)", _baseSalary, (v) => setState(() => _baseSalary = v)),
+          const SizedBox(height: 12),
+          _inputRow("Ortalama Teşvik/Ek Ödeme (TL)", _incentive, (v) => setState(() => _incentive = v)),
+          const SizedBox(height: 12),
+          _inputRow("Fazla Mesai / Nöbet (Saat)", _extraHours, (v) => setState(() => _extraHours = v)),
+          const Spacer(),
+          Container(
+            padding: const EdgeInsets.all(20), decoration: BoxDecoration(color: const Color(0xFF0D9488), borderRadius: BorderRadius.circular(16)),
+            child: Column(
+              children: [
+                Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [const Text("Nöbet Ücreti Getirisi:", style: TextStyle(color: Colors.white70)), Text("+${extraPay.toStringAsFixed(0)} TL", style: const TextStyle(color: Colors.white, fontWeight: FontWeight.bold))]),
+                const Divider(color: Colors.white30, height: 24),
+                Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [const Text("Toplam Tahmini Kazanç:", style: TextStyle(color: Colors.white, fontSize: 16, fontWeight: FontWeight.bold)), Text("${totalPay.toStringAsFixed(0)} TL", style: const TextStyle(color: Colors.yellow, fontSize: 22, fontWeight: FontWeight.bold))]),
+              ],
+            ),
+          ),
+          const SizedBox(height: 16),
+        ],
+      ),
+    );
+  }
+
+  Widget _inputRow(String label, double val, Function(double) onChanged) {
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      children: [
+        Expanded(child: Text(label, style: const TextStyle(fontWeight: FontWeight.bold))),
+        SizedBox(width: 100, child: TextField(keyboardType: TextInputType.number, textAlign: TextAlign.right, decoration: const InputDecoration(border: OutlineInputBorder(), contentPadding: EdgeInsets.symmetric(horizontal: 8, vertical: 8)), controller: TextEditingController(text: val.toStringAsFixed(0))..selection = TextSelection.collapsed(offset: val.toStringAsFixed(0).length), onChanged: (v) => onChanged(double.tryParse(v) ?? 0))),
+      ],
+    );
+  }
+}
