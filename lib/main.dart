@@ -557,6 +557,7 @@ final List<String> rawData = [
   "zonguldak_caycuma|Zonguldak Çaycuma Devlet Hastanesi|Zonguldak|Çaycuma|Devlet Hastanesi|72.4|71.9|5/10|6.500-9.000 TL|24 Saat Nöbet|10.000-14.000 TL|Havalimanı var, sakin doğa.|Ufak bir yerleşim."
 ];
 
+
 class MainNavigationScreen extends StatefulWidget {
   const MainNavigationScreen({super.key});
 
@@ -619,7 +620,7 @@ class _MainNavigationScreenState extends State<MainNavigationScreen> {
 
   Future<void> _loadAssetListSilently() async {
     try {
-      final manifestContent = await rootBundle.loadString('AssetManifest.json');
+      final manifestContent = await DefaultAssetBundle.of(context).loadString('AssetManifest.json');
       final Map<String, dynamic> manifestMap = json.decode(manifestContent);
       setState(() {
         _bundledAssets = manifestMap.keys.where((String key) => key.startsWith('assets/')).toList();
@@ -629,8 +630,10 @@ class _MainNavigationScreenState extends State<MainNavigationScreen> {
     }
   }
 
+  // URL Encode formatındaki (%20) boşlukları ve Türkçe karakterleri URL standardından çıkaran yepyeni, hatasız fonksiyon
   String _normalizeString(String text) {
-    return text.toLowerCase()
+    return Uri.decodeComponent(text) // %20 gibi boşlukları normal boşluğa çevirir
+      .toLowerCase()
       .replaceAll('ı', 'i').replaceAll('ö', 'o').replaceAll('ü', 'u')
       .replaceAll('ç', 'c').replaceAll('ş', 's').replaceAll('ğ', 'g')
       .replaceAll('hastanesi', '').replaceAll('eah', '').replaceAll('dh', '')
@@ -648,6 +651,7 @@ class _MainNavigationScreenState extends State<MainNavigationScreen> {
       if (parts.isEmpty) continue;
       
       final fileName = parts.first; 
+      // Dosya adını da decode ediyoruz ki URL formatı eşleştirmeyi bozmasın
       final normFileName = _normalizeString(fileName);
 
       if (normHospName.contains(normFileName) || normFileName.contains(normHospName)) {
@@ -812,7 +816,6 @@ class _MainNavigationScreenState extends State<MainNavigationScreen> {
   }
 
   Widget _buildAllList() {
-    // BURADAKİ DART DERLEYİCİ HATASINI (CASCADE OPERATOR) DÜZELTTİK
     final uniqueCities = _hospitals.map((h) => h.city).toSet().toList();
     uniqueCities.sort();
     final cities = ['Tümü', ...uniqueCities];
