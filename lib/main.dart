@@ -48,7 +48,6 @@ class Hospital {
   String get lojmanDurumu => (type == 'Devlet Hastanesi' && !['Merkez', 'İlkadım', 'Çankaya', 'Kadıköy', 'Şişli', 'Seyhan'].contains(district)) ? 'Lojman Kısıtlı / Sırada Beklenebilir' : 'Genellikle Yok';
 }
 
-// === İŞTE O GERİ DÖNEN 270 KÜSÜR HASTANELİK DEV LİSTE ===
 final List<String> rawData = [
   // ADANA (14)
   "adana_sehir|Adana Şehir Hastanesi|Adana|Yüreğir|Şehir Hastanesi|74.2|73.8|8/10|11.000-14.000 TL|24 Saat Nöbet|15.000-20.000 TL|Bölgenin ana referans merkezi, teşvikleri iyi.|Yaz aylarında inanılmaz sıcak. Acili hareketli.",
@@ -59,7 +58,7 @@ final List<String> rawData = [
   "adana_yuregir|Adana Yüreğir Devlet Hastanesi|Adana|Yüreğir|Devlet Hastanesi|73.2|72.8|7/10|8.000-11.000 TL|24 Saat Nöbet|12.000-16.000 TL|Gelişmiş ilçe.|Şehir hastanesinin gölgesinde kalıyor.",
   "adana_imamoglu|Adana İmamoğlu Devlet Hastanesi|Adana|İmamoğlu|Devlet Hastanesi|71.5|71.1|4/10|5.000-7.000 TL|24 Saat Nöbet|8.000-11.000 TL|Çok sakin, az vaka.|Mesleki gelişim zor.",
   "adana_karatas|Adana Karataş Devlet Hastanesi|Adana|Karataş|Devlet Hastanesi|72.1|71.6|5/10|5.500-8.000 TL|24 Saat Nöbet|9.000-12.000 TL|Deniz kenarında küçük ilçe.|Yazlık bölge olduğu için yazın yoğun.",
-  "adana_pozantı|Adana Pozantı Devlet Hastanesi|Adana|Pozantı|Devlet Hastanesi|71.8|71.3|5/10|5.500-8.000 TL|24 Saat Nöbet|8.500-12.000 TL|Toroslar'da serin hava.|Merkeze uzak.",
+  "adana_pozanti|Adana Pozantı Devlet Hastanesi|Adana|Pozantı|Devlet Hastanesi|71.8|71.3|5/10|5.500-8.000 TL|24 Saat Nöbet|8.500-12.000 TL|Toroslar'da serin hava.|Merkeze uzak.",
   "adana_saimbeyli|Adana Saimbeyli Devlet Hastanesi|Adana|Saimbeyli|Devlet Hastanesi|70.5|70.0|4/10|4.000-6.000 TL|24 Saat Nöbet|7.000-10.000 TL|Tasarruf için uygun.|Çok küçük ve sosyal imkan yok.",
   "adana_tufanbeyli|Adana Tufanbeyli Devlet Hastanesi|Adana|Tufanbeyli|Devlet Hastanesi|70.2|69.7|4/10|4.000-6.000 TL|24 Saat Nöbet|7.000-10.000 TL|İş yükü çok hafif.|Merkeze oldukça uzak.",
   "adana_feke|Adana Feke Devlet Hastanesi|Adana|Feke|Devlet Hastanesi|70.8|70.3|4/10|4.500-6.500 TL|24 Saat Nöbet|7.500-10.500 TL|Sakin ortam.|Gelişmemiş ilçe.",
@@ -243,7 +242,7 @@ final List<String> rawData = [
   "denizli_devlet|Denizli Devlet Hastanesi|Denizli|Merkezefendi|Devlet Hastanesi|74.6|74.1|7/10|8.000-11.500 TL|24 Saat Nöbet|14.000-19.000 TL|Ege'nin sanayi kenti, ekonomik rahatlık.|Hastane yoğun ve personel sirkülasyonu var.",
   "denizli_servergazi|Denizli Servergazi Devlet Hastanesi|Denizli|Merkezefendi|Devlet Hastanesi|74.2|73.7|6/10|7.500-10.500 TL|24 Saat Nöbet|14.000-19.000 TL|Merkezde ikinci bir alternatif, daha sakin.|Bina biraz eski.",
   "denizli_civril|Denizli Çivril Devlet Hastanesi|Denizli|Çivril|Devlet Hastanesi|73.5|73.0|5/10|6.500-9.000 TL|24 Saat Nöbet|10.000-14.000 TL|Göl manzaralı büyük ilçe.|Merkeze oldukça uzak (1.5 saat).",
-  "denizli_avas|Denizli Acıpayam Devlet Hastanesi|Denizli|Acıpayam|Devlet Hastanesi|73.1|72.6|5/10|6.000-8.500 TL|24 Saat Nöbet|9.000-13.000 TL|Antalya yolu üzerinde.|Sakin ilçe.",
+  "denizli_acipayam|Denizli Acıpayam Devlet Hastanesi|Denizli|Acıpayam|Devlet Hastanesi|73.1|72.6|5/10|6.000-8.500 TL|24 Saat Nöbet|9.000-13.000 TL|Antalya yolu üzerinde.|Sakin ilçe.",
   "denizli_tavas|Denizli Tavas Devlet Hastanesi|Denizli|Tavas|Devlet Hastanesi|72.8|72.3|5/10|6.000-8.500 TL|24 Saat Nöbet|9.000-12.000 TL|Muğla yolu üzerinde.|Küçük.",
   "denizli_buldan|Denizli Buldan Devlet Hastanesi|Denizli|Buldan|Devlet Hastanesi|72.5|72.0|4/10|5.500-8.000 TL|24 Saat Nöbet|8.500-11.500 TL|Tarihi evleriyle meşhur.|Sosyalleşme az.",
 
@@ -321,7 +320,7 @@ final List<String> rawData = [
   "isparta_yalvac|Isparta Yalvaç Devlet Hastanesi|Isparta|Yalvaç|Devlet Hastanesi|73.0|72.5|5/10|6.000-8.500 TL|24 Saat Nöbet|9.000-13.000 TL|Tarihi ve büyük ilçe.|Merkeze 1.5 saat mesafede.",
   "isparta_egirdir|Isparta Eğirdir Devlet Hastanesi|Isparta|Eğirdir|Devlet Hastanesi|73.4|72.9|5/10|6.000-8.500 TL|24 Saat Nöbet|10.000-14.000 TL|Göl kenarı, muazzam doğa.|Kışın çok sessiz.",
 
-  // İSTANBUL (5 - En çok bilinenler)
+  // İSTANBUL (5)
   "istanbul_cam_sakura|Başakşehir Çam ve Sakura Şehir H.|İstanbul|Başakşehir|Şehir Hastanesi|69.3|68.9|10/10|12.000-15.000 TL|24 Saat Nöbet|25.000-35.000 TL|Kağıtsız hastane, metroyla içine kadar ulaşım.|İstanbul pahalılığı ve aşırı kalabalık yoğunluk.",
   "istanbul_sadi_konuk|Bakırköy Dr. Sadi Konuk EAH|İstanbul|Bakırköy|Eğitim ve Araştırma|69.6|69.0|9/10|11.000-14.000 TL|24 Saat Nöbet|25.000-35.000 TL|Metrobüs dibinde, merkezi klinik.|Eski ve çok yoğun bir kurum.",
   "istanbul_ilhan_varank|Sancaktepe Prof. Dr. İlhan Varank EAH|İstanbul|Sancaktepe|Eğitim ve Araştırma|69.1|68.6|9/10|10.000-13.000 TL|24 Saat Nöbet|22.000-30.000 TL|Anadolu yakasının parlayan yıldızı.|Sancaktepe bölgesinin genel kalabalığı.",
@@ -800,7 +799,24 @@ class _MainNavigationScreenState extends State<MainNavigationScreen> {
 
     return Column(
       children: [
-        SingleChildScrollView(scrollDirection: Axis.horizontal, padding: const EdgeInsets.all(8), child: Row(children: cities.map((c) => Padding(padding: const EdgeInsets.only(right: 6), child: ChoiceChip(label: Text(c), selected: _activeCity == c, onSelected: (val) { if(val) setState(() => _activeCity = c); }))).toList())),
+        SingleChildScrollView(
+          scrollDirection: Axis.horizontal, 
+          padding: const EdgeInsets.all(8), 
+          child: Row(
+            children: cities.map((c) {
+              // YENİ ÖZELLİK: Tümü butonunda toplam hastane sayısı yazar!
+              String labelText = c == 'Tümü' ? 'Tümü (${_hospitals.length})' : c;
+              return Padding(
+                padding: const EdgeInsets.only(right: 6), 
+                child: ChoiceChip(
+                  label: Text(labelText, style: const TextStyle(fontWeight: FontWeight.bold)), 
+                  selected: _activeCity == c, 
+                  onSelected: (val) { if(val) setState(() => _activeCity = c); }
+                )
+              );
+            }).toList()
+          )
+        ),
         Expanded(child: ListView.builder(padding: const EdgeInsets.all(8), itemCount: filtered.length, itemBuilder: (ctx, i) => _buildCard(filtered[i]))),
       ],
     );
