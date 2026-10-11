@@ -140,6 +140,7 @@ class _MainNavigationScreenState extends State<MainNavigationScreen> {
     }
   }
 
+  // YENİ GÜVENLİ ASSET OKUMA SİSTEMİ
   Future<void> _loadBundledAssets() async {
     try {
       final manifestContent = await rootBundle.loadString('AssetManifest.json');
@@ -215,7 +216,6 @@ class _MainNavigationScreenState extends State<MainNavigationScreen> {
         final imagesStr = prefs.getString('images');
         if (imagesStr != null) _images = Map<String, String>.from(json.decode(imagesStr));
         
-        // Puan hafızadan çekiliyor
         _userScore = prefs.getDouble('userScore') ?? 72.0;
         _scoreController.text = _userScore.toString();
       });
@@ -229,7 +229,6 @@ class _MainNavigationScreenState extends State<MainNavigationScreen> {
     await prefs.setStringList('favs', _favoriteIds);
     await prefs.setString('notes', json.encode(_notes));
     await prefs.setString('images', json.encode(_images));
-    // Puan hafızaya kaydediliyor
     await prefs.setDouble('userScore', _userScore);
   }
 
@@ -306,18 +305,7 @@ class _MainNavigationScreenState extends State<MainNavigationScreen> {
                     children: [
                       const Text('Puan:', style: TextStyle(fontWeight: FontWeight.bold, color: Color(0xFF0D9488))),
                       const SizedBox(width: 8),
-                      SizedBox(
-                        width: 50, 
-                        child: TextField(
-                          controller: _scoreController,
-                          keyboardType: const TextInputType.numberWithOptions(decimal: true), 
-                          decoration: const InputDecoration(border: InputBorder.none), 
-                          onChanged: (v) {
-                            setState(() => _userScore = double.tryParse(v) ?? 0.0);
-                            _savePrefs(); // Puan değiştiği an hafızaya kaydeder
-                          }
-                        )
-                      ),
+                      SizedBox(width: 50, child: TextField(controller: _scoreController, keyboardType: const TextInputType.numberWithOptions(decimal: true), decoration: const InputDecoration(border: InputBorder.none), onChanged: (v) { setState(() => _userScore = double.tryParse(v) ?? 0.0); _savePrefs(); }))
                     ],
                   ),
                 )
