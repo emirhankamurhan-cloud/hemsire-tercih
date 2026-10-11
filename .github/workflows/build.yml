@@ -11,15 +11,10 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
-      # Java 17'yi sabitleyerek derleyici çökmelerini kökten çözüyoruz
-      - uses: actions/setup-java@v3
-        with:
-          distribution: 'zulu'
-          java-version: '17'
-
       - uses: subosito/flutter-action@v2
         with:
           channel: 'stable'
+          flutter-version: '3.22.2'
 
       - name: Scaffold Flutter App
         run: |
@@ -28,17 +23,21 @@ jobs:
           flutter create --org com.hemsire.tercih hemsire_tercih
           cd hemsire_tercih
           
+          # Versiyon çakışmalarını kökten kaldırdık, en stabil sürümü otomatik çekecek
           flutter pub add shared_preferences image_picker url_launcher
           
+          # İzinler ve Android ayarları
           sed -i '/<application/i <uses-permission android:name="android.permission.INTERNET"/>' android/app/src/main/AndroidManifest.xml
           sed -i '/<application/i <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>' android/app/src/main/AndroidManifest.xml
           sed -i '/<application/i <uses-permission android:name="android.permission.READ_MEDIA_IMAGES"/>' android/app/src/main/AndroidManifest.xml
+          sed -i 's/minSdkVersion flutter.minSdkVersion/minSdkVersion 21/g' android/app/build.gradle
+          sed -i 's/compileSdkVersion flutter.compileSdkVersion/compileSdkVersion 34/g' android/app/build.gradle
           
-          # ÇÖZÜM: Boş klasör hatasını engellemek için koruma dosyası (placeholder) ekliyoruz
+          # BOŞ KLASÖR ÇÖKMESİNİ ENGELLEYEN HAYAT KURTARICI KISIM:
           mkdir -p ./assets
-          touch ./assets/placeholder.txt
-          cp -a ../../assets/. ./assets/ 2>/dev/null || true
-          cp -a ../../assests/. ./assets/ 2>/dev/null || true
+          touch ./assets/.keep
+          cp -r ../../assets/* ./assets/ 2>/dev/null || true
+          cp -r ../../assests/* ./assets/ 2>/dev/null || true
           
           sed -i 's/uses-material-design: true/uses-material-design: true\n  assets:\n    - assets\//g' pubspec.yaml
           
