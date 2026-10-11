@@ -14,15 +14,34 @@ jobs:
       - uses: subosito/flutter-action@v2
         with:
           channel: 'stable'
+          flutter-version: '3.22.2'
 
-      - name: Install dependencies
-        run: flutter pub get
-
-      - name: Build APK
-        run: flutter build apk --release
+      - name: Scaffold Flutter App
+        run: |
+          mkdir -p temp_app
+          cd temp_app
+          flutter create --org com.hemsire.tercih hemsire_tercih
+          cd hemsire_tercih
+          
+          flutter pub add shared_preferences:^2.2.3 image_picker:^1.1.2 url_launcher:^6.2.6
+          
+          sed -i '/<application/i <uses-permission android:name="android.permission.INTERNET"/>' android/app/src/main/AndroidManifest.xml
+          sed -i '/<application/i <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>' android/app/src/main/AndroidManifest.xml
+          sed -i '/<application/i <uses-permission android:name="android.permission.READ_MEDIA_IMAGES"/>' android/app/src/main/AndroidManifest.xml
+          sed -i 's/minSdkVersion flutter.minSdkVersion/minSdkVersion 21/g' android/app/build.gradle
+          
+          mkdir -p ./assets
+          cp -r ../../assets/* ./assets/ 2>/dev/null || true
+          
+          # Hata verdiren o sorunlu satırları sildim. Sadece assets klasörünü tanımlıyoruz:
+          sed -i 's/uses-material-design: true/uses-material-design: true\n  assets:\n    - assets\//g' pubspec.yaml
+          
+          cp ../../lib/main.dart lib/main.dart
+          flutter build apk --release
+          cp build/app/outputs/flutter-apk/app-release.apk ../../app-release.apk
 
       - name: Upload APK
         uses: actions/upload-artifact@v4
         with:
           name: hemsire-tercih-apk
-          path: build/app/outputs/flutter-apk/app-release.apk
+          path: app-release.apk
